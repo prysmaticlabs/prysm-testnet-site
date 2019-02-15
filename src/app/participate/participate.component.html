@@ -1,0 +1,60 @@
+<div>
+  <h2>Step 1 - Get Prysm</h2>
+  <div>
+    The easiest way to get Prysm is to use the docker images.
+  </div>
+</div>
+
+
+<div>
+  <h2>Step 2 - Get GöETH</h2>
+  <ng-template [ngIf]="!walletAddress">
+    <div>
+      Choose a web3 provider
+    </div>
+  
+    <button mat-raised-button 
+            class="web3-logo"
+            (click)="chooseWeb3Provider(web3Provider.METAMASK)">
+      <img src="/assets/metamask-fox.svg">
+    </button>
+  
+    <button mat-raised-button 
+            class="web3-logo" 
+            (click)="chooseWeb3Provider(web3Provider.PORTIS)">
+      <img src="/assets/portis.svg">
+    </button>
+  </ng-template>
+  
+  <div *ngIf="walletAddress">
+    You are {{walletAddress}} and you have {{balance}} GöETH.
+  </div>
+</div>
+
+<div> 
+  <h2>Step 3 - Generate a validator public / private key</h2>
+  <div>
+    ...
+  </div>
+</div>
+
+<div>
+  <h2>Step 4 - Start your validator client</h2>
+  <div>
+    ...
+  </div>
+</div>
+
+<div>
+  <h2>Step 5 - Send the deposit</h2>
+  <div>
+    ...
+  </div>
+</div>
+
+<div>
+  <h2>Step 6 - Wait for your validator assignment</h2>
+  <div>
+    ...
+  </div>
+</div>

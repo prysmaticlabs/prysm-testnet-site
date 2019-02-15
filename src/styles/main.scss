@@ -1,0 +1,8 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import 'variables';
+
+html, body {
+  font-family: $modern-font-stack;
+  padding: 0;
+  margin: 0;
+}

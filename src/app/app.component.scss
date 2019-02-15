@@ -1,0 +1,21 @@
+@import '../styles/variables';
+
+nav > mat-toolbar {
+  background: $theme-secondary;
+  color: $white;
+
+  .flex-spacer {
+    flex: 1 1 auto;
+  }
+
+  a {
+    text-decoration: none;
+
+    padding: 0px 6px;
+  }
+}
+
+.content {
+  margin: 2rem;
+}
+
