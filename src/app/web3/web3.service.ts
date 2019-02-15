@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+import {DEPOSIT_CONTRACT_ABI} from './DepositContract';
 
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
@@ -29,5 +30,9 @@ export abstract class Web3Service {
   ethBalanceOf(address: string): Promise<string> {
     return this.web3.eth.getBalance(address)
       .then(bal => this.web3.utils.fromWei(bal, 'ether'));
+  }
+
+  getDepositContract(address: string) {
+    return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, address);
   }
 }

@@ -2,6 +2,9 @@
   <h2>Step 1 - Get Prysm</h2>
   <div>
     The easiest way to get Prysm is to use the docker images.
+    <pre>
+docker pull gcr.io/prysmaticlabs/prysm/validator:latest
+    </pre>
   </div>
 </div>
 
@@ -9,10 +12,6 @@
 <div>
   <h2>Step 2 - Get GöETH</h2>
   <ng-template [ngIf]="!walletAddress">
-    <div>
-      Choose a web3 provider
-    </div>
-  
     <button mat-raised-button 
             class="web3-logo"
             (click)="chooseWeb3Provider(web3Provider.METAMASK)">
@@ -24,6 +23,10 @@
             (click)="chooseWeb3Provider(web3Provider.PORTIS)">
       <img src="/assets/portis.svg">
     </button>
+
+    <div>
+      Choose a web3 provider
+    </div>
   </ng-template>
   
   <div *ngIf="walletAddress">
@@ -34,7 +37,18 @@
 <div> 
   <h2>Step 3 - Generate a validator public / private key</h2>
   <div>
-    ...
+    <pre>
+docker run -v /tmp/prysm-data:/data gcr.io/prysmaticlabs/prysm/validator:latest \
+   accounts create --keystore-path=/data --password=foo
+    </pre>
+   <div>
+     From those results, you'll want to copy the deposit data:
+     <div>
+       time="2019-02-15 18:52:43" level=info msg="Account creation complete! Copy and paste the deposit data shown below when issuing a transaction into the ETH1.0 deposit contract to activate your validator client" prefix=accounts
+       <br>
+       time="2019-02-15 18:52:43" level=info msg=<b>0x5700000040000000956df606414c1db3873b295ff51ed926708116919ca133c4d3502a59aa54e034c482162039307fbdfd7b8e32cef3ecd65cb062ee2c82cc7b117b1d3487bea65303000000706f70080000007769746864726177</b> prefix=accounts
+     </div>
+   </div>
   </div>
 </div>
 
@@ -49,6 +63,7 @@
   <h2>Step 5 - Send the deposit</h2>
   <div>
     ...
+    <button mat-raised-button (click)="makeDeposit()">Click me</button>
   </div>
 </div>
 
