@@ -5,6 +5,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 
 import { PortisService } from '../web3/portis.service';
 import { MetamaskService } from '../web3/metamask.service';
+import { ProgressService } from '../progress.service';
 import { DEPOSIT_CONTRACT_ADDRESS, Web3Service, Web3Provider } from '../web3/web3.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
@@ -30,6 +31,7 @@ export class ParticipateComponent implements OnInit {
     private readonly metamask: MetamaskService, 
     private readonly snackbar: MatSnackBar,
     private readonly storage: LocalStorage,
+    private readonly progress: ProgressService,
   ) { }
 
   ngOnInit() {
@@ -47,6 +49,7 @@ export class ParticipateComponent implements OnInit {
     this.snackbar.openFromComponent(SimpleSnackBar, {
       data: { message: err, action: 'OK' },
     }); 
+    this.progress.stopProgress();
   }
 
   async chooseWeb3Provider(provider: Web3Provider) {
@@ -68,15 +71,24 @@ export class ParticipateComponent implements OnInit {
   }
 
   async makeDeposit() {
-    const contract = this.web3.depositContract;
-    const data = "0x5700000040000000956df606414c1db3873b295ff51ed926708116919ca133c4d3502a59aa54e034c482162039307fbdfd7b8e32cef3ecd65cb062ee2c82cc7b117b1d3487bea65303000000706f70080000007769746864726177";
+    const snackbarConfig = {
+        duration: 10000, //ms
+      };
     try {
-      const res = await contract.methods.deposit(data).send({
-        value: 3200000000000, // TODO Get this from the public max deposit.
+      if (!this.web3) {
+        throw new Error('choose a web3 provider to make a deposit');
+      }
+      this.progress.startProgress();
+      this.web3.depositContract.methods.deposit(this.depositData).send({
+        value: await this.web3.maxDepositValue(), 
         from: this.walletAddress,
         gasLimit: 400000,
-      });
-      console.log(res);
+      }).on('transactionHash', () => {
+        this.snackbar.open('Transaction received. Pending confirmation...', '', snackbarConfig);
+      }).on('receipt', () => {
+        this.snackbar.open('Transaction confirmed. You are deposited!', 'OK', snackbarConfig);
+        this.progress.stopProgress();
+      }).on('error', this.showError);
     } catch (e) {
       this.showError(e);
     }

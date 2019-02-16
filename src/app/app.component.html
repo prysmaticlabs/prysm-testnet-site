@@ -9,6 +9,7 @@
     <span class="flex-spacer"></span>
     <span class="small-text" *ngIf="numValidators">{{numValidators}} validators!</span>
   </mat-toolbar>
+  <mat-progress-bar *ngIf="inProgress" mode="indeterminate"></mat-progress-bar>
 </nav>
 
 <div class="content">

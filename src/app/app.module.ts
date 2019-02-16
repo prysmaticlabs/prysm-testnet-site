@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { ParticipateModule } from './participate/participate.module';
     MatButtonModule,
     MatCardModule,
     MatToolbarModule,
+    MatProgressBarModule,
     HomeModule,
     StatsModule,
     ParticipateModule,

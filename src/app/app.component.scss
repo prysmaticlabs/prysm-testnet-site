@@ -1,23 +1,32 @@
 @import '../styles/variables';
 
-nav > mat-toolbar {
-  background: $theme-secondary;
-  color: $white;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 
-  .flex-spacer {
-    flex: 1 1 auto;
-  }
-
-  a {
-    text-decoration: none;
-    padding: 0px 6px;
-  }
-  .small-text {
-    font-size: 12px;
+  & > mat-toolbar {
+    background: $theme-secondary;
+    color: $white;
+  
+    .flex-spacer {
+      flex: 1 1 auto;
+    }
+  
+    a {
+      text-decoration: none;
+      padding: 0px 6px;
+    }
+    .small-text {
+      font-size: 12px;
+    }
   }
 }
 
 .content {
+	padding-top: 32px;
   margin: 2rem;
 }
 

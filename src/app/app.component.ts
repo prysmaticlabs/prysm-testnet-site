@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NoAccessWeb3Service } from './web3/no-access.service';
+import { ProgressService } from './progress.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,14 @@ import { NoAccessWeb3Service } from './web3/no-access.service';
 })
 export class AppComponent implements OnInit {
   numValidators: number;
+  inProgress = false;
   
-  constructor(private readonly web3: NoAccessWeb3Service) {}
+  constructor(
+    private readonly web3: NoAccessWeb3Service,
+    private readonly progress: ProgressService,
+  ) {
+    this.progress.progress.subscribe(v => this.inProgress = v);
+  }
 
   async ngOnInit() {
     await this.updateValidatorCount();

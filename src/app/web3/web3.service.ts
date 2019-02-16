@@ -38,7 +38,7 @@ export abstract class Web3Service {
     return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, DEPOSIT_CONTRACT_ADDRESS);
   }
 
-  /** Number of validators taht have deposited so far */
+  /** Number of validators that have deposited so far */
   numValidators(): Promise<number> {
     return this.depositContract
       .methods
@@ -47,6 +47,16 @@ export abstract class Web3Service {
       .then(res => res[0]);
   }
 
+  /** Max value required to deposit */ 
+  maxDepositValue(): Promise<number> {
+    return this.depositContract
+      .methods
+      .MAX_DEPOSIT_AMOUNT() // Note: this is denoted in gwei!
+      .call() 
+      .then(res => this.web3.utils.toWei(res[0], 'gwei'));
+  }
+
+  /** Deposit event stream */ 
   depositEvents() {
     return this.depositContract
        .events.Deposit();
