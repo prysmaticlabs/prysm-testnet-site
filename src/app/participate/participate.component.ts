@@ -15,7 +15,7 @@ const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
   styleUrls: ['./participate.component.scss']
 })
 export class ParticipateComponent implements OnInit {
-  private web3: Web3Service;
+  private web3?: Web3Service;
   web3Provider = Web3Provider;
   walletAddress: string;
   balance: string;

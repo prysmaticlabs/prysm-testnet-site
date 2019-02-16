@@ -69,6 +69,12 @@ docker run -v /tmp/prysm-data:/data -p 4000:4000 \
   --web3provider=wss://goerli.prylabs.net/websocket \
   --deposit-contract={{CONTRACT_ADDRESS}} \
   --demo-config</pre>
+  <pre>
+docker run -v /tmp/prysm-data:/data --network="host" \
+  gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \
+  --beacon-rpc-provider=127.0.0.1:4000 \
+  --keystore-path=/data \
+  --password=foo</pre>
 </div>
 
 <div>
