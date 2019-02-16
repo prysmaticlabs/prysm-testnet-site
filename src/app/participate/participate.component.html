@@ -4,8 +4,7 @@
     The easiest way to get Prysm is to use the docker images.
     <pre>
 docker pull gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}}
-docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}
-    </pre>
+docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
   </div>
 </div>
 
@@ -13,21 +12,22 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}
 <div>
   <h2>Step 2 - Get GöETH</h2>
   <ng-template [ngIf]="!walletAddress">
-    <button mat-raised-button 
-            class="web3-logo"
-            (click)="chooseWeb3Provider(web3Provider.METAMASK)">
-      <img src="/assets/metamask-fox.svg">
-    </button>
-  
-    <button mat-raised-button 
-            class="web3-logo" 
-            (click)="chooseWeb3Provider(web3Provider.PORTIS)">
-      <img src="/assets/portis.svg">
-    </button>
-
-    <div>
-      Choose a web3 provider
-    </div>
+    <mat-card class="web3-card">
+      <mat-card-title>Choose web3 provider</mat-card-title>
+      <mat-card-content>
+        <button mat-raised-button 
+                class="web3-logo"
+                (click)="chooseWeb3Provider(web3Provider.METAMASK)">
+          <img src="/assets/metamask-fox.svg">
+        </button>
+      
+        <button mat-raised-button 
+                class="web3-logo" 
+                (click)="chooseWeb3Provider(web3Provider.PORTIS)">
+          <img src="/assets/portis.svg">
+        </button>
+      </mat-card-content>
+    </mat-card>
   </ng-template>
   
   <div *ngIf="walletAddress">
@@ -41,8 +41,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}
   <div>
     <pre>
 docker run -v /tmp/prysm-data:/data gcr.io/prysmaticlabs/prysm/validator:latest \
-   accounts create --keystore-path=/data --password=foo
-    </pre>
+   accounts create --keystore-path=/data --password=foo</pre>
    <div>
      From those results, you'll want to copy the deposit data here.
    </div>
@@ -60,7 +59,8 @@ docker run -v /tmp/prysm-data:/data gcr.io/prysmaticlabs/prysm/validator:latest 
 </div>
 
 <div>
-  <h2>Step 4 - Start your validator client</h2>
+  <h2>Step 4 - Start your beacon chain & validator clients</h2>
+  <span>You'll need two terminals for this step.</span>
   <pre>
 docker run -v /tmp/prysm-data:/data -p 4000:4000 \
   gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
@@ -69,6 +69,8 @@ docker run -v /tmp/prysm-data:/data -p 4000:4000 \
   --web3provider=wss://goerli.prylabs.net/websocket \
   --deposit-contract={{CONTRACT_ADDRESS}} \
   --demo-config</pre>
+
+  <span>Run the next command in another terminal.</span>
   <pre>
 docker run -v /tmp/prysm-data:/data --network="host" \
   gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \

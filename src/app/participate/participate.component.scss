@@ -1,9 +1,24 @@
-.web3-logo {
-  height: 28px + 16px;
+@import '../../styles/variables';
 
-  img {
-    height: 28px;
+.web3-card {
+  max-width: 300px;
+
+  mat-card-content button {
+    margin: 6px;
   }
+
+  .web3-logo {
+    height: 48px + 16px;
+  
+    img {
+      height: 48px;
+    }
+  }
+}
+
+
+pre {
+  padding: 8px;
 }
 
 div {
