@@ -3,7 +3,8 @@
   <div>
     The easiest way to get Prysm is to use the docker images.
     <pre>
-docker pull gcr.io/prysmaticlabs/prysm/validator:latest
+docker pull gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}}
+docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}
     </pre>
   </div>
 </div>
@@ -31,6 +32,7 @@ docker pull gcr.io/prysmaticlabs/prysm/validator:latest
   
   <div *ngIf="walletAddress">
     You are {{walletAddress}} and you have {{balance}} GöETH.
+    <div><a href="#">Need more?</a></div>
   </div>
 </div>
 
@@ -42,21 +44,31 @@ docker run -v /tmp/prysm-data:/data gcr.io/prysmaticlabs/prysm/validator:latest 
    accounts create --keystore-path=/data --password=foo
     </pre>
    <div>
-     From those results, you'll want to copy the deposit data:
-     <div>
-       time="2019-02-15 18:52:43" level=info msg="Account creation complete! Copy and paste the deposit data shown below when issuing a transaction into the ETH1.0 deposit contract to activate your validator client" prefix=accounts
-       <br>
-       time="2019-02-15 18:52:43" level=info msg=<b>0x5700000040000000956df606414c1db3873b295ff51ed926708116919ca133c4d3502a59aa54e034c482162039307fbdfd7b8e32cef3ecd65cb062ee2c82cc7b117b1d3487bea65303000000706f70080000007769746864726177</b> prefix=accounts
-     </div>
+     From those results, you'll want to copy the deposit data here.
    </div>
+   <mat-form-field class="full-width">
+     <textarea matInput 
+               placeholder="Your validator deposit data"
+               cdkTextareaAutosize
+               #autosize="cdkTextareaAutosize"
+               cdkAutosizeMinRows="1"
+               cdkAutosizeMaxRows="4"
+               [(ngModel)]="depositData"
+               (change)="updateDepositData(depositData)"></textarea>
+   </mat-form-field>
   </div>
 </div>
 
 <div>
   <h2>Step 4 - Start your validator client</h2>
-  <div>
-    ...
-  </div>
+  <pre>
+docker run -v /tmp/prysm-data:/data -p 4000:4000 \
+  gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
+  --datadir=/data \
+  --enable-powchain \
+  --web3provider=wss://goerli.prylabs.net/websocket \
+  --deposit-contract={{CONTRACT_ADDRESS}} \
+  --demo-config</pre>
 </div>
 
 <div>

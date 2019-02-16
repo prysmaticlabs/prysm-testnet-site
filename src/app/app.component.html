@@ -7,9 +7,7 @@
     <a routerLink="/participate" class="mat-button">Participate</a>
 
     <span class="flex-spacer"></span>
-    <a href="https://github.com/prysmaticlabs/prysm" target="_blank">
-      <img class="nav-logo" src="/assets/github-circle-white-transparent.svg">
-    </a>
+    <span class="small-text" *ngIf="numValidators">{{numValidators}} validators!</span>
   </mat-toolbar>
 </nav>
 

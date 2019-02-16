@@ -3,6 +3,7 @@ import {DEPOSIT_CONTRACT_ABI} from './DepositContract';
 
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
+export const DEPOSIT_CONTRACT_ADDRESS = '0x9cbd127973072989d5c69001a6527DF501Dd3c93';
 
 export enum Web3Provider {
   PORTIS,
@@ -32,7 +33,22 @@ export abstract class Web3Service {
       .then(bal => this.web3.utils.fromWei(bal, 'ether'));
   }
 
-  getDepositContract(address: string) {
-    return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, address);
+  /** Reference to the deposit contract */
+  get depositContract() {
+    return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, DEPOSIT_CONTRACT_ADDRESS);
+  }
+
+  /** Number of validators taht have deposited so far */
+  numValidators(): Promise<number> {
+    return this.depositContract
+      .methods
+      .deposit_count()
+      .call()
+      .then(res => res[0]);
+  }
+
+  depositEvents() {
+    return this.depositContract
+       .events.Deposit();
   }
 }
