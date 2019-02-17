@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { FaucetModule } from '../faucet/faucet.module';
 import { Web3Module } from '../web3/web3.module';
@@ -20,6 +21,7 @@ import { ParticipateComponent } from './participate.component';
     MatButtonModule,
     MatInputModule,
     MatSnackBarModule,
+    MatStepperModule,
     Web3Module,
   ]
 })

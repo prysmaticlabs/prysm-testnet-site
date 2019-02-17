@@ -1,76 +1,108 @@
-<div>
-  <h2>Step 1 - Get Prysm</h2>
-  <div>
-    The easiest way to get Prysm is to use the docker images.
-    <pre>
+<div class="header">
+  <h1>
+    Want to try Ethereum 2.0?
+  </h1>
+  <p>Great! That's probably why you are here.</p> 
+  <p>
+    Keep in mind: this is a highly experimental test network with no uptime
+    guarentees. 
+  </p>
+  <p>
+     We gladly offer support in our 
+    <a href="https://discord.gg/2PDUuRU" target="_blank">Discord channel</a>, through 
+    <a href="https://github.com/prysmaticlabs/prysm/issues" target="_blank">Github issues</a>, our 
+    <a href="https://gitter.im/prysmaticlabs/prysm" target="_blank">Gitter channel</a>, and 
+    <a href="https://twitter.com/prylabs" target="_blank">Twitter @prylabs.</a>
+  </p>
+
+</div>
+<mat-vertical-stepper linear="true">
+  <mat-step>
+    <ng-template matStepLabel>Step 1 - Get Prysm</ng-template>
+    <p>
+      Prysm is our Ethereum 2.0 client and it comes in two components. 
+    </p>
+  
+    <p>
+      <b>Beacon chain client</b> - Responsible for managing the state of the 
+      beacon chain, validator shuffling, and more.
+    </p>
+    <p>
+      <b>Validator client</b> - Responsible for producing new blocks and 
+      attestations in the beacon chain and shard chains.
+    </p>
+    <div>
+      The easiest way to get Prysm is to use the docker images.
+      <pre>
 docker pull gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}}
 docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
-  </div>
-</div>
+    </div>
+  </mat-step>
 
-
-<div>
-  <h2>Step 2 - Get GöETH</h2>
-  <ng-template [ngIf]="!walletAddress">
-    <mat-card class="web3-card">
-      <mat-card-title>Choose web3 provider</mat-card-title>
-      <mat-card-content>
-        <button mat-raised-button 
-                class="web3-logo"
-                (click)="chooseWeb3Provider(web3Provider.METAMASK)">
-          <img src="/assets/metamask-fox.svg">
+  <mat-step>
+    <ng-template matStepLabel>Step 2 - Get GöETH</ng-template>
+    <ng-template [ngIf]="!walletAddress">
+      <mat-card class="web3-card">
+        <mat-card-title>Choose web3 provider</mat-card-title>
+        <mat-card-content>
+          <button mat-raised-button 
+                  class="web3-logo"
+                  (click)="chooseWeb3Provider(web3Provider.METAMASK)">
+            <img src="/assets/metamask-fox.svg">
+          </button>
+        
+          <button mat-raised-button 
+                  class="web3-logo" 
+                  (click)="chooseWeb3Provider(web3Provider.PORTIS)">
+            <img src="/assets/portis.svg">
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </ng-template>
+    
+    <div class="step2-wallet" *ngIf="walletAddress">
+      <p>
+        You are {{walletAddress}} and you have {{balance}} GöETH.
+      </p>
+      <p>
+        To deposit as a validator you'll need at least 0.0002 GöETH.
+      </p>
+      <div>
+        <button mat-raised-button (click)="requestFaucetFunds()">
+          Need GöETH?
         </button>
-      
-        <button mat-raised-button 
-                class="web3-logo" 
-                (click)="chooseWeb3Provider(web3Provider.PORTIS)">
-          <img src="/assets/portis.svg">
-        </button>
-      </mat-card-content>
-    </mat-card>
-  </ng-template>
-  
-  <div class="step2-wallet" *ngIf="walletAddress">
-    <div>
-      You are {{walletAddress}} and you have {{balance}} GöETH.
+      </div>
     </div>
-    <div>
-      To deposit as a validator you'll need at least 0.0002 GöETH.
-    </div>
-    <div>
-      <button mat-raised-button (click)="requestFaucetFunds()">
-        Need GöETH?
-      </button>
-    </div>
-  </div>
-</div>
+  </mat-step>
 
-<div> 
-  <h2>Step 3 - Generate a validator public / private key</h2>
-  <div>
+
+  <mat-step> 
+    <ng-template matStepLabel>Step 3 - Generate a validator public / private key</ng-template>
+    <div>
+      <pre>
+docker run -v /tmp/prysm-data:/data \
+   gcr.io/prysmaticlabs/prysm/validator:latest \
+   accounts create --keystore-path=/data --password=changeme</pre>
+     <div>
+       From those results, copy and paste the deposit data below.
+     </div>
+     <mat-form-field class="full-width">
+       <textarea matInput 
+                 placeholder="Your validator deposit data"
+                 cdkTextareaAutosize
+                 #autosize="cdkTextareaAutosize"
+                 cdkAutosizeMinRows="1"
+                 cdkAutosizeMaxRows="4"
+                 [(ngModel)]="depositData"
+                 (change)="updateDepositData(depositData)"></textarea>
+     </mat-form-field>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Step 4 - Start your beacon chain & validator clients</ng-template>
+    <span>You'll need two terminals for this step.</span>
     <pre>
-docker run -v /tmp/prysm-data:/data gcr.io/prysmaticlabs/prysm/validator:latest \
-   accounts create --keystore-path=/data --password=foo</pre>
-   <div>
-     From those results, copy and paste the deposit data below.
-   </div>
-   <mat-form-field class="full-width">
-     <textarea matInput 
-               placeholder="Your validator deposit data"
-               cdkTextareaAutosize
-               #autosize="cdkTextareaAutosize"
-               cdkAutosizeMinRows="1"
-               cdkAutosizeMaxRows="4"
-               [(ngModel)]="depositData"
-               (change)="updateDepositData(depositData)"></textarea>
-   </mat-form-field>
-  </div>
-</div>
-
-<div>
-  <h2>Step 4 - Start your beacon chain & validator clients</h2>
-  <span>You'll need two terminals for this step.</span>
-  <pre>
 docker run -v /tmp/prysm-data:/data -p 4000:4000 \
   gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
   --datadir=/data \
@@ -79,25 +111,27 @@ docker run -v /tmp/prysm-data:/data -p 4000:4000 \
   --deposit-contract={{CONTRACT_ADDRESS}} \
   --demo-config</pre>
 
-  <span>Run the next command in another terminal.</span>
-  <pre>
+    <span>Run the next command in another terminal.</span>
+    <pre>
 docker run -v /tmp/prysm-data:/data --network="host" \
   gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \
   --beacon-rpc-provider=127.0.0.1:4000 \
   --keystore-path=/data \
-  --password=foo</pre>
-</div>
+  --password=changeme</pre>
+  </mat-step>
 
-<div>
-  <h2>Step 5 - Send the deposit</h2>
-  <div>
-    <button mat-raised-button (click)="makeDeposit()">Click me</button>
-  </div>
-</div>
+  <mat-step>
+    <ng-template matStepLabel>Step 5 - Send the deposit</ng-template>
+    <div>
+      <button mat-raised-button (click)="makeDeposit()">Click me</button>
+    </div>
+  </mat-step>
 
-<div>
-  <h2>Step 6 - Wait for your validator assignment</h2>
-  <div>
-    ...
-  </div>
-</div>
+  <mat-step>
+    <ng-template matStepLabel>Step 6 - Wait for your validator assignment</ng-template>
+    <div>
+      ...
+    </div>
+  </mat-step>
+
+</mat-vertical-stepper>
