@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   recaptchaSiteKey: '6LdX85EUAAAAAGeujVRsy8KJzRvYoC-InusmiDZr',
   depositContractAddress: '0x9cbd127973072989d5c69001a6527DF501Dd3c93',
-  apiEndpoint: 'http://api.prylabs.net',
+  apiEndpoint: 'https://api.prylabs.net',
 };
 
 /*
