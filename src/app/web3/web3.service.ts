@@ -1,9 +1,10 @@
 import Web3 from 'web3';
-import {DEPOSIT_CONTRACT_ABI} from './DepositContract';
+import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
+import { environment } from '../../environments/environment';
 
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
-export const DEPOSIT_CONTRACT_ADDRESS = '0x9cbd127973072989d5c69001a6527DF501Dd3c93';
+export const DEPOSIT_CONTRACT_ADDRESS = environment.depositContractAddress; 
 
 export enum Web3Provider {
   PORTIS,

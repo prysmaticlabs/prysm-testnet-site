@@ -37,3 +37,26 @@ nav {
   margin: 2rem;
 }
 
+
+footer {
+  background: $theme-secondary;
+  color: $white;
+  
+  padding: 16px;
+  
+  div.prylabs-foot {
+    align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    flex-direction: column;
+
+    .brand {
+      font-size: 24px;
+      margin-bottom: 8px;
+
+      a {
+        color: $white;
+      }
+    }
+  }
+}
