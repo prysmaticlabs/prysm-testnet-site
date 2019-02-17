@@ -6,7 +6,6 @@ import { environment } from '../../environments/environment';
 import { ProgressService } from '../progress.service';
 import { NoAccessWeb3Service } from '../web3/no-access.service';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { FaucetServiceClient } from '../../proto/FaucetServiceClientPb';
 import { FundingRequest, FundingResponse } from '../../proto/faucet_pb';
 
@@ -77,11 +76,10 @@ export class FaucetDialog {
     });
 
     subject
-    .pipe(map(d => d.toObject()))
     .subscribe(data => {
       console.log('resp', data);
-      const eth = this.web3.web3.utils.fromWei(data.Amount, 'ether');
-      this.snackbar.open(`Funded ${eth} GöETH in TX ${data.Transactionhash}`);
+      const eth = this.web3.web3.utils.fromWei(data.getAmount(), 'ether');
+      this.snackbar.open(`Funded ${eth} GöETH in transaction ${data.getTransactionhash()}`);
       this.progress.stopProgress();
       this.inProgress = false;
       this.dialogRef.close();
