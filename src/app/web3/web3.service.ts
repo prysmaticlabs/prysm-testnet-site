@@ -11,7 +11,7 @@ export enum Web3Provider {
 }
 
 export abstract class Web3Service {
-  constructor(protected readonly web3: Web3) {}
+  constructor(public readonly web3: Web3) {}
 
   /** Throws an error if the provider is on the wrong network. */
   ensureTestnet(): Promise<void> {

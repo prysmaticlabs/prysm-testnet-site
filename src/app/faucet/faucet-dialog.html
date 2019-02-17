@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>
+  Request GöETH
+</h1>
+
+<mat-dialog-content>
+  Need some GöETH? We'll give you a tiny bit.
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button color="primary" 
+          mat-button 
+          (click)="request()"
+          [disabled]="inProgress">
+    Yes please
+  </button>
+  <button mat-button 
+          mat-dialog-close 
+          [disabled]="inProgress">
+    No thanks
+  </button>
+</mat-dialog-actions>
+
+<ngx-invisible-recaptcha #captchaElem
+  [siteKey]="siteKey"
+   badge="bottomright"
+   (success)="handleSuccess($event)"
+   [(ngModel)]="recaptcha"
+   [ngModelOptions]="{ standalone: true }">
+</ngx-invisible-recaptcha> 
+

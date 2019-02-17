@@ -32,7 +32,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
   
   <div *ngIf="walletAddress">
     You are {{walletAddress}} and you have {{balance}} GöETH.
-    <div><a href="#">Need more?</a></div>
+    <div><button mat-raised-button (click)="requestFaucetFunds()">Need more?</button></div>
   </div>
 </div>
 

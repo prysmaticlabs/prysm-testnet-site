@@ -6,6 +6,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { PortisService } from '../web3/portis.service';
 import { MetamaskService } from '../web3/metamask.service';
 import { ProgressService } from '../progress.service';
+import { FaucetService } from '../faucet/faucet.service';
 import { DEPOSIT_CONTRACT_ADDRESS, Web3Service, Web3Provider } from '../web3/web3.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
@@ -32,6 +33,7 @@ export class ParticipateComponent implements OnInit {
     private readonly snackbar: MatSnackBar,
     private readonly storage: LocalStorage,
     private readonly progress: ProgressService,
+    private readonly faucet: FaucetService,
   ) { }
 
   ngOnInit() {
@@ -44,16 +46,10 @@ export class ParticipateComponent implements OnInit {
     // setItem must be subscribed with a no-op or it won't fire the observable.
     this.storage.setItem(DEPOSIT_DATA_STORAGE_KEY, data).subscribe(() => {});
   }
-  
-  private showError(err: Error) {
-    this.snackbar.openFromComponent(SimpleSnackBar, {
-      data: { message: err, action: 'OK' },
-    }); 
-    this.progress.stopProgress();
-  }
 
   async chooseWeb3Provider(provider: Web3Provider) {
     switch(provider) {
+      // Prompt user to change their network to goerli.
       case Web3Provider.METAMASK: this.web3 = this.metamask; break;
       case Web3Provider.PORTIS: this.web3 = this.portis; break;
       default: throw new Error("Unknown provider: " + provider); 
@@ -92,5 +88,18 @@ export class ParticipateComponent implements OnInit {
     } catch (e) {
       this.showError(e);
     }
+  }
+
+  /** Method to prompt funding request from the faucet service. */
+  requestFaucetFunds() {
+    this.faucet.requestFunds(this.walletAddress);
+  }
+
+  /** Snackbar helper to show errors. */
+  private showError(err: Error) {
+    this.snackbar.openFromComponent(SimpleSnackBar, {
+      data: { message: err, action: 'OK' },
+    }); 
+    this.progress.stopProgress();
   }
 }
