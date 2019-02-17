@@ -18,10 +18,10 @@ export class FaucetService {
   ) { }
    
   /** Initiate request for funds */
-  requestFunds(address: string): void {
-    const dialogRef = this.dialog.open(FaucetDialog, {
+  requestFunds(address: string): Promise<void> {
+    return this.dialog.open(FaucetDialog, {
       data: { address },
-    });
+    }).afterClosed().toPromise();
   }
 }
 

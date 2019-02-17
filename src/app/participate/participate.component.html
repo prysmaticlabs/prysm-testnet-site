@@ -30,9 +30,18 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
     </mat-card>
   </ng-template>
   
-  <div *ngIf="walletAddress">
-    You are {{walletAddress}} and you have {{balance}} GöETH.
-    <div><button mat-raised-button (click)="requestFaucetFunds()">Need more?</button></div>
+  <div class="step2-wallet" *ngIf="walletAddress">
+    <div>
+      You are {{walletAddress}} and you have {{balance}} GöETH.
+    </div>
+    <div>
+      To deposit as a validator you'll need at least 0.0002 GöETH.
+    </div>
+    <div>
+      <button mat-raised-button (click)="requestFaucetFunds()">
+        Need GöETH?
+      </button>
+    </div>
   </div>
 </div>
 
@@ -82,7 +91,6 @@ docker run -v /tmp/prysm-data:/data --network="host" \
 <div>
   <h2>Step 5 - Send the deposit</h2>
   <div>
-    ...
     <button mat-raised-button (click)="makeDeposit()">Click me</button>
   </div>
 </div>

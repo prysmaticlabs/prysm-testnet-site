@@ -61,9 +61,7 @@ export class ParticipateComponent implements OnInit {
       return this.showError(e);
     }
    
-    const accounts = await this.web3.queryAccounts();
-    this.walletAddress = accounts[0];
-    this.balance = await this.web3.ethBalanceOf(this.walletAddress);
+    await this.updateBalance();
   }
 
   async makeDeposit() {
@@ -92,7 +90,14 @@ export class ParticipateComponent implements OnInit {
 
   /** Method to prompt funding request from the faucet service. */
   requestFaucetFunds() {
-    this.faucet.requestFunds(this.walletAddress);
+    this.faucet.requestFunds(this.walletAddress)
+      .then(() => this.updateBalance());
+  }
+
+  private async updateBalance() {
+    const accounts = await this.web3.queryAccounts();
+    this.walletAddress = accounts[0];
+    this.balance = await this.web3.ethBalanceOf(this.walletAddress);
   }
 
   /** Snackbar helper to show errors. */
