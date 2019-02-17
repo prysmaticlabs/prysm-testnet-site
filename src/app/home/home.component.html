@@ -1,4 +1,37 @@
 <div class="centered">
   <h1>Prysmatic Labs</h1>
-  <h2>Ethereum 2.0 - Phase 0 test network</h2>
+  <h2>Ethereum 2.0 - Phase 0 Test Network</h2>
+  <div>
+    <img src="assets/prysm.svg">
+  </div>
+
+</div>
+
+<div>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</div>
+
+<div class="tables">
+
+  <div>
+    <h3>What this is</h3>
+    
+    <mat-list>
+      <mat-list-item *ngFor="let prop of testnetProperties">
+        <mat-icon mat-list-icon>check</mat-icon>
+        {{prop}}
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <div>
+    <h3>What this isn't</h3>
+  
+    <mat-list>
+      <mat-list-item *ngFor="let prop of notTestnetProperties">
+        <mat-icon mat-list-icon>clear</mat-icon>
+        {{prop}}
+      </mat-list-item>
+    </mat-list>
+  </div>
 </div>

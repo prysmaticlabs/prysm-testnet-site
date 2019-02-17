@@ -8,6 +8,6 @@ import { Web3Service } from './web3.service';
 })
 export class NoAccessWeb3Service extends Web3Service {
   constructor() { 
-    super(new Web3('wss://goerli.prylabs.net/websocket'));
+    super(new Web3('https://goerli.prylabs.net'));
   }
 }

@@ -1,3 +1,21 @@
 div.centered {
   text-align:center;  
+
+  div img {
+    height: 175px;
+
+    margin-bottom: 12px;
+  }
+}
+
+div.tables {
+  display: flex;
+
+  h3 {
+    text-align: center;
+  }
+
+  div {
+    flex: 1;
+  }
 }

@@ -11,14 +11,21 @@ nav {
     background: $theme-secondary;
     color: $white;
   
+    span.brand {
+      margin-right: 8px;
+    }
+
+    a.mat-button {
+      text-decoration: none;
+      padding: 0px 6px;
+      min-width: 40px;
+    }
+
     .flex-spacer {
       flex: 1 1 auto;
     }
   
-    a {
-      text-decoration: none;
-      padding: 0px 6px;
-    }
+
     .small-text {
       font-size: 12px;
     }

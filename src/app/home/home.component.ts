@@ -6,6 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  readonly testnetProperties = [
+    'Prysm only',
+    'Publically accessible',
+  ];
+
+  readonly notTestnetProperties = [
+    'Multi-client',
+    'Real ETH',
+  ];
 
   constructor() { }
 
