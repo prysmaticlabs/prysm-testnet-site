@@ -4167,6 +4167,11 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
+google-protobuf@^3.7.0-rc.2:
+  version "3.7.0-rc.2"
+  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.7.0-rc.2.tgz#a65e9216825065099c4ff243eee9e16e764cc2c9"
+  integrity sha512-mHl4c23RGm7PakQ7OODtWa0H3tpm78we9JE23GkcrTL8rbD/7jpX6p5977quPdr9bLa0yJSst4tDDyXl8wwW3Q==
+
 got@^7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/got/-/got-7.1.0.tgz#05450fd84094e6bbea56f451a43a9c289166385a"
@@ -4196,6 +4201,11 @@ graceful-fs@^4.1.10, graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
   integrity sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=
+
+grpc-web@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/grpc-web/-/grpc-web-1.0.3.tgz#494949abef6bc877c5b6bd4291773e47ac2a44cc"
+  integrity sha512-C1mk+55YgPAmU4OK36Fm+nZoo62KTmjSF4/aUHT/yfpKFKTR6r/O8aavyRWaXUT83EcsoZoQaWYWY/2hrOSRJg==
 
 handle-thing@^2.0.0:
   version "2.0.0"

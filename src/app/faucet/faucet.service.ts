@@ -1,12 +1,14 @@
 import { Component, Injectable, Inject, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SimpleSnackBar, MatSnackBar } from '@angular/material/snack-bar';
 import { ReCaptchaV3Service, InvisibleReCaptchaComponent } from 'ngx-captcha';
 import { environment } from '../../environments/environment';
 import { ProgressService } from '../progress.service';
 import { NoAccessWeb3Service } from '../web3/no-access.service';
-import { of as  observableOf } from 'rxjs';
+import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FaucetServiceClient } from '../../proto/FaucetServiceClientPb';
+import { FundingRequest, FundingResponse } from '../../proto/faucet_pb';
 
 /** Faucet service to initiate a funding request via dialog/modal. */
 @Injectable({
@@ -31,6 +33,10 @@ export class FaucetService {
   templateUrl: 'faucet-dialog.html',
 })
 export class FaucetDialog {
+  private readonly client = new FaucetServiceClient(
+    environment.apiEndpoint, 
+    null /*credentials*/, 
+    null/*options*/);
   inProgress = false;
   readonly siteKey = environment.recaptchaSiteKey;
   @ViewChild('captchaElem') captchaElem: InvisibleReCaptchaComponent;
@@ -40,7 +46,6 @@ export class FaucetDialog {
     private readonly dialogRef: MatDialogRef<FaucetDialog>,
     private readonly reCaptcha: ReCaptchaV3Service,
     private readonly progress: ProgressService,
-    private readonly http: HttpClient,
     private readonly snackbar: MatSnackBar,
     private readonly web3: NoAccessWeb3Service,
     @Inject(MAT_DIALOG_DATA) readonly data: { address: string },
@@ -53,18 +58,30 @@ export class FaucetDialog {
   handleSuccess(captcha: string): void {
     console.log('captcha success', captcha);
 
-    // TODO: Do the request
-    //this.http.post(url, {address, captcha})
-    //.catch(this.showError)
-    observableOf({
-      success: true,
-      amount: "100000000000000000",
-      transactionHash: 'fake-0xcdd8e1f7108af6b9e08bb27a27deb34d796ec9d0b0d225ea557265a5a963e03b',
-    })
-    .subscribe((data: {amount: string, transactionHash: string}) => {
+    // Properties must be set via setters.
+    // See: https://github.com/grpc/grpc-web/issues/445
+    const request = new FundingRequest();
+    request.setWalletAddress(this.data.address);
+    request.setRecaptchaSiteKey(this.siteKey);
+    request.setRecaptchaResponse(captcha);
+
+    const subject = new Subject<FundingResponse>();
+    this.client.requestFunds(request, null, (err, resp) => {
+      if (err) {
+        return this.showError(new Error(err.message)); 
+      }
+      if (resp.getError()) {
+        return this.showError(new Error(resp.getError()));
+      }
+      return subject.next(resp);
+    });
+
+    subject
+    .pipe(map(d => d.toObject()))
+    .subscribe(data => {
       console.log('resp', data);
-      const eth = this.web3.web3.utils.fromWei(data.amount, 'ether');
-      this.snackbar.open(`Funded ${eth} GöETH in TX ${data.transactionHash}`);
+      const eth = this.web3.web3.utils.fromWei(data.Amount, 'ether');
+      this.snackbar.open(`Funded ${eth} GöETH in TX ${data.Transactionhash}`);
       this.progress.stopProgress();
       this.inProgress = false;
       this.dialogRef.close();

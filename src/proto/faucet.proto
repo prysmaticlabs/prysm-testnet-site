@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package faucet;
+
+service FaucetService {
+  rpc RequestFunds(FundingRequest) returns (FundingResponse) {}
+}
+
+message FundingRequest {
+  string wallet_address = 1;
+  string recaptcha_site_key = 2;
+  string recaptcha_response = 3;
+}
+
+message FundingResponse {
+  string error = 1;
+  string amount = 2;
+  string transactionHash = 3;
+}

@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { FaucetDialog, FaucetService } from './faucet.service';
@@ -16,7 +15,6 @@ import { FaucetDialog, FaucetService } from './faucet.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     MatButtonModule,
     MatDialogModule,
     MatSnackBarModule,
