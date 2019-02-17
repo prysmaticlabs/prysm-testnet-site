@@ -31,9 +31,10 @@ export class FaucetService {
   templateUrl: 'faucet-dialog.html',
 })
 export class FaucetDialog {
-  private inProgress = false;
+  inProgress = false;
   readonly siteKey = environment.recaptchaSiteKey;
   @ViewChild('captchaElem') captchaElem: InvisibleReCaptchaComponent;
+  recaptcha: any;
 
   constructor(
     private readonly dialogRef: MatDialogRef<FaucetDialog>,
