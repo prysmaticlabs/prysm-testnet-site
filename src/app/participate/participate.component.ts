@@ -1,5 +1,6 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar, SimpleSnackBar } from '@angular/material/snack-bar';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { MatStepper } from '@angular/material/stepper';
@@ -25,7 +26,8 @@ export class ParticipateComponent implements OnInit {
   walletAddress: string;
   balance: string;
   depositData: string;
-  deposited  = false;
+  depositDataFormGroup: FormGroup;
+  deposited: boolean|'pending'  = false;
   readonly CONTRACT_ADDRESS = DEPOSIT_CONTRACT_ADDRESS;
   readonly DOCKER_TAG = "latest";
 
@@ -40,9 +42,13 @@ export class ParticipateComponent implements OnInit {
     private readonly progress: ProgressService,
     private readonly faucet: FaucetService,
     private readonly cdr: ChangeDetectorRef,
+    private readonly formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
+    this.depositDataFormGroup = this.formBuilder.group({
+      depositDataCtrl: [''],
+    });
     this.storage.getItem(DEPOSIT_DATA_STORAGE_KEY).subscribe((data: string) => {
       this.depositData = data;
     });
@@ -77,8 +83,9 @@ export class ParticipateComponent implements OnInit {
       if (!this.web3) {
         throw new Error('choose a web3 provider to make a deposit');
       }
+      this.deposited = 'pending';
       this.progress.startProgress();
-      this.web3.depositContract.methods.deposit(this.depositData).send({
+      this.web3.depositContract.methods.deposit(this.depositData.trim()).send({
         value: "3200000000000", 
         from: this.walletAddress,
         gasLimit: 400000,

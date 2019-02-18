@@ -1,7 +1,11 @@
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import 'variables';
 @import './animations.scss';
 @import '~@angular/material/theming';
+
+@include mat-core();
+
+// Create theme.
+@include angular-material-theme($prylabs-theme);
 
 // Create a config with the default typography levels.
 $config: mat-typography-config();

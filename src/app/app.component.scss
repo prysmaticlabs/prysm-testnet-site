@@ -1,5 +1,7 @@
 @import '../styles/variables';
 
+$header-footer-background: mat-color($theme-primary);
+
 :host {
   display: flex;
   flex-direction: column;
@@ -14,7 +16,7 @@ nav {
   z-index: 2;
 
   & > mat-toolbar {
-    background: $theme-secondary;
+    background: $header-footer-background;
     color: $white;
   
     span.brand {
@@ -58,7 +60,7 @@ nav {
 
 
 footer {
-  background: $theme-secondary;
+  background: $header-footer-background; 
   color: $white;
   flex-shrink: 0;
   

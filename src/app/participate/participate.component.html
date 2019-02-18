@@ -82,27 +82,34 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
   </mat-step>
 
 
-  <mat-step [completed]="!!depositData && !!walletAddress"> 
-    <ng-template matStepLabel>Generate a validator public / private key</ng-template>
-    <div>
-      <pre>
-docker run -v /tmp/prysm-data:/data \
-   gcr.io/prysmaticlabs/prysm/validator:latest \
-   accounts create --keystore-path=/data --password=changeme</pre>
-     <div>
-       From those results, copy and paste the deposit data below.
-     </div>
-     <mat-form-field class="full-width">
-       <textarea matInput 
-                 placeholder="Your validator deposit data"
-                 cdkTextareaAutosize
-                 #autosize="cdkTextareaAutosize"
-                 cdkAutosizeMinRows="1"
-                 cdkAutosizeMaxRows="4"
-                 [(ngModel)]="depositData"
-                 (change)="updateDepositData(depositData)"></textarea>
-     </mat-form-field>
-    </div>
+  <mat-step [stepControl]="depositDataFormGroup">
+    <form [formGroup]="depositDataFormGroup">
+      <ng-template matStepLabel>Generate a validator public / private key</ng-template>
+      <div>
+        <pre>
+dock  er run -v /tmp/prysm-data:/data \
+   g  cr.io/prysmaticlabs/prysm/validator:latest \
+   a  ccounts create --keystore-path=/data --password=changeme</pre>
+       <div>
+         From those results, copy and paste the deposit data below.
+       </div>
+       <mat-form-field class="full-width">
+         <textarea matInput 
+                   placeholder="Your validator deposit data"
+                   cdkTextareaAutosize
+                   #autosize="cdkTextareaAutosize"
+                   formControlName="depositDataCtrl"
+                   depositDataValidation
+                   cdkAutosizeMinRows="1"
+                   cdkAutosizeMaxRows="4"
+                   [(ngModel)]="depositData"
+                   (change)="updateDepositData(depositData)"></textarea>
+         <mat-error>
+           Deposit data must be in the form of 0x123456789abcdef
+         </mat-error>
+       </mat-form-field>
+      </div>
+    </form>
   </mat-step>
 
   <mat-step>
@@ -129,7 +136,15 @@ docker run -v /tmp/prysm-data:/data --network="host" \
   <mat-step [completed]="deposited">
     <ng-template matStepLabel>Send a validator deposit</ng-template>
     <div>
-      <button mat-raised-button (click)="makeDeposit()">Click me</button>
+      <p>
+        Now that you have everything running, make the validator deposit into
+        the deposit contract. This transaction sends your deposit data and the
+        deposit GöETH to initiate a new validator into the system.
+      </p>
+      <button mat-raised-button 
+              color="accent"
+              (click)="makeDeposit()"
+              [disabled]="deposited==='pending'">Make deposit</button>
     </div>
   </mat-step>
 
