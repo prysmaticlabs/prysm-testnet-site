@@ -46,7 +46,13 @@ nav {
   .content {
     padding-top: 32px;
     margin: 2rem;
-    max-width: 920px;
+
+    @media (min-width: 800px) {
+      max-width: 920px;
+    }
+    @media (max-width: 800px) {
+      max-width: 80%;
+    }
   }
 }
 
