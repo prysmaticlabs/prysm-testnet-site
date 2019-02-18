@@ -133,7 +133,7 @@ docker run -v /tmp/prysm-data:/data --network="host" \
   --password=changeme</pre>
   </mat-step>
 
-  <mat-step [completed]="deposited">
+  <mat-step [completed]="deposited === true">
     <ng-template matStepLabel>Send a validator deposit</ng-template>
     <div>
       <p>
