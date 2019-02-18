@@ -1,9 +1,13 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import 'variables';
 @import './animations.scss';
+@import '~@angular/material/theming';
+
+// Create a config with the default typography levels.
+$config: mat-typography-config();
 
 html, body {
-  font-family: $modern-font-stack;
+  font-family: mat-font-family($config);
   padding: 0;
   margin: 0;
   height: 100%;
