@@ -22,6 +22,7 @@ export class FaucetService {
   requestFunds(address: string): Promise<void> {
     return this.dialog.open(FaucetDialog, {
       data: { address },
+      width: '450px',
     }).afterClosed().toPromise();
   }
 }
@@ -30,6 +31,7 @@ export class FaucetService {
 @Component({
   selector: 'faucet-dialog',
   templateUrl: 'faucet-dialog.html',
+  styleUrls: ['./faucet-dialog.scss']
 })
 export class FaucetDialog {
   private readonly client = new FaucetServiceClient(

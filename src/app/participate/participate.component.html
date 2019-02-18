@@ -44,9 +44,13 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
   </mat-step>
 
   <mat-step [completed]="walletAddress">
-    <ng-template matStepLabel>Get GöETH</ng-template>
+    <ng-template matStepLabel>Get GöETH — Test ether</ng-template>
+    <p>
+      This test network leverages the Goerli network to simulate validator
+      deposits on a proof-of-work chain.
+    </p>
     <ng-template [ngIf]="!walletAddress">
-      <p>Choose a web3 provider</p>
+      <p>First, choose a web3 provider.</p>
       <span class="providers">
         <button mat-raised-button 
                 class="web3-logo"
