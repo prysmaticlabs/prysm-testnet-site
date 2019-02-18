@@ -11,7 +11,7 @@ import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn, ValidationError
 })
 export class DepositDataValidatorDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors|null {
-    if (/^0x[0-9a-f]*$/.test((control.value || '').trim())) {
+    if (/^0x[0-9a-f]+$/.test((control.value || '').trim())) {
       return null;
     }
     return { 'invalidDepositData': {value: control.value}};
