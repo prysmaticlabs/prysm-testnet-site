@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +20,7 @@ import { ParticipateComponent } from './participate.component';
     FormsModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
     MatInputModule,
     MatSnackBarModule,
     MatStepperModule,
