@@ -87,9 +87,9 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
       <ng-template matStepLabel>Generate a validator public / private key</ng-template>
       <div>
         <pre>
-dock  er run -v /tmp/prysm-data:/data \
-   g  cr.io/prysmaticlabs/prysm/validator:latest \
-   a  ccounts create --keystore-path=/data --password=changeme</pre>
+docker run -v /tmp/prysm-data:/data \
+   gcr.io/prysmaticlabs/prysm/validator:latest \
+   accounts create --keystore-path=/data --password=changeme</pre>
        <div>
          From those results, copy and paste the deposit data below.
        </div>
