@@ -46,22 +46,20 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
   <mat-step [completed]="walletAddress">
     <ng-template matStepLabel>Get GöETH</ng-template>
     <ng-template [ngIf]="!walletAddress">
-      <mat-card class="web3-card">
-        <mat-card-title>Choose web3 provider</mat-card-title>
-        <mat-card-content>
-          <button mat-raised-button 
-                  class="web3-logo"
-                  (click)="chooseWeb3Provider(web3Provider.METAMASK)">
-            <img src="/assets/metamask-fox.svg">
-          </button>
-        
-          <button mat-raised-button 
-                  class="web3-logo" 
-                  (click)="chooseWeb3Provider(web3Provider.PORTIS)">
-            <img src="/assets/portis.svg">
-          </button>
-        </mat-card-content>
-      </mat-card>
+      <p>Choose a web3 provider</p>
+      <span class="providers">
+        <button mat-raised-button 
+                class="web3-logo"
+                (click)="chooseWeb3Provider(web3Provider.METAMASK)">
+          <img src="/assets/metamask-fox.svg">
+        </button>
+       
+        <button mat-raised-button 
+                class="web3-logo" 
+                (click)="chooseWeb3Provider(web3Provider.PORTIS)">
+          <img src="/assets/portis.svg">
+        </button>
+      </span>
     </ng-template>
     
     <div class="step2-wallet" *ngIf="walletAddress">

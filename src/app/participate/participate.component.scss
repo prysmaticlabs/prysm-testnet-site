@@ -1,18 +1,14 @@
 @import '../../styles/variables';
 
-.web3-card {
-  max-width: 300px;
-
-  mat-card-content button {
+.providers {
+  button {
     margin: 6px;
   }
-
   .web3-logo {
     height: 48px + 16px;
-  
     img {
       height: 48px;
-    }
+    } 
   }
 }
 
