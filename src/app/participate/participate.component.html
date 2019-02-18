@@ -22,7 +22,7 @@
   </ng-template>
 
   <mat-step>
-    <ng-template matStepLabel>Step 1 - Get Prysm</ng-template>
+    <ng-template matStepLabel>Get Prysm</ng-template>
     <p>
       Prysm is our Ethereum 2.0 client and it comes in two components. 
     </p>
@@ -44,7 +44,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
   </mat-step>
 
   <mat-step [completed]="walletAddress">
-    <ng-template matStepLabel>Step 2 - Get GöETH</ng-template>
+    <ng-template matStepLabel>Get GöETH</ng-template>
     <ng-template [ngIf]="!walletAddress">
       <mat-card class="web3-card">
         <mat-card-title>Choose web3 provider</mat-card-title>
@@ -81,7 +81,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
 
 
   <mat-step [completed]="!!depositData && !!walletAddress"> 
-    <ng-template matStepLabel>Step 3 - Generate a validator public / private key</ng-template>
+    <ng-template matStepLabel>Generate a validator public / private key</ng-template>
     <div>
       <pre>
 docker run -v /tmp/prysm-data:/data \
@@ -104,7 +104,7 @@ docker run -v /tmp/prysm-data:/data \
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Step 4 - Start your beacon chain & validator clients</ng-template>
+    <ng-template matStepLabel>Start your beacon chain & validator clients</ng-template>
     <span>You'll need two terminals for this step.</span>
     <pre>
 docker run -v /tmp/prysm-data:/data -p 4000:4000 \
@@ -125,14 +125,14 @@ docker run -v /tmp/prysm-data:/data --network="host" \
   </mat-step>
 
   <mat-step [completed]="deposited">
-    <ng-template matStepLabel>Step 5 - Send the deposit</ng-template>
+    <ng-template matStepLabel>Send a validator deposit</ng-template>
     <div>
       <button mat-raised-button (click)="makeDeposit()">Click me</button>
     </div>
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Step 6 - Wait for your validator assignment</ng-template>
+    <ng-template matStepLabel>Wait for your validator assignment</ng-template>
     <div>
       ...
     </div>

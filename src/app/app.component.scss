@@ -1,5 +1,11 @@
 @import '../styles/variables';
 
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
 nav {
   position: fixed;
   top: 0;
@@ -25,7 +31,6 @@ nav {
       flex: 1 1 auto;
     }
   
-
     .small-text {
       font-size: 12px;
     }
@@ -35,12 +40,14 @@ nav {
 .content {
 	padding-top: 32px;
   margin: 2rem;
+  flex: 1 0 auto;
 }
 
 
 footer {
   background: $theme-secondary;
   color: $white;
+  flex-shrink: 0;
   
   padding: 16px;
   
