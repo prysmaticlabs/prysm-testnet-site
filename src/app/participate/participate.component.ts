@@ -1,7 +1,10 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar, SimpleSnackBar } from '@angular/material/snack-bar';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { MatStepper } from '@angular/material/stepper';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { PortisService } from '../web3/portis.service';
 import { MetamaskService } from '../web3/metamask.service';
@@ -22,10 +25,12 @@ export class ParticipateComponent implements OnInit {
   walletAddress: string;
   balance: string;
   depositData: string;
+  deposited  = false;
   readonly CONTRACT_ADDRESS = DEPOSIT_CONTRACT_ADDRESS;
   readonly DOCKER_TAG = "latest";
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  @ViewChild('stepper') stepper: MatStepper;
 
   constructor(
     private readonly portis: PortisService,
@@ -34,6 +39,7 @@ export class ParticipateComponent implements OnInit {
     private readonly storage: LocalStorage,
     private readonly progress: ProgressService,
     private readonly faucet: FaucetService,
+    private readonly cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -65,27 +71,36 @@ export class ParticipateComponent implements OnInit {
   }
 
   async makeDeposit() {
-    const snackbarConfig = {
-        duration: 10000, //ms
-      };
+    const snackbarConfig = {duration: 10000 /*ms*/};
+    const confirmation$ = new Subject();
     try {
       if (!this.web3) {
         throw new Error('choose a web3 provider to make a deposit');
       }
       this.progress.startProgress();
       this.web3.depositContract.methods.deposit(this.depositData).send({
-        value: await this.web3.maxDepositValue(), 
+        value: "3200000000000", 
         from: this.walletAddress,
         gasLimit: 400000,
+      }).on('confirmation', () => {
+        confirmation$.next();
       }).on('transactionHash', () => {
         this.snackbar.open('Transaction received. Pending confirmation...', '', snackbarConfig);
-      }).on('receipt', () => {
-        this.snackbar.open('Transaction confirmed. You are deposited!', 'OK', snackbarConfig);
-        this.progress.stopProgress();
       }).on('error', this.showError);
     } catch (e) {
       this.showError(e);
     }
+
+    confirmation$
+      .pipe(first())
+      .subscribe(() => {
+        this.snackbar.open('Transaction confirmed. You are deposited!', 'OK', snackbarConfig);
+        this.progress.stopProgress();
+        this.deposited = true;
+        // Force change detection before advancing the stepper. 
+        this.cdr.detectChanges(); 
+        this.stepper.next();
+      });
   }
 
   /** Method to prompt funding request from the faucet service. */

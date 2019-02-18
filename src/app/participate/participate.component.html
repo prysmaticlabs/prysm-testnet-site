@@ -16,7 +16,7 @@
   </p>
 
 </div>
-<mat-vertical-stepper linear="true">
+<mat-vertical-stepper linear="true" #stepper>
   <ng-template matStepperIcon="edit">
     <mat-icon>check</mat-icon>
   </ng-template>
@@ -43,7 +43,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
     </div>
   </mat-step>
 
-  <mat-step>
+  <mat-step [completed]="walletAddress">
     <ng-template matStepLabel>Step 2 - Get GöETH</ng-template>
     <ng-template [ngIf]="!walletAddress">
       <mat-card class="web3-card">
@@ -80,7 +80,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
   </mat-step>
 
 
-  <mat-step> 
+  <mat-step [completed]="!!depositData && !!walletAddress"> 
     <ng-template matStepLabel>Step 3 - Generate a validator public / private key</ng-template>
     <div>
       <pre>
@@ -124,7 +124,7 @@ docker run -v /tmp/prysm-data:/data --network="host" \
   --password=changeme</pre>
   </mat-step>
 
-  <mat-step>
+  <mat-step [completed]="deposited">
     <ng-template matStepLabel>Step 5 - Send the deposit</ng-template>
     <div>
       <button mat-raised-button (click)="makeDeposit()">Click me</button>
