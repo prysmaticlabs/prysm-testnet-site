@@ -37,10 +37,17 @@ nav {
   }
 }
 
-.content {
-	padding-top: 32px;
-  margin: 2rem;
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   flex: 1 0 auto;
+
+  .content {
+    padding-top: 32px;
+    margin: 2rem;
+    max-width: 920px;
+  }
 }
 
 

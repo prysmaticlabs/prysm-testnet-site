@@ -12,8 +12,10 @@
   <mat-progress-bar *ngIf="inProgress" mode="indeterminate"></mat-progress-bar>
 </nav>
 
-<div class="content">
-  <router-outlet></router-outlet>
+<div class="content-wrapper">
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
 
 <footer>

@@ -1,3 +1,4 @@
+# docker build -t gcr.io/prysmaticlabs/prysm-testnet-site:latest .
 
 ### STAGE 1: Build ###
 
