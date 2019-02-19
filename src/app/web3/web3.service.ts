@@ -5,11 +5,16 @@ import { environment } from '../../environments/environment';
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
 export const DEPOSIT_CONTRACT_ADDRESS = environment.depositContractAddress; 
+export const DEPOSIT_AMOUNT = environment.depositAmount;
 
 export enum Web3Provider {
   PORTIS,
   METAMASK,
 }
+
+const w = new Web3('noop');
+export const toWei = w.utils.toWei;
+export const fromWei = w.utils.fromWei;
 
 export abstract class Web3Service {
   constructor(public readonly web3: Web3) {}

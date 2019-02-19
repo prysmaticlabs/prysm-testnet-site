@@ -43,7 +43,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
     </div>
   </mat-step>
 
-  <mat-step [completed]="walletAddress">
+  <mat-step [completed]="walletAddress && balance > MIN_BALANCE">
     <ng-template matStepLabel>Get GöETH — Test ether</ng-template>
     <p>
       This test network leverages the Goerli network to simulate validator
@@ -71,7 +71,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
         You are {{walletAddress}} and you have {{balance}} GöETH.
       </p>
       <p>
-        To deposit as a validator you'll need at least 0.0002 GöETH.
+        To deposit as a validator you'll need at least {{MIN_BALANCE_IN_ETH}} GöETH.
       </p>
       <div>
         <button mat-raised-button (click)="requestFaucetFunds()">
