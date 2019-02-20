@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar, SimpleSnackBar } from '@angular/material/snack-bar';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { MatStepper } from '@angular/material/stepper';
-import { Subject } from 'rxjs';
+import { Observable, Subject, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { PortisService } from '../web3/portis.service';
@@ -25,6 +25,7 @@ export class ParticipateComponent implements OnInit {
   web3Provider = Web3Provider;
   walletAddress: string;
   balance: string;
+  balance$?: Observable<unknown>;
   depositData: string;
   depositDataFormGroup: FormGroup;
   deposited: boolean|'pending'  = false;
@@ -56,6 +57,10 @@ export class ParticipateComponent implements OnInit {
     });
   }
 
+  hasMinimumBalance(): boolean {
+    return Number(this.balance) >= Number(this.MIN_BALANCE_IN_ETH);
+  }
+
   updateDepositData(data: string) {
     // setItem must be subscribed with a no-op or it won't fire the observable.
     this.storage.setItem(DEPOSIT_DATA_STORAGE_KEY, data).subscribe(() => {});
@@ -76,6 +81,10 @@ export class ParticipateComponent implements OnInit {
     }
    
     await this.updateBalance();
+    this.balance$ = interval(5000 /*ms*/);
+    this.balance$.subscribe(async () => {
+      await this.updateBalance();
+    });
   }
 
   async makeDeposit() {
@@ -95,14 +104,14 @@ export class ParticipateComponent implements OnInit {
         confirmation$.next();
       }).on('transactionHash', () => {
         this.snackbar.open('Transaction received. Pending confirmation...', '', snackbarConfig);
-      }).on('error', this.showError);
+      }).on('error', (e) => this.showError(e));
     } catch (e) {
       this.showError(e);
     }
 
     confirmation$
       .pipe(first())
-      .subscribe(() => {
+      .subscribe(async () => {
         this.snackbar.open('Transaction confirmed. You are deposited!', 'OK', snackbarConfig);
         this.progress.stopProgress();
         this.deposited = true;
@@ -115,7 +124,9 @@ export class ParticipateComponent implements OnInit {
   /** Method to prompt funding request from the faucet service. */
   requestFaucetFunds() {
     this.faucet.requestFunds(this.walletAddress)
-      .then(() => this.updateBalance());
+      .then((amt: string) => {
+        this.balance = String(Number(this.balance) + Number(amt));
+       });
   }
 
   private async updateBalance() {

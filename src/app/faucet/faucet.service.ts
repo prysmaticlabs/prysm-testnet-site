@@ -18,8 +18,11 @@ export class FaucetService {
     private readonly dialog: MatDialog,
   ) { }
    
-  /** Initiate request for funds */
-  requestFunds(address: string): Promise<void> {
+  /** 
+   * Initiate request for funds. Returns string representation of funded amount
+   * in ETH 
+   */
+  requestFunds(address: string): Promise<string> {
     return this.dialog.open(FaucetDialog, {
       data: { address },
       width: '450px',
@@ -81,10 +84,14 @@ export class FaucetDialog {
     .subscribe(data => {
       console.log('resp', data);
       const eth = this.web3.web3.utils.fromWei(data.getAmount(), 'ether');
-      this.snackbar.open(`Funded ${eth} GöETH in transaction ${data.getTransactionhash()}`);
+      this.snackbar.open(
+        `Funded ${eth} GöETH in transaction ${data.getTransactionhash()}`,
+        ''/*action*/,
+        { duration: 5000 /*ms*/},
+      );
       this.progress.stopProgress();
       this.inProgress = false;
-      this.dialogRef.close();
+      this.dialogRef.close(eth);
     });
   }
 

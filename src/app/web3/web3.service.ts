@@ -15,6 +15,7 @@ export enum Web3Provider {
 const w = new Web3('noop');
 export const toWei = w.utils.toWei;
 export const fromWei = w.utils.fromWei;
+export const toBN = w.utils.toBN;
 
 export abstract class Web3Service {
   constructor(public readonly web3: Web3) {}
