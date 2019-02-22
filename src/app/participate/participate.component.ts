@@ -12,6 +12,7 @@ import { MetamaskService } from '../web3/metamask.service';
 import { ProgressService } from '../progress.service';
 import { FaucetService } from '../faucet/faucet.service';
 import { DEPOSIT_AMOUNT, DEPOSIT_CONTRACT_ADDRESS, fromWei, toWei, Web3Service, Web3Provider } from '../web3/web3.service';
+import { environment } from '../../environments/environment';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 
@@ -29,6 +30,7 @@ export class ParticipateComponent implements OnInit {
   depositData: string;
   depositDataFormGroup: FormGroup;
   deposited: boolean|'pending'  = false;
+  readonly BOOTNODE_ADDRESS = environment.bootnodeAddress;
   readonly MIN_BALANCE_IN_ETH = '0.35';
   readonly MIN_BALANCE = toWei(this.MIN_BALANCE_IN_ETH, 'ether');
   readonly CONTRACT_ADDRESS = DEPOSIT_CONTRACT_ADDRESS;
