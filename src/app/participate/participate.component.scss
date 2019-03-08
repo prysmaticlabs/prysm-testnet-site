@@ -8,7 +8,7 @@
     height: 48px + 16px;
     img {
       height: 48px;
-    } 
+    }
   }
 }
 
@@ -26,4 +26,24 @@ div {
 
 mat-form-field.full-width {
   width: 100%;
+}
+
+::ng-deep .mat-step-header .mat-step-icon {
+  // background-color: #4dc0b5;
+  color: $white-87-opacity;
+  border: none;
+  box-sizing: border-box;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  // background-color: #4dc0b5;
+  border: #000 1.5px solid;
+  color: $black-87-opacity;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+  // background-color: #4dc0b5;
+  border: none;
+  color: $black-87-opacity;
+  background-color: #4dc0b5;
 }
