@@ -1,8 +1,6 @@
-@import "../styles/variables";
+@import '../styles/variables';
 
-$header-background: mat-color($theme-primary);
-$footer-background: #22292f;
-$footer-text-color: #42a5f5;
+$header-footer-background: mat-color($theme-primary);
 
 :host {
   display: flex;
@@ -18,10 +16,9 @@ nav {
   z-index: 2;
 
   & > mat-toolbar {
-    background: $header-background;
-    color: #4a4a4a;
-    border-bottom: 5px solid #eb4a9d;
-
+    background: $header-footer-background;
+    color: $white;
+  
     span.brand {
       margin-right: 8px;
     }
@@ -35,7 +32,7 @@ nav {
     .flex-spacer {
       flex: 1 1 auto;
     }
-
+  
     .small-text {
       font-size: 14px;
     }
@@ -47,7 +44,6 @@ nav {
   align-items: center;
   flex-direction: column;
   flex: 1 0 auto;
-  background-color: $theme-bg;
 
   .content {
     padding-top: 32px;
@@ -62,13 +58,14 @@ nav {
   }
 }
 
+
 footer {
-  background: $footer-background;
+  background: $header-footer-background; 
   color: $white;
   flex-shrink: 0;
-
+  
   padding: 16px;
-
+  
   div.prylabs-foot {
     align-items: center;
     display: flex;
@@ -82,8 +79,7 @@ footer {
     }
 
     a {
-      color: $footer-text-color;
-      text-decoration: none !important;
+      color: $white;
     }
   }
 }
