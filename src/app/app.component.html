@@ -1,13 +1,15 @@
 <nav>
   <mat-toolbar>
-    <span class="brand">Prylabs</span>
+    <span class="brand">Prysmatic Labs</span>
 
     <a routerLink="/" class="mat-button">Home</a>
     <a routerLink="/stats" class="mat-button">Stats</a>
     <a routerLink="/participate" class="mat-button">Participate</a>
 
     <span class="flex-spacer"></span>
-    <span class="small-text" *ngIf="numValidators">{{numValidators}} validators!</span>
+    <span class="small-text" *ngIf="numValidators"
+      >{{ numValidators }} validators!</span
+    >
   </mat-toolbar>
   <mat-progress-bar *ngIf="inProgress" mode="indeterminate"></mat-progress-bar>
 </nav>
@@ -24,9 +26,9 @@
       <a href="https://prysmaticlabs.com">Prysmatic Labs</a>
     </span>
     <span>
-      Deposit contract: 
-      <a href="https://goerli.etherscan.io/address/{{depositContractAddress}}">
-        {{depositContractAddress}}
+      Deposit contract:
+      <a href="https://goerli.etherscan.io/address/{{ depositContractAddress }}">
+        {{ depositContractAddress }}
       </a>
     </span>
   </div>
