@@ -1,0 +1,21 @@
+div.centered {
+  text-align:center;  
+
+  div img {
+    height: 175px;
+    animation: 4s ease-in-out infinite float;
+    margin-bottom: 12px;
+  }
+}
+
+div.tables {
+  display: flex;
+
+  h3 {
+    text-align: center;
+  }
+
+  div {
+    flex: 1;
+  }
+}

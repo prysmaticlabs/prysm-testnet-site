@@ -1,0 +1,15 @@
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .with-icon {
+    display: flex;
+    align-items: center;
+    margin: 8px;
+  
+    mat-icon {
+      padding: 0px 4px;
+    }
+  }
+}

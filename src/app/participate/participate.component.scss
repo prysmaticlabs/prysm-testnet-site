@@ -1,0 +1,29 @@
+@import '../../styles/variables';
+
+.providers {
+  button {
+    margin: 6px;
+  }
+  .web3-logo {
+    height: 48px + 16px;
+    img {
+      height: 48px;
+    } 
+  }
+}
+
+mat-vertical-stepper {
+  margin-left: -18px;
+}
+
+pre {
+  padding: 8px;
+}
+
+div {
+  word-wrap: break-word;
+}
+
+mat-form-field.full-width {
+  width: 100%;
+}
