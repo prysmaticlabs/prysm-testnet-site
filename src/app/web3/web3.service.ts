@@ -1,10 +1,11 @@
 import Web3 from 'web3';
+import { HttpClient } from '@angular/common/http';
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
 import { environment } from '../../environments/environment';
 
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
-export const DEPOSIT_CONTRACT_ADDRESS = environment.depositContractAddress; 
+export const DEPOSIT_CONTRACT_ENDPOINT = 'https://beta.prylabs.net/contract';
 export const DEPOSIT_AMOUNT = environment.depositAmount;
 
 export enum Web3Provider {
@@ -18,7 +19,15 @@ export const fromWei = w.utils.fromWei;
 export const toBN = w.utils.toBN;
 
 export abstract class Web3Service {
-  constructor(public readonly web3: Web3) {}
+  public depositContractAddress: string;
+
+  constructor(public readonly web3: Web3, private http: HttpClient) {
+    // Initialize the deposit contract address by resolving the
+    // latest from the http endpoint
+    this.http.get(DEPOSIT_CONTRACT_ENDPOINT).subscribe((res: any) => {
+      this.depositContractAddress = res;
+    });
+  }
 
   /** Throws an error if the provider is on the wrong network. */
   ensureTestnet(): Promise<void> {
@@ -42,7 +51,7 @@ export abstract class Web3Service {
 
   /** Reference to the deposit contract */
   get depositContract() {
-    return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, DEPOSIT_CONTRACT_ADDRESS);
+    return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, this.depositContractAddress);
   }
 
   /** Number of validators that have deposited so far */

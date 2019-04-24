@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NoAccessWeb3Service } from './web3/no-access.service';
 import { ProgressService } from './progress.service';
-import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +10,14 @@ import { environment } from '../environments/environment';
 export class AppComponent implements OnInit {
   numValidators: number;
   inProgress = false;
-  depositContractAddress = environment.depositContractAddress;
+  depositContractAddress: string;
   
   constructor(
     private readonly web3: NoAccessWeb3Service,
     private readonly progress: ProgressService,
   ) {
     this.progress.progress.subscribe(v => this.inProgress = v);
+    this.depositContractAddress = this.web3.depositContractAddress;
   }
 
   async ngOnInit() {
