@@ -71,6 +71,11 @@ export class ParticipateComponent implements OnInit {
   updateDepositData(data: string) {
     // setItem must be subscribed with a no-op or it won't fire the observable.
     this.storage.setItem(DEPOSIT_DATA_STORAGE_KEY, data).subscribe(() => {});
+    this.stepper.next();
+  }
+
+  onKeyUp(event: any) {
+    this.stepper.next();
   }
 
   async chooseWeb3Provider(provider: Web3Provider) {
