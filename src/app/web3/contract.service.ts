@@ -8,13 +8,14 @@ const DEPOSIT_CONTRACT_ENDPOINT = 'https://beta.prylabs.net/contract';
   providedIn: 'root',
 })
 export class ContractService {
-  public contractSub: Observable<any>;
+  private contractSub: Observable<any>;
 
   constructor(private http: HttpClient) {}
 
-  fetchDepositContract(): Observable<any> {
+  /** Resolves the latest deposit contract address from the testnet */
+  getAddress(): Observable<any> {
     if (!this.contractSub) {
-      this.contractSub = this.http.get(DEPOSIT_CONTRACT_ENDPOINT);
+      this.contractSub = this.http.get(DEPOSIT_CONTRACT_ENDPOINT, {responseType: 'text'});
     }
     return this.contractSub;
   }

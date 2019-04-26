@@ -2,7 +2,6 @@ import { Component, Injectable } from '@angular/core';
 import Web3 from 'web3';
 import { Web3Service } from './web3.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ContractService } from './contract.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +9,9 @@ import { ContractService } from './contract.service';
 export class MetamaskService extends Web3Service {
   private readonly dialog: MatDialog;
 
-  constructor(dialog: MatDialog, contract: ContractService) {
+  constructor(dialog: MatDialog) {
     try {
-      super(new Web3((window as any).ethereum), contract);
+      super(new Web3((window as any).ethereum));
     } catch(e) {
       console.error(e);
     }

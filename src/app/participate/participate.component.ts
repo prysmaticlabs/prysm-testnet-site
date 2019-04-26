@@ -13,6 +13,7 @@ import { ProgressService } from '../progress.service';
 import { FaucetService } from '../faucet/faucet.service';
 import { DEPOSIT_AMOUNT, fromWei, toWei, Web3Service, Web3Provider } from '../web3/web3.service';
 import { environment } from '../../environments/environment';
+import { ContractService } from '../web3/contract.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 
@@ -48,11 +49,13 @@ export class ParticipateComponent implements OnInit {
     private readonly faucet: FaucetService,
     private readonly cdr: ChangeDetectorRef,
     private readonly formBuilder: FormBuilder,
-  ) {
-    this.depositContractAddress = this.web3.depositContractAddress;
-  }
+    private readonly contractService: ContractService,
+  ) {}
 
   ngOnInit() {
+    this.contractService.getAddress().subscribe(async (res: any) => {
+      this.depositContractAddress = res;
+    });
     this.depositDataFormGroup = this.formBuilder.group({
       depositDataCtrl: [''],
     });
@@ -100,7 +103,7 @@ export class ParticipateComponent implements OnInit {
       }
       this.deposited = 'pending';
       this.progress.startProgress();
-      this.web3.depositContract.methods.deposit(this.depositData.trim()).send({
+      this.web3.depositContract(this.depositContractAddress).methods.deposit(this.depositData.trim()).send({
         value: DEPOSIT_AMOUNT,
         from: this.walletAddress,
         gasLimit: 400000,
