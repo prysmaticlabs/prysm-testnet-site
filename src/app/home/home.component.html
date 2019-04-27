@@ -13,30 +13,53 @@
 </div>
 
 <mat-card>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  <mat-card-content>
+    <p>
+    The <b>Sapphire Testnet</b> is a public network created by <a href="https://prysmaticlabs.com" target="_blank">Prysmatic Labs</a> implementing the Ethereum 2.0 Phase 0 protocol for a proof-of-stake blockchain 
+    enabling anyone holding test ETH to join and participate.
+    </p>
+   
+    <p>
+      <i>This is a highly experimental test network</i> with no security guarantees. The network <b>resets every 24 hours</b> for improvements and maintenance as we help make eth2 a reality.
+    </p>
+    <p>
+      Have Questions? Get In Touch!
+    </p>
+    <p>
+      <a class="social discord" mat-button><img src="assets/discord.svg"/></a>
+    </p>
+    <hr/>
+    <h2>Testnet Information</h2>
+    <div class="tables">
+      <div>
+        <h3>What This Is</h3>
+        
+        <mat-list>
+          <mat-list-item *ngFor="let prop of testnetProperties">
+            <mat-icon mat-list-icon color="primary">check</mat-icon>
+            {{prop}}
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div>
+        <h3>What This Isn't</h3>
+      
+        <mat-list>
+          <mat-list-item *ngFor="let prop of notTestnetProperties">
+            <mat-icon mat-list-icon color="warn">clear</mat-icon>
+            {{prop}}
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+    <hr/>
+    <h2>Frequently Asked Questions</h2>
+    <p>What runs the network?</p>
+    <p>
+      Built in Go and fully-open source, the network runs on an eth2 node implementation called <a href="https://github.com/prysmaticlabs/prysm" target="_blank">Prysm</a>. To participate in the network, anyone can send 3.2 ETH from the Goerli ETH1.0 testnet into
+      a validator deposit contract, which will queue in the user as a <b>validator</b> in the system. Validators participate in proposing and voting on blocks in the protocol, and the network applies rewards/penalties based on their behavior.
+    </p> 
+    <p>TODO</p>
+  </mat-card-content>
 </mat-card>
-
-<div class="tables">
-
-  <div>
-    <h3>What this is</h3>
-    
-    <mat-list>
-      <mat-list-item *ngFor="let prop of testnetProperties">
-        <mat-icon mat-list-icon>check</mat-icon>
-        {{prop}}
-      </mat-list-item>
-    </mat-list>
-  </div>
-
-  <div>
-    <h3>What this isn't</h3>
-  
-    <mat-list>
-      <mat-list-item *ngFor="let prop of notTestnetProperties">
-        <mat-icon mat-list-icon>clear</mat-icon>
-        {{prop}}
-      </mat-list-item>
-    </mat-list>
-  </div>
-</div>

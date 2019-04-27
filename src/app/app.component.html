@@ -3,10 +3,10 @@
     <span class="brand">Prysm Eth2 Testnet</span>
 
     <span class="flex-spacer"></span>
-    <a routerLink="/" mat-button><mat-icon svgIcon="home"></mat-icon>Home</a>
-    <a routerLink="/stats" mat-button>Stats</a>
-    <a routerLink="/participate" mat-button>Participate</a>
-    <a target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!</a>
+    <a routerLink="/" mat-button>Home<mat-icon>home</mat-icon></a>
+    <a routerLink="/stats" mat-button>Stats<mat-icon>public</mat-icon></a>
+    <a routerLink="/participate" mat-button>Participate<mat-icon>person_add</mat-icon></a>
+    <a target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!<mat-icon>launch</mat-icon></a>
   </mat-toolbar>
   <mat-progress-bar *ngIf="inProgress" mode="indeterminate"></mat-progress-bar>
 </nav>
@@ -16,3 +16,7 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<footer>
+  Copyright 2019, Prysmatic Labs LLC.
+</footer>

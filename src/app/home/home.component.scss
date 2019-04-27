@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+@import '~@angular/material/theming';
 
 div.centered {
   text-align: center;  
@@ -38,12 +39,44 @@ div.main-actions {
 
 div.tables {
   display: flex;
-
   h3 {
     text-align: center;
   }
-
   div {
     flex: 1;
+  }
+}
+
+.mat-card-content {
+  padding-left: 20px;
+  padding-right: 20px;
+  hr {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  a {
+    text-decoration: none;
+    color: $pink;
+    font-weight: bold;
+  }
+  .social {
+    @include mat-elevation(3);
+    width: 150px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .discord {
+    background-color: #7289DA;
+  }
+  .github {
+    background-color: $black;
+  }
+  p {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 2rem;
   }
 }
