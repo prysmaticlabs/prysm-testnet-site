@@ -36,6 +36,12 @@ div.main-actions {
   }
 }
 
+mat-card {
+  @media (max-width: 800px) {
+    margin-top: 50px;
+  }
+}
+
 div.tables {
   display: flex;
   h3 {
