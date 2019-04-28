@@ -5,7 +5,7 @@
     <span class="flex-spacer"></span>
     <a class="link" routerLink="/" mat-button>Home</a>
     <a routerLink="/participate" mat-button>Participate</a>
-    <a class="link" target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!<mat-icon>launch</mat-icon></a>
+    <a class="link" target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!</a>
   </mat-toolbar>
   <mat-progress-bar *ngIf="inProgress" mode="indeterminate" color="primary"></mat-progress-bar>
 </nav>
