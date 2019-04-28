@@ -127,7 +127,9 @@ docker run -v /tmp/prysm-data:/data -p 4000:4000 \
     <pre>
 docker run -v /tmp/prysm-data:/data --network="host" \
   gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \
-  --beacon-rpc-provider=127.0.0.1:4000
+  --beacon-rpc-provider=127.0.0.1:4000 \
+  --keystore-path=/data \
+  --password=changeme
   </pre>
   </mat-step>
 
