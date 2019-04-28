@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.progress.startProgress();
-    this.contractService.getAddress().subscribe(async (res: any) => {
+    this.contractService.getAddress().subscribe(async (res: string) => {
       this.depositContractAddress = res;
       await this.updateValidatorCount(res);
       this.web3.depositEvents(this.depositContractAddress).on('data', () => this.updateValidatorCount(res));

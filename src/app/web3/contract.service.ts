@@ -13,7 +13,7 @@ export class ContractService {
   constructor(private http: HttpClient) {}
 
   /** Resolves the latest deposit contract address from the testnet */
-  getAddress(): Observable<any> {
+  getAddress(): Observable<string> {
     if (!this.contractSub) {
       this.contractSub = this.http.get(DEPOSIT_CONTRACT_ENDPOINT, {responseType: 'text'});
     }

@@ -53,7 +53,7 @@ export class ParticipateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.contractService.getAddress().subscribe(async (res: any) => {
+    this.contractService.getAddress().subscribe(async (res: string) => {
       this.depositContractAddress = res;
     });
     this.depositDataFormGroup = this.formBuilder.group({

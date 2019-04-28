@@ -3,8 +3,8 @@
     <span class="brand"><a routerLink="/">💎 Prysm Eth2 Testnet</a></span>
 
     <span class="flex-spacer"></span>
-    <a class="link" routerLink="/" mat-button>Home<mat-icon>home</mat-icon></a>
-    <a class="link" routerLink="/stats" mat-button>Stats<mat-icon>public</mat-icon></a>
+    <a class="link" routerLink="/" mat-button>Home</a>
+    <a class="link" routerLink="/stats" mat-button>Stats</a>
     <a class="link" routerLink="/participate" mat-button>Participate<mat-icon>person_add</mat-icon></a>
     <a target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!<mat-icon>launch</mat-icon></a>
   </mat-toolbar>
@@ -21,5 +21,5 @@
   Copyright 2019, <a href="https://prysmaticlabs.com" target="_blank">Prysmatic Labs</a> LLC.
   <br/>
   <br/>
-  Latest Deposit Contract - <a href="https://goerli.etherscan.io/address/{{depositContractAddress}}">{{depositContractAddress}}</a>
+  Latest Deposit Contract - {{depositContractAddress}}
 </footer>
