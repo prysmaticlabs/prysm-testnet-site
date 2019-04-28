@@ -103,7 +103,7 @@ docker run -v /tmp/prysm-data:/data \
                    cdkAutosizeMinRows="1"
                    cdkAutosizeMaxRows="4"
                    [(ngModel)]="depositData"
-                   (keyup)="onKeyUp($event)"
+                   (keyup.enter)="onKeyUp($event)"
                    (change)="updateDepositData(depositData)"></textarea>
          <mat-error>
            Deposit data must be in the form of 0x123456789abcdef

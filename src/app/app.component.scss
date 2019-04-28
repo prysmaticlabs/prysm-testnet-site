@@ -48,7 +48,7 @@ nav {
   flex-direction: column;
   flex: 1 0 auto;
   background-image: url(/assets/testnetbg.svg);
-  background-size: 100% 100%;
+  background-size: 100% 60%;
   background-color: $dark-grey;
 
   .content {
@@ -70,6 +70,14 @@ footer {
   padding-top: 40px;
   padding-bottom: 40px;
   border-top: 6px solid $pink;
-  color: white;
+  color: $white;
   font-size: 16px;
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    color: $white;
+  }
+  a:hover {
+    color: $pink;
+  }
 }
