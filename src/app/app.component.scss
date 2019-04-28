@@ -40,7 +40,9 @@ nav {
     i {
       color: $black;
     }
-    border-bottom: 6px solid $pink;
+  }
+  .loaded {
+    border-bottom: 4px solid $pink;
   }
   @media (max-width: 800px) {
     a {

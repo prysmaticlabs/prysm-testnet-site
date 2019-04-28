@@ -33,8 +33,7 @@ export class ParticipateComponent implements OnInit {
   deposited: boolean|'pending'  = false;
   depositContractAddress: string;
   readonly BOOTNODE_ADDRESS = environment.bootnodeAddress;
-  readonly MIN_BALANCE_IN_ETH = '3.2';
-  readonly MIN_BALANCE = toWei(this.MIN_BALANCE_IN_ETH, 'ether');
+  readonly MIN_BALANCE = '3.21';
   readonly DOCKER_TAG = "latest";
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -65,7 +64,7 @@ export class ParticipateComponent implements OnInit {
   }
 
   hasMinimumBalance(): boolean {
-    return Number(this.balance) >= Number(this.MIN_BALANCE_IN_ETH);
+    return Number(this.balance) >= Number(this.MIN_BALANCE);
   }
 
   updateDepositData(data: string) {
