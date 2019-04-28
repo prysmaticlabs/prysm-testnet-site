@@ -74,7 +74,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
       <p>
         To deposit as a validator you'll need at least {{MIN_BALANCE}} GöETH.
       </p>
-      <div>
+      <div *ngIf="!hasMinimumBalance()">
         <button color="accent" mat-raised-button (click)="requestFaucetFunds()">
           Need GöETH?
         </button>
