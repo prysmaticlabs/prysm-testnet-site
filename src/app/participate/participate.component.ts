@@ -33,7 +33,7 @@ export class ParticipateComponent implements OnInit {
   deposited: boolean|'pending'  = false;
   depositContractAddress: string;
   readonly BOOTNODE_ADDRESS = environment.bootnodeAddress;
-  readonly MIN_BALANCE_IN_ETH = '0.35';
+  readonly MIN_BALANCE_IN_ETH = '3.2';
   readonly MIN_BALANCE = toWei(this.MIN_BALANCE_IN_ETH, 'ether');
   readonly DOCKER_TAG = "latest";
 
