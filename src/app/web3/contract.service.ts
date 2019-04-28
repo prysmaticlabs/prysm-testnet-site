@@ -8,7 +8,7 @@ const DEPOSIT_CONTRACT_ENDPOINT = 'https://beta.prylabs.net/contract';
   providedIn: 'root',
 })
 export class ContractService {
-  private contractSub: Observable<any>;
+  private contractSub: Observable<string>;
 
   constructor(private http: HttpClient) {}
 
