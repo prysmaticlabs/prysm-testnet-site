@@ -6,8 +6,7 @@ export const environment = {
   production: false,
   recaptchaSiteKey: '6LdX85EUAAAAAGeujVRsy8KJzRvYoC-InusmiDZr',
   apiEndpoint: 'https://api.prylabs.net',
-  depositAmount: '320000000000000000', // 0.32 ETH
-  bootnodeAddress: '/ip4/35.224.249.2/tcp/30001/p2p/QmQEe7o6hKJdGdSkJRh7WJzS6xrex5f4w2SPR6oWbJNriw',
+  depositAmount: '3200000000000000000', // 3.2 ETH
 };
 
 /*

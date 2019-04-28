@@ -32,8 +32,7 @@ export class ParticipateComponent implements OnInit {
   depositDataFormGroup: FormGroup;
   deposited: boolean|'pending'  = false;
   depositContractAddress: string;
-  readonly BOOTNODE_ADDRESS = environment.bootnodeAddress;
-  readonly MIN_BALANCE = '3.21';
+  readonly MIN_BALANCE = fromWei(environment.depositAmount, 'ether');
   readonly DOCKER_TAG = "latest";
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;

@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { fromWei } from '../web3/web3.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   readonly testnetProperties = [
     'Prysm Only, Single Client Testnet',
     'Full, Casper Proof of Stake',
@@ -22,9 +24,5 @@ export class HomeComponent implements OnInit {
     'Long Running & Highly Available',
   ];
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  readonly DEPOSIT_AMOUNT = fromWei(environment.depositAmount, 'ether');
 }
