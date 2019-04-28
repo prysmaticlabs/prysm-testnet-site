@@ -6,10 +6,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 import { HomeComponent } from './home.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [HomeComponent],
   imports: [
+    AppRoutingModule,
     CommonModule,
     MatIconModule,
     MatCardModule,

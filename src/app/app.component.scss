@@ -18,6 +18,12 @@ nav {
   z-index: 2;
   border-bottom: 6px solid $pink;
 
+  .brand a {
+    text-decoration: none;
+    color: $black;
+    background-color: transparent;
+  }
+
   a {
     margin-left: 8px;
   }
@@ -47,8 +53,11 @@ nav {
   align-items: center;
   flex-direction: column;
   flex: 1 0 auto;
-  background-image: url(/assets/testnetbg.svg);
-  background-size: 100% 50%;
+  background-image: url(/assets/testnetbg.svg); 
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
   background-color: $dark-grey;
 
   .content {
@@ -61,6 +70,9 @@ nav {
     @media (max-width: 800px) {
       max-width: 80%;
     }
+  }
+  @media (max-width: 800px) {
+    background-image: none;
   }
 }
 
