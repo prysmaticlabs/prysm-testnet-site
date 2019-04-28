@@ -1,15 +1,13 @@
 <nav>
-  <mat-toolbar>
-    <span class="brand">Prylabs</span>
-
-    <a routerLink="/" class="mat-button">Home</a>
-    <a routerLink="/stats" class="mat-button">Stats</a>
-    <a routerLink="/participate" class="mat-button">Participate</a>
+  <mat-toolbar [class.loaded]="!inProgress">
+    <span class="brand"><a routerLink="/">💎 <span class="brand-text">Prysm Eth2 Testnet</span></a></span>
 
     <span class="flex-spacer"></span>
-    <span class="small-text" *ngIf="numValidators">{{numValidators}} validators!</span>
+    <a class="link" routerLink="/" mat-button>Home</a>
+    <a routerLink="/participate" mat-button>Participate</a>
+    <a class="link" target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!</a>
   </mat-toolbar>
-  <mat-progress-bar *ngIf="inProgress" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar *ngIf="inProgress" mode="indeterminate" color="primary"></mat-progress-bar>
 </nav>
 
 <div class="content-wrapper">
@@ -19,15 +17,8 @@
 </div>
 
 <footer>
-  <div class="prylabs-foot">
-    <span class="brand">
-      <a href="https://prysmaticlabs.com">Prysmatic Labs</a>
-    </span>
-    <span>
-      Deposit contract: 
-      <a href="https://goerli.etherscan.io/address/{{depositContractAddress}}">
-        {{depositContractAddress}}
-      </a>
-    </span>
-  </div>
+  Copyright 2019, <a href="https://prysmaticlabs.com" target="_blank">Prysmatic Labs</a> LLC.
+  <br/>
+  <br/>
+  Latest Deposit Contract - {{depositContractAddress}}
 </footer>

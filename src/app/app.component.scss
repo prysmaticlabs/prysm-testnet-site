@@ -1,4 +1,5 @@
 @import '../styles/variables';
+@import '~@angular/material/theming';
 
 $header-footer-background: mat-color($theme-primary);
 
@@ -9,32 +10,45 @@ $header-footer-background: mat-color($theme-primary);
 }
 
 nav {
+  @include mat-elevation(6);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 2;
 
+  .brand a {
+    text-decoration: none;
+    color: $black;
+    background-color: transparent;
+  }
+
+  a {
+    margin-left: 4px;
+  }
+
   & > mat-toolbar {
-    background: $header-footer-background;
-    color: $white;
-  
-    span.brand {
-      margin-right: 8px;
-    }
-
-    a.mat-button {
-      text-decoration: none;
-      padding: 0px 8px;
-      min-width: 40px;
-    }
-
+    background: $white;
+    color: $black;
     .flex-spacer {
       flex: 1 1 auto;
     }
-  
-    .small-text {
-      font-size: 14px;
+    i {
+      color: $black;
+    }
+  }
+  .loaded {
+    border-bottom: 4px solid $pink;
+  }
+  @media (max-width: 800px) {
+    a {
+      margin-left: 4px;
+    }
+    .brand-text {
+      display: none;
+    }
+    .link {
+      display: none;
     }
   }
 }
@@ -44,42 +58,43 @@ nav {
   align-items: center;
   flex-direction: column;
   flex: 1 0 auto;
+  background-image: url(/assets/testnetbg.svg); 
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  background-color: $dark-grey;
 
   .content {
     padding-top: 32px;
-    margin: 2rem;
+    margin: 4rem;
 
     @media (min-width: 800px) {
       max-width: 920px;
     }
     @media (max-width: 800px) {
-      max-width: 80%;
+      width: 100%;
     }
+  }
+  @media (max-width: 800px) {
+    background-image: none;
   }
 }
 
-
 footer {
-  background: $header-footer-background; 
+  background-color: $black;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-top: 6px solid $pink;
   color: $white;
-  flex-shrink: 0;
-  
-  padding: 16px;
-  
-  div.prylabs-foot {
-    align-items: center;
-    display: flex;
-    flex-flow: row wrap;
-    flex-direction: column;
-    font-size: 12px;
-
-    .brand {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    a {
-      color: $white;
-    }
+  font-size: 16px;
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    color: $white;
+  }
+  a:hover {
+    color: $pink;
   }
 }

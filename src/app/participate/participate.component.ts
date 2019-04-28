@@ -11,8 +11,9 @@ import { PortisService } from '../web3/portis.service';
 import { MetamaskService } from '../web3/metamask.service';
 import { ProgressService } from '../progress.service';
 import { FaucetService } from '../faucet/faucet.service';
-import { DEPOSIT_AMOUNT, DEPOSIT_CONTRACT_ADDRESS, fromWei, toWei, Web3Service, Web3Provider } from '../web3/web3.service';
+import { DEPOSIT_AMOUNT, fromWei, toWei, Web3Service, Web3Provider } from '../web3/web3.service';
 import { environment } from '../../environments/environment';
+import { ContractService } from '../web3/contract.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 
@@ -30,10 +31,9 @@ export class ParticipateComponent implements OnInit {
   depositData: string;
   depositDataFormGroup: FormGroup;
   deposited: boolean|'pending'  = false;
+  depositContractAddress: string;
   readonly BOOTNODE_ADDRESS = environment.bootnodeAddress;
-  readonly MIN_BALANCE_IN_ETH = '0.35';
-  readonly MIN_BALANCE = toWei(this.MIN_BALANCE_IN_ETH, 'ether');
-  readonly CONTRACT_ADDRESS = DEPOSIT_CONTRACT_ADDRESS;
+  readonly MIN_BALANCE = '3.21';
   readonly DOCKER_TAG = "latest";
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -41,16 +41,20 @@ export class ParticipateComponent implements OnInit {
 
   constructor(
     private readonly portis: PortisService,
-    private readonly metamask: MetamaskService, 
+    private readonly metamask: MetamaskService,
     private readonly snackbar: MatSnackBar,
     private readonly storage: LocalStorage,
     private readonly progress: ProgressService,
     private readonly faucet: FaucetService,
     private readonly cdr: ChangeDetectorRef,
     private readonly formBuilder: FormBuilder,
-  ) { }
+    private readonly contractService: ContractService,
+  ) {}
 
   ngOnInit() {
+    this.contractService.getAddress().subscribe(async (res: string) => {
+      this.depositContractAddress = res;
+    });
     this.depositDataFormGroup = this.formBuilder.group({
       depositDataCtrl: [''],
     });
@@ -60,7 +64,7 @@ export class ParticipateComponent implements OnInit {
   }
 
   hasMinimumBalance(): boolean {
-    return Number(this.balance) >= Number(this.MIN_BALANCE_IN_ETH);
+    return Number(this.balance) >= Number(this.MIN_BALANCE);
   }
 
   updateDepositData(data: string) {
@@ -68,12 +72,16 @@ export class ParticipateComponent implements OnInit {
     this.storage.setItem(DEPOSIT_DATA_STORAGE_KEY, data).subscribe(() => {});
   }
 
+  onKeyUp() {
+    this.stepper.next();
+  }
+
   async chooseWeb3Provider(provider: Web3Provider) {
     switch(provider) {
       // Prompt user to change their network to goerli.
       case Web3Provider.METAMASK: this.web3 = this.metamask; break;
       case Web3Provider.PORTIS: this.web3 = this.portis; break;
-      default: throw new Error("Unknown provider: " + provider); 
+      default: throw new Error("Unknown provider: " + provider);
     }
 
     try {
@@ -98,7 +106,7 @@ export class ParticipateComponent implements OnInit {
       }
       this.deposited = 'pending';
       this.progress.startProgress();
-      this.web3.depositContract.methods.deposit(this.depositData.trim()).send({
+      this.web3.depositContract(this.depositContractAddress).methods.deposit(this.depositData.trim()).send({
         value: DEPOSIT_AMOUNT,
         from: this.walletAddress,
         gasLimit: 400000,

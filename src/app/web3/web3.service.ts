@@ -1,10 +1,10 @@
 import Web3 from 'web3';
+import { ContractService } from './contract.service';
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
 import { environment } from '../../environments/environment';
 
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
-export const DEPOSIT_CONTRACT_ADDRESS = environment.depositContractAddress; 
 export const DEPOSIT_AMOUNT = environment.depositAmount;
 
 export enum Web3Provider {
@@ -24,7 +24,7 @@ export abstract class Web3Service {
   ensureTestnet(): Promise<void> {
     return this.web3.eth.net.getId().then(id => {
       if (id !== TESTNET_ID) {
-        throw new Error(`Invalid testnet id: ${id}. Restart your web3 provider connected to ${TESTNET_URL} or other Goerli network node.`); 
+        throw new Error(`Invalid testnet id: ${id}. Restart your web3 provider connected to ${TESTNET_URL} or other Goerli network node.`);
       }
     });
   }
@@ -41,13 +41,13 @@ export abstract class Web3Service {
   }
 
   /** Reference to the deposit contract */
-  get depositContract() {
-    return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, DEPOSIT_CONTRACT_ADDRESS);
+  depositContract(address: string) {
+    return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, address);
   }
 
   /** Number of validators that have deposited so far */
-  numValidators(): Promise<number> {
-    return this.depositContract
+  numValidators(address: string): Promise<number> {
+    return this.depositContract(address)
       .methods
       .deposit_count()
       .call()
@@ -55,8 +55,8 @@ export abstract class Web3Service {
   }
 
   /** Max value required to deposit */ 
-  maxDepositValue(): Promise<number> {
-    return this.depositContract
+  maxDepositValue(address: string): Promise<number> {
+    return this.depositContract(address)
       .methods
       .MAX_DEPOSIT_AMOUNT() // Note: this is denoted in gwei!
       .call() 
@@ -64,8 +64,8 @@ export abstract class Web3Service {
   }
 
   /** Deposit event stream */ 
-  depositEvents() {
-    return this.depositContract
+  depositEvents(address: string) {
+    return this.depositContract(address)
        .events.Deposit();
   }
 }

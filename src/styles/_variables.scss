@@ -1,12 +1,15 @@
 @import '~@angular/material/theming';
 
 $white: #fff;
+$black: #000;
 $grey: #eee;
+$pink: #eb4a9b;
+$dark-grey: #21292e;
 
 // Colors available at https://material.io/design/color/
 // Palettes defined here: https://github.com/angular/material2/blob/a6c6a58cc4bccddeb87ad71b33a849527e23c462/src/lib/core/theming/_palette.scss
-$theme-primary: mat-palette($mat-deep-purple);
-$theme-accent: mat-palette($mat-blue);
+$theme-primary: mat-palette($mat-teal);
+$theme-accent: mat-palette($mat-pink);
 $theme-warn: mat-palette($mat-red);
 $prylabs-theme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
 

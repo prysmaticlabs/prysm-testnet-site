@@ -1,4 +1,9 @@
 @import '../../styles/variables';
+@import '~@angular/material/theming';
+
+.participate-wrapper {
+  background-color: $dark-grey;
+}
 
 .providers {
   button {
@@ -14,6 +19,10 @@
 
 mat-vertical-stepper {
   margin-left: -18px;
+  @include mat-elevation(6); 
+  @media (max-width: 800px) {
+    margin-left: 4px;
+  }
 }
 
 pre {
@@ -26,4 +35,20 @@ div {
 
 mat-form-field.full-width {
   width: 100%;
+}
+
+.header {
+  color: $white;
+  padding-bottom: 30px;
+  padding-top: 20px;
+  h1 {
+    font-weight: normal;
+  }
+  a {
+    color: $pink;
+    text-decoration: none;
+  }
+  @media (max-width: 800px) {
+    margin-left: 4px;
+  }
 }

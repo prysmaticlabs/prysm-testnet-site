@@ -7,13 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   readonly testnetProperties = [
-    'Prysm only',
-    'Publically accessible',
+    'Prysm Only, Single Client Testnet',
+    'Full, Casper Proof of Stake',
+    'Goerli Testnet ETH for Staking',
+    'Publicly Accessible',
+    'Short-Lived (24 hrs at a time)',
   ];
 
   readonly notTestnetProperties = [
-    'Multi-client',
+    'Multi-Client Network',
+    'Includes Smart Contract & EVM Functionality',
     'Real ETH',
+    'Highly Optimized',
+    'Long Running & Highly Available',
   ];
 
   constructor() { }
