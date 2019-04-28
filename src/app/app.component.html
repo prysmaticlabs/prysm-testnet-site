@@ -3,9 +3,9 @@
     <span class="brand"><a routerLink="/">💎 Prysm Eth2 Testnet</a></span>
 
     <span class="flex-spacer"></span>
-    <a routerLink="/" mat-button>Home<mat-icon>home</mat-icon></a>
-    <a routerLink="/stats" mat-button>Stats<mat-icon>public</mat-icon></a>
-    <a routerLink="/participate" mat-button>Participate<mat-icon>person_add</mat-icon></a>
+    <a class="link" routerLink="/" mat-button>Home<mat-icon>home</mat-icon></a>
+    <a class="link" routerLink="/stats" mat-button>Stats<mat-icon>public</mat-icon></a>
+    <a class="link" routerLink="/participate" mat-button>Participate<mat-icon>person_add</mat-icon></a>
     <a target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!<mat-icon>launch</mat-icon></a>
   </mat-toolbar>
   <mat-progress-bar *ngIf="inProgress" mode="indeterminate"></mat-progress-bar>

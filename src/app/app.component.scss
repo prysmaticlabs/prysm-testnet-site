@@ -16,7 +16,6 @@ nav {
   left: 0;
   right: 0;
   z-index: 2;
-  border-bottom: 6px solid $pink;
 
   .brand a {
     text-decoration: none;
@@ -44,6 +43,12 @@ nav {
     }
     i {
       color: $black;
+    }
+    border-bottom: 6px solid $pink;
+  }
+  @media (max-width: 800px) {
+    .link {
+      display: none;
     }
   }
 }
