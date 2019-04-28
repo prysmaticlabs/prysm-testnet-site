@@ -27,10 +27,6 @@ nav {
     margin-left: 4px;
   }
 
-  .mat-icon {
-    padding-left: 10px;
-  }
-
   & > mat-toolbar {
     background: $white;
     color: $black;
@@ -52,9 +48,6 @@ nav {
       display: none;
     }
     .link {
-      display: none;
-    }
-    mat-icon {
       display: none;
     }
   }
