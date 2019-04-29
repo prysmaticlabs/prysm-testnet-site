@@ -26,13 +26,7 @@ export abstract class Web3Service {
     // Do not use a real eth provider in server side rendering.
     if (isPlatformServer(platformId)) {
       this.eth = undefined;
-    } else {
-      this.eth.listAccounts().then(accounts => {
-        if (accounts.length > 0 ) {
-          this.signer = this.eth.getSigner(accounts[0]);
-        }
-      });
-    }
+    } 
   }
 
   /** Throws an error if the provider is on the wrong network. */
@@ -46,6 +40,20 @@ export abstract class Web3Service {
         throw new Error(`Invalid testnet id: ${net.chainId}. Restart your web3 provider connected to ${TESTNET_URL} or other Goerli network node.`);
       }
     });
+  }
+
+  /** Throws an error if there is no signer. */
+  ensureSigner(): Promise<void> {
+   if (isPlatformServer(this.platformId)) {
+      return Promise.resolve();
+    }
+
+   return this.eth.listAccounts().then(accounts => {
+     if (accounts.length === 0) {
+       throw new Error("no accounts to sign with");
+     }
+     this.signer = this.eth.getSigner(accounts[0]);
+   });
   }
 
   /** Returns list of accounts associated with the web3 provider */

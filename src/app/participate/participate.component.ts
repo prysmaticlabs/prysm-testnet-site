@@ -104,6 +104,8 @@ export class ParticipateComponent implements OnInit {
       if (!this.web3) {
         throw new Error('choose a web3 provider to make a deposit');
       }
+      await this.web3.ensureSigner();
+
       this.deposited = 'pending';
       this.progress.startProgress();
       this.web3.depositContract(this.depositContractAddress).deposit(this.depositData.trim(), {

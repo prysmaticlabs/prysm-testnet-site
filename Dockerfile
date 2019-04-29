@@ -1,6 +1,6 @@
 # docker build -t gcr.io/prysmaticlabs/prysm-testnet-site:latest .
 
-FROM node:11-alpine
+FROM node:11-alpine as builder 
 
 RUN apk update && apk upgrade && \
     apk add --no-cache git python make g++
@@ -21,4 +21,10 @@ COPY . .
 ## Build the angular app in production mode and store the artifacts in dist folder
 RUN npm run build:ssr
 
-CMD ["npm", "run", "serve:ssr"]
+
+# Copy only the dist dir.
+FROM node:11-alpine
+
+COPY --from=builder /ng-app/dist/ /dist
+
+CMD ["npm", "dist/server"]
