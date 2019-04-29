@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NoAccessService } from './no-access.service';
+import { NoAccessWeb3Service } from './no-access.service';
 
-describe('NoAccessService', () => {
+describe('NoAccessWeb3Service', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: NoAccessService = TestBed.get(NoAccessService);
+    const service: NoAccessWeb3Service = TestBed.get(NoAccessWeb3Service);
     expect(service).toBeTruthy();
   });
 });

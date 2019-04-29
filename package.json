@@ -8,7 +8,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "gen-proto": "protoc  -I=./src/proto ./src/proto/faucet.proto --js_out=import_style=commonjs:./src/proto --grpc-web_out=import_style=typescript,mode=grpcwebtext:./src/proto"
+    "gen-proto": "protoc  -I=./src/proto ./src/proto/faucet.proto --js_out=import_style=commonjs:./src/proto --grpc-web_out=import_style=typescript,mode=grpcwebtext:./src/proto",
+    "compile:server": "webpack --config webpack.server.config.js --progress --colors",
+    "serve:ssr": "node dist/server",
+    "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
+    "build:client-and-server-bundles": "ng build --prod && ng run prysm-testnet-site:server:production"
   },
   "private": true,
   "dependencies": {
@@ -18,19 +22,24 @@
     "@angular/compiler": "7.2.5",
     "@angular/core": "7.2.5",
     "@angular/forms": "7.2.5",
+    "@angular/http": "7.2.5",
     "@angular/material": "7.3.2",
     "@angular/platform-browser": "7.2.5",
     "@angular/platform-browser-dynamic": "7.2.5",
+    "@angular/platform-server": "7.2.5",
     "@angular/router": "7.2.5",
+    "@nguniversal/express-engine": "^7.1.1",
+    "@nguniversal/module-map-ngfactory-loader": "0.0.0",
     "@ngx-pwa/local-storage": "7.4.1",
     "@portis/web3": "2.0.0-beta.11",
     "core-js": "2.6.5",
+    "ethers": "^4.0.27",
+    "express": "^4.15.2",
     "google-protobuf": "3.7.0-rc.2",
     "grpc-web": "1.0.3",
     "ngx-captcha": "6.2.1",
     "rxjs": "6.3.3",
     "tslib": "1.9.3",
-    "web3": "1.0.0-beta.46",
     "websocket": "1.0.28",
     "zone.js": "0.8.29"
   },
@@ -51,8 +60,10 @@
     "karma-jasmine": "1.1.2",
     "karma-jasmine-html-reporter": "0.2.2",
     "protractor": "5.4.2",
+    "ts-loader": "^5.2.0",
     "ts-node": "7.0.1",
     "tslint": "5.11.0",
-    "typescript": "3.2.4"
+    "typescript": "3.2.4",
+    "webpack-cli": "^3.1.0"
   }
 }

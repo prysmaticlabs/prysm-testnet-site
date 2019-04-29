@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { fromWei } from '../web3/web3.service';
+import { ethers } from 'ethers';
 
 @Component({
   selector: 'app-home',
@@ -24,5 +24,5 @@ export class HomeComponent {
     'Long Running & Highly Available',
   ];
 
-  readonly DEPOSIT_AMOUNT = fromWei(environment.depositAmount, 'ether');
+  readonly DEPOSIT_AMOUNT = ethers.utils.formatEther(environment.depositAmount);
 }

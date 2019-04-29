@@ -20,7 +20,7 @@ import { ParticipateModule } from './participate/participate.module';
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     AppRoutingModule,
     MatButtonModule,

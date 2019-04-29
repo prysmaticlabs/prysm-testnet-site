@@ -26,7 +26,8 @@ export class AppComponent implements OnInit {
     this.contractService.getAddress().subscribe(async (res: string) => {
       this.depositContractAddress = res;
       await this.updateValidatorCount(res);
-      this.web3.depositEvents(this.depositContractAddress).on('data', () => this.updateValidatorCount(res));
+      this.web3.depositEvents(this.depositContractAddress)
+        .subscribe(() => this.updateValidatorCount(res));
     });
   }
 
