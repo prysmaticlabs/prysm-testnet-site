@@ -53,6 +53,9 @@ div.tables {
   @media (max-width: 800px) {
     flex-direction: row;
     flex-wrap: wrap;
+    mat-list-item {
+      margin-top: 50px;
+    }
   }
 }
 
