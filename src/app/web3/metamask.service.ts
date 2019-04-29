@@ -1,5 +1,5 @@
 import { Component, Injectable } from '@angular/core';
-import Web3 from 'web3';
+import { Eth } from 'web3-eth';
 import { Web3Service } from './web3.service';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -11,7 +11,7 @@ export class MetamaskService extends Web3Service {
 
   constructor(dialog: MatDialog) {
     try {
-      super(new Web3((window as any).ethereum));
+      super(new Eth((window as any).ethereum));
     } catch(e) {
       console.error(e);
     }

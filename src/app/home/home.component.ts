@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { fromWei } from '../web3/web3.service';
+import { fromWei } from 'web3-utils';
 
 @Component({
   selector: 'app-home',

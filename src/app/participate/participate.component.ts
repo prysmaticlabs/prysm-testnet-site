@@ -6,12 +6,13 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { MatStepper } from '@angular/material/stepper';
 import { Observable, Subject, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { fromWei, toWei } from 'web3-utils';
 
 import { PortisService } from '../web3/portis.service';
 import { MetamaskService } from '../web3/metamask.service';
 import { ProgressService } from '../progress.service';
 import { FaucetService } from '../faucet/faucet.service';
-import { DEPOSIT_AMOUNT, fromWei, toWei, Web3Service, Web3Provider } from '../web3/web3.service';
+import { DEPOSIT_AMOUNT,  Web3Service, Web3Provider } from '../web3/web3.service';
 import { environment } from '../../environments/environment';
 import { ContractService } from '../web3/contract.service';
 

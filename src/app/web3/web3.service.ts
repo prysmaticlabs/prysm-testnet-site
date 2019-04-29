@@ -1,4 +1,5 @@
-import Web3 from 'web3';
+import { toWei, fromWei, toBN } from 'web3-utils';
+import { Eth } from 'web3-eth';
 import { ContractService } from './contract.service';
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
 import { environment } from '../../environments/environment';
@@ -12,17 +13,13 @@ export enum Web3Provider {
   METAMASK,
 }
 
-const w = new Web3('noop');
-export const toWei = w.utils.toWei;
-export const fromWei = w.utils.fromWei;
-export const toBN = w.utils.toBN;
 
 export abstract class Web3Service {
-  constructor(public readonly web3: Web3) {}
+  constructor(public readonly eth: Eth) {}
 
   /** Throws an error if the provider is on the wrong network. */
   ensureTestnet(): Promise<void> {
-    return this.web3.eth.net.getId().then(id => {
+    return this.eth.net.getId().then(id => {
       if (id !== TESTNET_ID) {
         throw new Error(`Invalid testnet id: ${id}. Restart your web3 provider connected to ${TESTNET_URL} or other Goerli network node.`);
       }
@@ -31,18 +28,18 @@ export abstract class Web3Service {
 
   /** Returns list of accounts associated with the web3 provider */
   queryAccounts(): Promise<string[]> {
-    return this.web3.eth.getAccounts();
+    return this.eth.getAccounts();
   }
 
   /** Returns the balance of an account in units of ETH */
   ethBalanceOf(address: string): Promise<string> {
-    return this.web3.eth.getBalance(address)
-      .then(bal => this.web3.utils.fromWei(bal, 'ether'));
+    return this.eth.getBalance(address)
+      .then(bal => fromWei(bal, 'ether'));
   }
 
   /** Reference to the deposit contract */
   depositContract(address: string) {
-    return new this.web3.eth.Contract(DEPOSIT_CONTRACT_ABI as any, address);
+    return new this.eth.Contract(DEPOSIT_CONTRACT_ABI as any, address);
   }
 
   /** Number of validators that have deposited so far */
@@ -60,7 +57,7 @@ export abstract class Web3Service {
       .methods
       .MAX_DEPOSIT_AMOUNT() // Note: this is denoted in gwei!
       .call() 
-      .then(res => this.web3.utils.toWei(res[0], 'gwei'));
+      .then(res => toWei(res[0], 'gwei'));
   }
 
   /** Deposit event stream */ 
