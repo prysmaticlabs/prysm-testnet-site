@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ethers } from 'ethers';
 import { Web3Service } from './web3.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,9 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 export class MetamaskService extends Web3Service {
   private readonly dialog: MatDialog;
 
-  constructor(dialog: MatDialog) {
+  constructor(@Inject(PLATFORM_ID) platformId: Object, dialog: MatDialog) {
     try {
-      super(new ethers.providers.Web3Provider((window as any).ethereum));
+      super(platformId, new ethers.providers.Web3Provider((window as any).ethereum));
     } catch(e) {
       console.error(e);
     }

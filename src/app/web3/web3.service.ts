@@ -1,3 +1,5 @@
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import { ethers } from 'ethers';
 import { Observable, Subject } from 'rxjs';
 
@@ -16,10 +18,23 @@ export enum Web3Provider {
 
 
 export abstract class Web3Service {
-  constructor(public readonly eth: ethers.providers.JsonRpcProvider) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    public readonly eth: ethers.providers.JsonRpcProvider,
+  ) {
+    // Do not use a real eth provider in server side rendering.
+    if (isPlatformServer(platformId)) {
+      this.eth = undefined;
+    }
+  }
+
 
   /** Throws an error if the provider is on the wrong network. */
   ensureTestnet(): Promise<void> {
+    if (isPlatformServer(this.platformId)) {
+      return Promise.resolve();
+    }
+
     return this.eth.getNetwork().then(net => {
       if (net.chainId !== TESTNET_ID) {
         throw new Error(`Invalid testnet id: ${net.chainId}. Restart your web3 provider connected to ${TESTNET_URL} or other Goerli network node.`);
@@ -29,11 +44,19 @@ export abstract class Web3Service {
 
   /** Returns list of accounts associated with the web3 provider */
   queryAccounts(): Promise<string[]> {
+    if (isPlatformServer(this.platformId)) {
+        return Promise.resolve([]);
+    }
+
     return this.eth.listAccounts();
   }
 
   /** Returns the balance of an account in units of ETH */
   ethBalanceOf(address: string): Promise<string> {
+    if (isPlatformServer(this.platformId)) {
+      return Promise.resolve("0");
+    }
+
     return this.eth.getBalance(address)
       .then(bal => ethers.utils.formatEther(bal));
   }
@@ -45,6 +68,10 @@ export abstract class Web3Service {
 
   /** Number of validators that have deposited so far */
   numValidators(address: string): Promise<number> {
+    if (isPlatformServer(this.platformId)) {
+      return Promise.resolve(16640);
+    }
+
     return this.depositContract(address)
       .functions
       .deposit_count()
@@ -53,6 +80,10 @@ export abstract class Web3Service {
 
   /** Max value required to deposit */ 
   maxDepositValue(address: string): Promise<number> {
+    if (isPlatformServer(this.platformId)) {
+        return Promise.resolve(ethers.utils.parseEther("32").toNumber());
+    }
+
     return this.depositContract(address)
       .methods
       .MAX_DEPOSIT_AMOUNT() // Note: this is denoted in gwei!
@@ -62,6 +93,10 @@ export abstract class Web3Service {
 
   /** Deposit event stream */ 
   depositEvents(address: string): Observable<void> {
+    if (isPlatformServer(this.platformId)) {
+      return new Observable();
+    }
+
     return new Observable(observer => {
       const filter = this.depositContract(address).filters.Deposit();
       this.depositContract(address).on(filter, () => observer.next());
