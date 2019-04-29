@@ -6,7 +6,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { MatStepper } from '@angular/material/stepper';
 import { Observable, Subject, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { fromWei, toWei } from 'web3-utils';
+import { ethers } from 'ethers';
 
 import { PortisService } from '../web3/portis.service';
 import { MetamaskService } from '../web3/metamask.service';
@@ -33,7 +33,7 @@ export class ParticipateComponent implements OnInit {
   depositDataFormGroup: FormGroup;
   deposited: boolean|'pending'  = false;
   depositContractAddress: string;
-  readonly MIN_BALANCE = fromWei(environment.depositAmount, 'ether');
+  readonly MIN_BALANCE = ethers.utils.formatEther(environment.depositAmount);
   readonly DOCKER_TAG = "latest";
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;

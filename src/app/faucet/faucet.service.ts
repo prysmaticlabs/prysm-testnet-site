@@ -2,7 +2,8 @@ import { Component, Injectable, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SimpleSnackBar, MatSnackBar } from '@angular/material/snack-bar';
 import { ReCaptchaV3Service, InvisibleReCaptchaComponent } from 'ngx-captcha';
-import { fromWei } from 'web3-utils';
+import { ethers } from 'ethers';
+
 import { environment } from '../../environments/environment';
 import { ProgressService } from '../progress.service';
 import { NoAccessWeb3Service } from '../web3/no-access.service';
@@ -84,7 +85,7 @@ export class FaucetDialog {
     subject
     .subscribe(data => {
       console.log('resp', data);
-      const eth = fromWei(data.getAmount(), 'ether');
+      const eth = ethers.utils.formatEther(data.getAmount());
       this.snackbar.open(
         `Funded ${eth} GöETH in transaction ${data.getTransactionhash()}`,
         ''/*action*/,

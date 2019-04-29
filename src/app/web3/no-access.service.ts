@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Eth } from 'web3-eth';
+import { ethers } from 'ethers';
 
 import { Web3Service } from './web3.service';
 
@@ -8,6 +8,6 @@ import { Web3Service } from './web3.service';
 })
 export class NoAccessWeb3Service extends Web3Service {
   constructor() { 
-    super(new Eth('wss://goerli.prylabs.net/websocket'));
+    super(new ethers.providers.JsonRpcProvider('wss://goerli.prylabs.net/websocket'));
   }
 }

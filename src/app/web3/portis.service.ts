@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import Portis from '@portis/web3';
-import { Eth } from 'web3-eth';
+import { ethers } from 'ethers';
 import { Web3Service } from './web3.service';
 
 const DAPP_ID = 'cf87be83-629d-4e45-a0e6-4341e050f770';
@@ -12,6 +12,6 @@ const portis = new Portis(DAPP_ID, NETWORK);
 })
 export class PortisService extends Web3Service {
   constructor() {
-    super(new Eth(portis.provider));
+    super(new ethers.providers.Web3Provider(portis.provider));
   } 
 }
