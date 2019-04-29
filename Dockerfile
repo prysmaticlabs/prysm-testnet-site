@@ -27,4 +27,4 @@ FROM node:11-alpine
 
 COPY --from=builder /ng-app/dist/ /dist
 
-CMD ["npm", "dist/server"]
+CMD ["node", "dist/server"]
