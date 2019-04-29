@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { Observable, Subject } from 'rxjs';
 
 import { ContractService } from './contract.service';
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
@@ -45,10 +46,9 @@ export abstract class Web3Service {
   /** Number of validators that have deposited so far */
   numValidators(address: string): Promise<number> {
     return this.depositContract(address)
-      .methods
+      .functions
       .deposit_count()
-      .call()
-      .then(res => res[0]);
+      .then((res: ethers.utils.BigNumber) => res.toNumber());
   }
 
   /** Max value required to deposit */ 
@@ -61,8 +61,10 @@ export abstract class Web3Service {
   }
 
   /** Deposit event stream */ 
-  depositEvents(address: string) {
-    return this.depositContract(address)
-       .events.Deposit();
+  depositEvents(address: string): Observable<void> {
+    return new Observable(observer => {
+      const filter = this.depositContract(address).filters.Deposit();
+      this.depositContract(address).on(filter, () => observer.next());
+    });
   }
 }
