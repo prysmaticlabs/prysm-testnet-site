@@ -18,6 +18,7 @@ export enum Web3Provider {
 
 
 export abstract class Web3Service {
+  private signer: ethers.providers.JsonRpcSigner;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     public readonly eth: ethers.providers.JsonRpcProvider,
@@ -25,9 +26,14 @@ export abstract class Web3Service {
     // Do not use a real eth provider in server side rendering.
     if (isPlatformServer(platformId)) {
       this.eth = undefined;
+    } else {
+      this.eth.listAccounts().then(accounts => {
+        if (accounts.length > 0 ) {
+          this.signer = this.eth.getSigner(accounts[0]);
+        }
+      });
     }
   }
-
 
   /** Throws an error if the provider is on the wrong network. */
   ensureTestnet(): Promise<void> {
@@ -63,7 +69,7 @@ export abstract class Web3Service {
 
   /** Reference to the deposit contract */
   depositContract(address: string) {
-    return new ethers.Contract(address, DEPOSIT_CONTRACT_ABI, this.eth);
+    return new ethers.Contract(address, DEPOSIT_CONTRACT_ABI, this.signer || this.eth);
   }
 
   /** Number of validators that have deposited so far */

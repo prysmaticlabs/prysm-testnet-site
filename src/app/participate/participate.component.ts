@@ -106,15 +106,14 @@ export class ParticipateComponent implements OnInit {
       }
       this.deposited = 'pending';
       this.progress.startProgress();
-      this.web3.depositContract(this.depositContractAddress).methods.deposit(this.depositData.trim()).send({
-        value: DEPOSIT_AMOUNT,
-        from: this.walletAddress,
+      this.web3.depositContract(this.depositContractAddress).deposit(this.depositData.trim(), {
+        value: ethers.utils.parseUnits(DEPOSIT_AMOUNT, 'wei'),
         gasLimit: 400000,
-      }).on('confirmation', () => {
-        confirmation$.next();
-      }).on('transactionHash', () => {
+      }).then((tx: {hash: string}) => {
         this.snackbar.open('Transaction received. Pending confirmation...', '', snackbarConfig);
-      }).on('error', (e) => this.showError(e));
+
+        this.web3.eth.waitForTransaction(tx.hash, 1).then(() => confirmation$.next());
+      }).catch(e => this.showError(e));
     } catch (e) {
       this.showError(e);
     }
