@@ -1,0 +1,29 @@
+// A partial copy of the protobuf from prysmaticlabs/prysm.
+syntax = "proto3";
+package ethereum.beacon.rpc.v1;
+
+service ValidatorService {
+  rpc ValidatorStatus(ValidatorIndexRequest) returns (ValidatorStatusResponse);
+}
+
+message ValidatorIndexRequest {
+  bytes public_key = 1;
+}
+
+message ValidatorStatusResponse {
+  ValidatorStatus status = 1;
+  uint64 eth1_deposit_block_number = 2;
+  uint64 deposit_inclusion_slot = 3;
+  uint64 activation_epoch = 4;
+  uint64 position_in_activation_queue = 5;
+}
+
+enum ValidatorStatus {
+  UNKNOWN_STATUS = 0;
+  PENDING_ACTIVE = 1;
+  ACTIVE = 2;
+  INITIATED_EXIT = 3;
+  WITHDRAWABLE = 4;
+  EXITED = 5;
+  EXITED_SLASHED = 6;
+}
