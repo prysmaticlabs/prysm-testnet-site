@@ -13,8 +13,7 @@ export const DEPOSIT_DATA_LENGTH = 386;
 })
 export class DepositDataValidatorDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors|null {
-    console.log(control.value.length);
-    if (/^0x[0-9a-f]+$/.test((control.value || '').trim()) && control.value.trim().length === DEPOSIT_DATA_LENGTH) {
+    if (/^0x[0-9a-f]+$/.test((control.value || '').trim()) && (control.value || '').trim().length === DEPOSIT_DATA_LENGTH) {
       return null;
     }
     return { 'invalidDepositData': {value: control.value}};
