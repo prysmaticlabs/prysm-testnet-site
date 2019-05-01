@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar, SimpleSnackBar } from '@angular/material/snack-bar';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { MatStepper } from '@angular/material/stepper';
-import { Observable, Subject, interval, from } from 'rxjs';
+import { Observable, Subject, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ethers } from 'ethers';
 
