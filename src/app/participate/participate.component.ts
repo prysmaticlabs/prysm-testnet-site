@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar, SimpleSnackBar } from '@angular/material/snack-bar';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { MatStepper } from '@angular/material/stepper';
-import { Observable, Subject, interval } from 'rxjs';
+import { Observable, Subject, interval, from } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ethers } from 'ethers';
 
@@ -15,6 +15,7 @@ import { FaucetService } from '../faucet/faucet.service';
 import { DEPOSIT_AMOUNT,  Web3Service, Web3Provider } from '../web3/web3.service';
 import { environment } from '../../environments/environment';
 import { ContractService } from '../web3/contract.service';
+import { DEPOSIT_DATA_LENGTH } from './deposit-data-validator';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 
@@ -74,6 +75,10 @@ export class ParticipateComponent implements OnInit {
 
   onKeyUp() {
     this.stepper.next();
+  }
+
+  get depositDataLength() {
+    return DEPOSIT_DATA_LENGTH;
   }
 
   async chooseWeb3Provider(provider: Web3Provider) {

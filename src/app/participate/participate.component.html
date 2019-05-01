@@ -42,6 +42,9 @@
 docker pull gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}}
 docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
     </div>
+    <div>
+      Alternatively, you can install Prysm by following our docs <a href="https://prysmaticlabs.gitbook.io/prysm/" target="_blank">here 💎</a>
+    </div>
   </mat-step>
 
   <mat-step [completed]="walletAddress && hasMinimumBalance()">
@@ -107,7 +110,7 @@ docker run -v /tmp/prysm-data:/data \
                    (keyup.enter)="onKeyUp()"
                    (change)="updateDepositData(depositData)"></textarea>
          <mat-error>
-           Deposit data must be in the form of 0x123456789abcdef
+           Deposit data must be in the form of 0x123456789abcdef and have {{depositDataLength}} characters
          </mat-error>
        </mat-form-field>
       </div>
@@ -120,7 +123,8 @@ docker run -v /tmp/prysm-data:/data \
     <pre>
 docker run -v /tmp/prysm-data:/data -p 4000:4000 \
   gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
-  --datadir=/data
+  --datadir=/data \
+  --clear-db
     </pre>
 
     <span>Run the next command in another terminal.</span>
