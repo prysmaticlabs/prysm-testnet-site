@@ -13,7 +13,7 @@ export class HomeComponent {
     'Full, Casper Proof of Stake',
     'Goerli Testnet ETH for Staking',
     'Publicly Accessible',
-    'Short-Lived (24 hrs at a time)',
+    'Short-Lived (Scheduled Restarts)',
   ];
 
   readonly notTestnetProperties = [
