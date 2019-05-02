@@ -40,7 +40,7 @@ export class FaucetService {
 })
 export class FaucetDialog {
   private readonly client = new FaucetServiceClient(
-    environment.apiEndpoint, 
+    environment.apiEndpoint,
     null /*credentials*/, 
     null/*options*/);
   inProgress = false;
