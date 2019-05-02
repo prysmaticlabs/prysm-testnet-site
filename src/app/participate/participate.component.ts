@@ -7,7 +7,8 @@ import { MatStepper } from '@angular/material/stepper';
 import { Observable, Subject, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ethers } from 'ethers';
-
+import { AnySSZType, deserialize } from '@chainsafe/ssz';
+ 
 import { PortisService } from '../web3/portis.service';
 import { MetamaskService } from '../web3/metamask.service';
 import { ProgressService } from '../progress.service';
@@ -18,6 +19,15 @@ import { ContractService } from '../web3/contract.service';
 import { DEPOSIT_DATA_LENGTH } from './deposit-data-validator';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
+const DEPOSIT_DATA_TYPE: AnySSZType = {
+  name: 'DepositData',
+  fields: [
+    ['pubkey', 'bytes48'],
+    ['validatorIndex', 'number64'],
+    ['proofOfPossession', 'bytes96']
+  ]
+};
+
 
 @Component({
   selector: 'app-participate',
@@ -35,7 +45,7 @@ export class ParticipateComponent implements OnInit {
   deposited: boolean|'pending'  = false;
   depositContractAddress: string;
   readonly MIN_BALANCE = ethers.utils.formatEther(environment.depositAmount);
-  readonly DOCKER_TAG = "latest";
+  readonly DOCKER_TAG = 'latest';
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @ViewChild('stepper') stepper: MatStepper;
@@ -71,6 +81,9 @@ export class ParticipateComponent implements OnInit {
   updateDepositData(data: string) {
     // setItem must be subscribed with a no-op or it won't fire the observable.
     this.storage.setItem(DEPOSIT_DATA_STORAGE_KEY, data).subscribe(() => {});
+
+    // TODO: Define the type
+    const d: any = deserialize(data, DEPOSIT_DATA_TYPE);
   }
 
   onKeyUp() {
@@ -131,8 +144,8 @@ export class ParticipateComponent implements OnInit {
         this.snackbar.open('Transaction confirmed. You are deposited!', 'OK', snackbarConfig);
         this.progress.stopProgress();
         this.deposited = true;
-        // Force change detection before advancing the stepper. 
-        this.cdr.detectChanges(); 
+        // Force change detection before advancing the stepper.
+        this.cdr.detectChanges();
         this.stepper.next();
       });
   }
