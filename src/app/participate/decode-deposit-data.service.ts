@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 interface DepositData {
   pubkey: string;
@@ -15,7 +14,6 @@ export class DecodeDepositDataService {
   constructor(private http: HttpClient) { }
 
   decodeDepositData(deposit: string) {
-    return this.http.post<DepositData>("https://alpha.prylabs.net/ssz/decodeDepositData", { data: deposit });
-
+    return this.http.post<DepositData>('https://alpha.prylabs.net/ssz/decodeDepositData', { data: deposit.trim() });
   }
 }

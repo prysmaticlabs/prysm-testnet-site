@@ -7,7 +7,7 @@ import { Web3Service } from './web3.service';
   providedIn: 'root'
 })
 export class NoAccessWeb3Service extends Web3Service {
-  constructor(@Inject(PLATFORM_ID) platformId: Object) { 
+  constructor(@Inject(PLATFORM_ID) platformId: object) {
     super(platformId, new ethers.providers.JsonRpcProvider('https://goerli.prylabs.net'));
   }
 }
