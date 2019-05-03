@@ -28,7 +28,6 @@
     "@angular/platform-browser-dynamic": "7.2.5",
     "@angular/platform-server": "7.2.5",
     "@angular/router": "7.2.5",
-    "@chainsafe/ssz": "^0.2.0",
     "@nguniversal/express-engine": "^7.1.1",
     "@nguniversal/module-map-ngfactory-loader": "0.0.0",
     "@ngx-pwa/local-storage": "7.4.1",
