@@ -16,6 +16,7 @@ import { DEPOSIT_AMOUNT,  Web3Service, Web3Provider } from '../web3/web3.service
 import { environment } from '../../environments/environment';
 import { ContractService } from '../web3/contract.service';
 import { DEPOSIT_DATA_LENGTH } from './deposit-data-validator';
+import { DecodeDepositDataService } from './decode-deposit-data.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 
@@ -26,6 +27,7 @@ const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 })
 export class ParticipateComponent implements OnInit {
   private web3?: Web3Service;
+  private pubkey: string;
   web3Provider = Web3Provider;
   walletAddress: string;
   balance: string;
@@ -50,6 +52,7 @@ export class ParticipateComponent implements OnInit {
     private readonly cdr: ChangeDetectorRef,
     private readonly formBuilder: FormBuilder,
     private readonly contractService: ContractService,
+    private readonly depositDataService: DecodeDepositDataService,
   ) {}
 
   ngOnInit() {
@@ -61,6 +64,11 @@ export class ParticipateComponent implements OnInit {
     });
     this.storage.getItem(DEPOSIT_DATA_STORAGE_KEY).subscribe((data: string) => {
       this.depositData = data;
+      // TODO: Handle invalid input or server error.
+      this.depositDataService.decodeDepositData(data).subscribe(data => {
+        this.pubkey = data.pubkey;
+      });
+
     });
   }
 
@@ -71,6 +79,11 @@ export class ParticipateComponent implements OnInit {
   updateDepositData(data: string) {
     // setItem must be subscribed with a no-op or it won't fire the observable.
     this.storage.setItem(DEPOSIT_DATA_STORAGE_KEY, data).subscribe(() => {});
+
+    // TODO: Handle invalid input or server error.
+    this.depositDataService.decodeDepositData(data).subscribe(data => {
+      this.pubkey = data.pubkey;
+    });
   }
 
   onKeyUp() {
@@ -102,39 +115,40 @@ export class ParticipateComponent implements OnInit {
     });
   }
 
-  async makeDeposit() {
-    const snackbarConfig = {duration: 10000 /*ms*/};
-    const confirmation$ = new Subject();
-    try {
-      if (!this.web3) {
-        throw new Error('choose a web3 provider to make a deposit');
-      }
-      await this.web3.ensureSigner();
+  async makeDeposit() {    
 
-      this.deposited = 'pending';
-      this.progress.startProgress();
-      this.web3.depositContract(this.depositContractAddress).deposit(this.depositData.trim(), {
-        value: ethers.utils.parseUnits(DEPOSIT_AMOUNT, 'wei'),
-        gasLimit: 400000,
-      }).then((tx: {hash: string}) => {
-        this.snackbar.open('Transaction received. Pending confirmation...', '', snackbarConfig);
-
-        this.web3.eth.waitForTransaction(tx.hash, 1).then(() => confirmation$.next());
-      }).catch(e => this.showError(e));
-    } catch (e) {
-      this.showError(e);
-    }
-
-    confirmation$
-      .pipe(first())
-      .subscribe(async () => {
-        this.snackbar.open('Transaction confirmed. You are deposited!', 'OK', snackbarConfig);
-        this.progress.stopProgress();
-        this.deposited = true;
-        // Force change detection before advancing the stepper. 
-        this.cdr.detectChanges(); 
-        this.stepper.next();
-      });
+    //    const snackbarConfig = {duration: 10000 /*ms*/};
+    //    const confirmation$ = new Subject();
+    //    try {
+    //      if (!this.web3) {
+    //        throw new Error('choose a web3 provider to make a deposit');
+    //      }
+    //      await this.web3.ensureSigner();
+    //
+    //      this.deposited = 'pending';
+    //      this.progress.startProgress();
+    //      this.web3.depositContract(this.depositContractAddress).deposit(this.depositData.trim(), {
+    //        value: ethers.utils.parseUnits(DEPOSIT_AMOUNT, 'wei'),
+    //        gasLimit: 400000,
+    //      }).then((tx: {hash: string}) => {
+    //        this.snackbar.open('Transaction received. Pending confirmation...', '', snackbarConfig);
+    //
+    //        this.web3.eth.waitForTransaction(tx.hash, 1).then(() => confirmation$.next());
+    //      }).catch(e => this.showError(e));
+    //    } catch (e) {
+    //      this.showError(e);
+    //    }
+    //
+    //    confirmation$
+    //      .pipe(first())
+    //      .subscribe(async () => {
+    //        this.snackbar.open('Transaction confirmed. You are deposited!', 'OK', snackbarConfig);
+    //        this.progress.stopProgress();
+    //        this.deposited = true;
+    //        // Force change detection before advancing the stepper. 
+    //        this.cdr.detectChanges(); 
+    //        this.stepper.next();
+    //      });
   }
 
   /** Method to prompt funding request from the faucet service. */

@@ -13,6 +13,16 @@ export namespace ValidatorIndexRequest {
   }
 }
 
+export enum ValidatorStatus {
+    UNKNOWN_STATUS = 0,
+    PENDING_ACTIVE = 1,
+    ACTIVE = 2,
+    INITIATED_EXIT = 3,
+    WITHDRAWABLE = 4,
+    EXITED = 5,
+    EXITED_SLASHED = 6,
+}
+
 export class ValidatorStatusResponse {
   constructor ();
   getStatus(): ValidatorStatus;
