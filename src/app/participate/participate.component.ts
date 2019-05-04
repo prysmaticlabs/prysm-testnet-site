@@ -12,10 +12,12 @@ import { PortisService } from '../web3/portis.service';
 import { MetamaskService } from '../web3/metamask.service';
 import { ProgressService } from '../progress.service';
 import { FaucetService } from '../faucet/faucet.service';
-import { DEPOSIT_AMOUNT,  Web3Service, Web3Provider } from '../web3/web3.service';
+import { DEPOSIT_AMOUNT, Web3Service, Web3Provider } from '../web3/web3.service';
 import { environment } from '../../environments/environment';
 import { ContractService } from '../web3/contract.service';
 import { DEPOSIT_DATA_LENGTH } from './deposit-data-validator';
+import { DecodeDepositDataService } from './decode-deposit-data.service';
+import { ValidatorActivationServiceService, ValidatorStatusUpdate } from './validator-activation-service.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 
@@ -26,16 +28,18 @@ const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 })
 export class ParticipateComponent implements OnInit {
   private web3?: Web3Service;
+  private pubkey: string;
   web3Provider = Web3Provider;
   walletAddress: string;
   balance: string;
   balance$?: Observable<unknown>;
   depositData: string;
   depositDataFormGroup: FormGroup;
-  deposited: boolean|'pending'  = false;
+  deposited: boolean | 'pending' = false;
   depositContractAddress: string;
+  validatorStatus: ValidatorStatusUpdate;
   readonly MIN_BALANCE = ethers.utils.formatEther(environment.depositAmount);
-  readonly DOCKER_TAG = "latest";
+  readonly DOCKER_TAG = 'latest';
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @ViewChild('stepper') stepper: MatStepper;
@@ -50,7 +54,9 @@ export class ParticipateComponent implements OnInit {
     private readonly cdr: ChangeDetectorRef,
     private readonly formBuilder: FormBuilder,
     private readonly contractService: ContractService,
-  ) {}
+    private readonly depositDataService: DecodeDepositDataService,
+    private readonly validatorActivationService: ValidatorActivationServiceService,
+  ) { }
 
   ngOnInit() {
     this.contractService.getAddress().subscribe(async (res: string) => {
@@ -61,6 +67,12 @@ export class ParticipateComponent implements OnInit {
     });
     this.storage.getItem(DEPOSIT_DATA_STORAGE_KEY).subscribe((data: string) => {
       this.depositData = data;
+
+      // TODO: Handle invalid input or server error.
+      this.depositDataService.decodeDepositData(data).subscribe(d => {
+        this.pubkey = d.pubkey;
+      });
+
     });
   }
 
@@ -70,7 +82,12 @@ export class ParticipateComponent implements OnInit {
 
   updateDepositData(data: string) {
     // setItem must be subscribed with a no-op or it won't fire the observable.
-    this.storage.setItem(DEPOSIT_DATA_STORAGE_KEY, data).subscribe(() => {});
+    this.storage.setItem(DEPOSIT_DATA_STORAGE_KEY, data).subscribe(() => { });
+
+    // TODO: Handle invalid input or server error.
+    this.depositDataService.decodeDepositData(data).subscribe(d => {
+      this.pubkey = d.pubkey;
+    });
   }
 
   onKeyUp() {
@@ -82,11 +99,11 @@ export class ParticipateComponent implements OnInit {
   }
 
   async chooseWeb3Provider(provider: Web3Provider) {
-    switch(provider) {
+    switch (provider) {
       // Prompt user to change their network to goerli.
       case Web3Provider.METAMASK: this.web3 = this.metamask; break;
       case Web3Provider.PORTIS: this.web3 = this.portis; break;
-      default: throw new Error("Unknown provider: " + provider);
+      default: throw new Error('Unknown provider: ' + provider);
     }
 
     try {
@@ -94,7 +111,7 @@ export class ParticipateComponent implements OnInit {
     } catch (e) {
       return this.showError(e);
     }
-   
+
     await this.updateBalance();
     this.balance$ = interval(5000 /*ms*/);
     this.balance$.subscribe(async () => {
@@ -103,7 +120,7 @@ export class ParticipateComponent implements OnInit {
   }
 
   async makeDeposit() {
-    const snackbarConfig = {duration: 10000 /*ms*/};
+    const snackbarConfig = { duration: 10000 /*ms*/ };
     const confirmation$ = new Subject();
     try {
       if (!this.web3) {
@@ -116,7 +133,7 @@ export class ParticipateComponent implements OnInit {
       this.web3.depositContract(this.depositContractAddress).deposit(this.depositData.trim(), {
         value: ethers.utils.parseUnits(DEPOSIT_AMOUNT, 'wei'),
         gasLimit: 400000,
-      }).then((tx: {hash: string}) => {
+      }).then((tx: { hash: string }) => {
         this.snackbar.open('Transaction received. Pending confirmation...', '', snackbarConfig);
 
         this.web3.eth.waitForTransaction(tx.hash, 1).then(() => confirmation$.next());
@@ -125,16 +142,25 @@ export class ParticipateComponent implements OnInit {
       this.showError(e);
     }
 
+    this.waitForActivation();
+
     confirmation$
       .pipe(first())
-      .subscribe(async () => {
+      .subscribe(() => {
         this.snackbar.open('Transaction confirmed. You are deposited!', 'OK', snackbarConfig);
         this.progress.stopProgress();
         this.deposited = true;
-        // Force change detection before advancing the stepper. 
-        this.cdr.detectChanges(); 
+        // Force change detection before advancing the stepper.
+        this.cdr.detectChanges();
         this.stepper.next();
       });
+  }
+
+  waitForActivation() {
+    this.validatorActivationService.validatorStatus(this.pubkey).subscribe(status => {
+      this.validatorStatus = status;
+      console.log('Status updated', status);
+    });
   }
 
   /** Method to prompt funding request from the faucet service. */
@@ -142,7 +168,7 @@ export class ParticipateComponent implements OnInit {
     this.faucet.requestFunds(this.walletAddress)
       .then((amt: string) => {
         this.balance = String(Number(this.balance) + Number(amt));
-       });
+      });
   }
 
   private async updateBalance() {
@@ -155,7 +181,7 @@ export class ParticipateComponent implements OnInit {
   private showError(err: Error) {
     this.snackbar.openFromComponent(SimpleSnackBar, {
       data: { message: err, action: 'OK' },
-    }); 
+    });
     this.progress.stopProgress();
   }
 }

@@ -20,13 +20,13 @@ export enum Web3Provider {
 export abstract class Web3Service {
   private signer: ethers.providers.JsonRpcSigner;
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     public readonly eth: ethers.providers.JsonRpcProvider,
   ) {
     // Do not use a real eth provider in server side rendering.
     if (isPlatformServer(platformId)) {
       this.eth = undefined;
-    } 
+    }
   }
 
   /** Throws an error if the provider is on the wrong network. */
@@ -37,7 +37,8 @@ export abstract class Web3Service {
 
     return this.eth.getNetwork().then(net => {
       if (net.chainId !== TESTNET_ID) {
-        throw new Error(`Invalid testnet id: ${net.chainId}. Restart your web3 provider connected to ${TESTNET_URL} or other Goerli network node.`);
+        throw new Error(`Invalid testnet id: ${net.chainId}. Restart your web3 provider ` +
+        `connected to ${TESTNET_URL} or other Goerli network node.`);
       }
     });
   }
@@ -50,7 +51,7 @@ export abstract class Web3Service {
 
    return this.eth.listAccounts().then(accounts => {
      if (accounts.length === 0) {
-       throw new Error("no accounts to sign with");
+       throw new Error('no accounts to sign with');
      }
      this.signer = this.eth.getSigner(accounts[0]);
    });
@@ -68,7 +69,7 @@ export abstract class Web3Service {
   /** Returns the balance of an account in units of ETH */
   ethBalanceOf(address: string): Promise<string> {
     if (isPlatformServer(this.platformId)) {
-      return Promise.resolve("0");
+      return Promise.resolve('0');
     }
 
     return this.eth.getBalance(address)
@@ -92,20 +93,20 @@ export abstract class Web3Service {
       .then((res: ethers.utils.BigNumber) => res.toNumber());
   }
 
-  /** Max value required to deposit */ 
+  /** Max value required to deposit */
   maxDepositValue(address: string): Promise<number> {
     if (isPlatformServer(this.platformId)) {
-        return Promise.resolve(ethers.utils.parseEther("32").toNumber());
+        return Promise.resolve(ethers.utils.parseEther('32').toNumber());
     }
 
     return this.depositContract(address)
       .methods
       .MAX_DEPOSIT_AMOUNT() // Note: this is denoted in gwei!
-      .call() 
+      .call()
       .then(res => ethers.utils.parseUnits(res[0], 'gwei'));
   }
 
-  /** Deposit event stream */ 
+  /** Deposit event stream */
   depositEvents(address: string): Observable<void> {
     if (isPlatformServer(this.platformId)) {
       return new Observable();
@@ -116,4 +117,20 @@ export abstract class Web3Service {
       this.depositContract(address).on(filter, () => observer.next());
     });
   }
+
+  genesisTime(address: string): Observable<Date> {
+    const genesisTime = this.depositContract(address).genesisTime;
+    return new Observable(observer => {
+      genesisTime().then((time: string) => {
+        const t = littleEndianHexStringToDecimal(time);
+        observer.next(new Date(t * 1000));
+      });
+    });
+  }
+}
+
+function littleEndianHexStringToDecimal(str: string) {
+    const prefix = '0x';
+    const bigEndian = prefix + (str || '').replace(prefix, '').match(/../g).reverse().join('');
+    return parseInt(bigEndian, 16);
 }
