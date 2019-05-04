@@ -159,7 +159,6 @@ export class ParticipateComponent implements OnInit {
   waitForActivation() {
     this.validatorActivationService.validatorStatus(this.pubkey).subscribe(status => {
       this.validatorStatus = status;
-      console.log('Status updated', status);
     });
   }
 
