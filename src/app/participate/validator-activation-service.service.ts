@@ -51,7 +51,7 @@ export class ValidatorActivationServiceService {
 
           return concat(
             of(this.estimateActivationStatus(genesisTime, status)),
-            combineLatest(interval(100), latestStatus$)
+            combineLatest(interval(500), latestStatus$)
               .pipe(
                 map(v => v[1]),
                 map(s => this.estimateActivationStatus(genesisTime, s)),
