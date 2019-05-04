@@ -47,7 +47,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
     </div>
   </mat-step>
 
-  <mat-step [completed]="walletAddress && hasMinimumBalance()">
+  <mat-step [completed]="(walletAddress && hasMinimumBalance()) || deposited">
     <ng-template matStepLabel>Get GöETH — Test ether</ng-template>
     <p>
       This test network leverages the Goerli network to simulate validator
