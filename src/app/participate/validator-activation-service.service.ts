@@ -95,10 +95,10 @@ export class ValidatorActivationServiceService {
   }
 
   private blockTime(status: ValidatorStatusResponse.AsObject): Observable<Date> {
-    if (status === null || status.Eth1DepositBlockNumber === 0) {
+    if (status === null || status.eth1DepositBlockNumber === 0) {
       return of(null);
     }
-    return this.web3.blockTime(status.Eth1DepositBlockNumber);
+    return this.web3.blockTime(status.eth1DepositBlockNumber);
   }
 
   private estimateActivationStatus(genesisTime: Date, status: ValidatorStatusResponse, eth1BlockTime?: Date): ValidatorStatusUpdate {
