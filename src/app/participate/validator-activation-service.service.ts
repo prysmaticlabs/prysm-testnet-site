@@ -59,8 +59,9 @@ export class ValidatorActivationServiceService {
           const latestBlockTime$ = from(latestStatus$).pipe(
             map((s: ValidatorStatusResponse | null) => s && s.toObject()),
             distinctUntilChanged((a, b) => deepEqual(a, b)),
+            skipWhile(s => s === null),
             tap(s => console.log(s)), // Debug logging update of new statuses.
-            switchMap((s: ValidatorStatusResponse.AsObject | null) => this.blockTime(s)),
+            switchMap((s: ValidatorStatusResponse.AsObject) => this.blockTime(s)),
           );
 
           return interval(200).pipe(
