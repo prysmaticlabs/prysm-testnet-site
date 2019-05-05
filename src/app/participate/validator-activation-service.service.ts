@@ -30,8 +30,6 @@ export class ValidatorActivationServiceService {
     null /* credentials */,
     null /* options */);
 
-  private readonly blockTimeCache = new Map<number, Date>();
-
   constructor(
     private readonly web3: NoAccessWeb3Service,
     private readonly contractService: ContractService,
@@ -40,8 +38,6 @@ export class ValidatorActivationServiceService {
 
   // Updates the validator status percent every 200ms until 100%.
   validatorStatus(pubkey: string): Observable<ValidatorStatusUpdate> {
-    // TODO: First fetch the validator status for the pubkey.
-    // Then continuously map it out, then take until its estimated to be 100%.
 
     const genesisTime$ = this.contractService.getAddress()
       .pipe(switchMap(address => this.web3.genesisTime(address)));
@@ -58,10 +54,9 @@ export class ValidatorActivationServiceService {
           );
 
           const latestBlockTime$ = from(latestStatus$).pipe(
-            map((s: ValidatorStatusResponse | null) => s && s.toObject()),
-            distinctUntilChanged((a, b) => deepEqual(a, b)),
+            distinctUntilChanged((a, b) => deepEqual(a.toObject(), b.toObject())),
             tap(s => console.log(s)), // Debug logging update of new statuses.
-            switchMap((s: ValidatorStatusResponse.AsObject) => this.blockTime(s)),
+            switchMap((s: ValidatorStatusResponse) => this.blockTime(s)),
           );
 
           return interval(200).pipe(
@@ -94,11 +89,11 @@ export class ValidatorActivationServiceService {
     return subject;
   }
 
-  private blockTime(status: ValidatorStatusResponse.AsObject): Observable<Date> {
-    if (status === null || status.eth1DepositBlockNumber === 0) {
+  private blockTime(status: ValidatorStatusResponse): Observable<Date> {
+    if (status === null || status.getEth1DepositBlockNumber() === 0) {
       return of(null);
     }
-    return this.web3.blockTime(status.eth1DepositBlockNumber);
+    return this.web3.blockTime(status.getEth1DepositBlockNumber());
   }
 
   private estimateActivationStatus(genesisTime: Date, status: ValidatorStatusResponse, eth1BlockTime?: Date): ValidatorStatusUpdate {
