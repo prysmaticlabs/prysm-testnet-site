@@ -39,7 +39,7 @@ export class ParticipateComponent implements OnInit {
   depositContractAddress: string;
   validatorStatus: ValidatorStatusUpdate;
   readonly MIN_BALANCE = ethers.utils.formatEther(environment.depositAmount);
-  readonly DOCKER_TAG = 'latest';
+  readonly DOCKER_TAG = 'sapphire';
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @ViewChild('stepper') stepper: MatStepper;
@@ -101,7 +101,10 @@ export class ParticipateComponent implements OnInit {
   async chooseWeb3Provider(provider: Web3Provider) {
     switch (provider) {
       // Prompt user to change their network to goerli.
-      case Web3Provider.METAMASK: this.web3 = this.metamask; break;
+      case Web3Provider.METAMASK:
+        this.web3 = this.metamask;
+        await this.metamask.enable();
+        break;
       case Web3Provider.PORTIS: this.web3 = this.portis; break;
       default: throw new Error('Unknown provider: ' + provider);
     }

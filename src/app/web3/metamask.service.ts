@@ -3,19 +3,27 @@ import { ethers } from 'ethers';
 import { Web3Service } from './web3.service';
 import { MatDialog } from '@angular/material/dialog';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class MetamaskService extends Web3Service {
   private readonly dialog: MatDialog;
+  private readonly ethereum: any;
 
-  constructor(@Inject(PLATFORM_ID) platformId: Object, dialog: MatDialog) {
+  constructor(@Inject(PLATFORM_ID) platformId: object, dialog: MatDialog) {
     try {
-      super(platformId, new ethers.providers.Web3Provider((window as any).ethereum));
+      const ethereum = (window as any).ethereum;
+      super(platformId, new ethers.providers.Web3Provider(ethereum));
+      this.ethereum = ethereum;
     } catch(e) {
       console.error(e);
     }
     this.dialog = dialog;
+  }
+
+  async enable() {
+    await this.ethereum.enable();
   }
 
   /** @override to prompt user to change their settings before panicking. */

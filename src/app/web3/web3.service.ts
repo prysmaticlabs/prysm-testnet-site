@@ -38,29 +38,29 @@ export abstract class Web3Service {
     return this.eth.getNetwork().then(net => {
       if (net.chainId !== TESTNET_ID) {
         throw new Error(`Invalid testnet id: ${net.chainId}. Restart your web3 provider ` +
-        `connected to ${TESTNET_URL} or other Goerli network node.`);
+          `connected to ${TESTNET_URL} or other Goerli network node.`);
       }
     });
   }
 
   /** Throws an error if there is no signer. */
   ensureSigner(): Promise<void> {
-   if (isPlatformServer(this.platformId)) {
+    if (isPlatformServer(this.platformId)) {
       return Promise.resolve();
     }
 
-   return this.eth.listAccounts().then(accounts => {
-     if (accounts.length === 0) {
-       throw new Error('no accounts to sign with');
-     }
-     this.signer = this.eth.getSigner(accounts[0]);
-   });
+    return this.eth.listAccounts().then(accounts => {
+      if (accounts.length === 0) {
+        throw new Error('no accounts to sign with');
+      }
+      this.signer = this.eth.getSigner(accounts[0]);
+    });
   }
 
   /** Returns list of accounts associated with the web3 provider */
   queryAccounts(): Promise<string[]> {
     if (isPlatformServer(this.platformId)) {
-        return Promise.resolve([]);
+      return Promise.resolve([]);
     }
 
     return this.eth.listAccounts();
@@ -96,7 +96,7 @@ export abstract class Web3Service {
   /** Max value required to deposit */
   maxDepositValue(address: string): Promise<number> {
     if (isPlatformServer(this.platformId)) {
-        return Promise.resolve(ethers.utils.parseEther('32').toNumber());
+      return Promise.resolve(ethers.utils.parseEther('32').toNumber());
     }
 
     return this.depositContract(address)
@@ -112,7 +112,7 @@ export abstract class Web3Service {
       return new Observable();
     }
 
-    return new Observable(observer => {
+    return new Observable<void>(observer => {
       const filter = this.depositContract(address).filters.Deposit();
       this.depositContract(address).on(filter, () => observer.next());
     });
@@ -120,17 +120,28 @@ export abstract class Web3Service {
 
   genesisTime(address: string): Observable<Date> {
     const genesisTime = this.depositContract(address).genesisTime;
-    return new Observable(observer => {
+    return new Observable<Date>(observer => {
       genesisTime().then((time: string) => {
         const t = littleEndianHexStringToDecimal(time);
         observer.next(new Date(t * 1000));
       });
     });
   }
+
+  blockTime(height: number): Observable<Date> {
+    return new Observable<Date>(observer => {
+      this.eth.getBlock(height).then(block => {
+        const blockTime = new Date(block.timestamp * 1000);
+        observer.next(blockTime);
+
+        console.log(`${height} block time=`, blockTime);
+      });
+    });
+  }
 }
 
 function littleEndianHexStringToDecimal(str: string) {
-    const prefix = '0x';
-    const bigEndian = prefix + (str || '').replace(prefix, '').match(/../g).reverse().join('');
-    return parseInt(bigEndian, 16);
+  const prefix = '0x';
+  const bigEndian = prefix + (str || '').replace(prefix, '').match(/../g).reverse().join('');
+  return parseInt(bigEndian, 16);
 }
