@@ -92,7 +92,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
       <div>
         <pre>
 docker run -it -v /tmp/prysm-data:/data \
-   gcr.io/prysmaticlabs/prysm/validator:latest \
+   gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \
    accounts create --keystore-path=/data --password=changeme</pre>
        <div>
          From those results, copy and paste the deposit data below.
