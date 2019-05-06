@@ -14,6 +14,6 @@ export class DecodeDepositDataService {
   constructor(private http: HttpClient) { }
 
   decodeDepositData(deposit: string) {
-    return this.http.post<DepositData>('https://alpha.prylabs.net/ssz/decodeDepositData', { data: deposit.trim() });
+    return this.http.post<DepositData>('https://prylabs.net/ssz/decodeDepositData', { data: (deposit || '').trim() });
   }
 }

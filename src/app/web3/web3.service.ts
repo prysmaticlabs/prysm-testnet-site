@@ -84,7 +84,7 @@ export abstract class Web3Service {
   /** Number of validators that have deposited so far */
   numValidators(address: string): Promise<number> {
     if (isPlatformServer(this.platformId)) {
-      return Promise.resolve(16640);
+      return Promise.resolve(0);
     }
 
     return this.depositContract(address)
