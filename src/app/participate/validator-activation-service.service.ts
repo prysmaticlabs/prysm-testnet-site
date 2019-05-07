@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { zip, Observable, interval, of, Subject, from } from 'rxjs';
-import { withLatestFrom, map, tap, switchMap, startWith, takeWhile, skipWhile, distinctUntilKeyChanged, distinct, distinctUntilChanged } from 'rxjs/operators';
+import { retry, withLatestFrom, map, tap, switchMap, startWith, takeWhile, skipWhile, distinctUntilKeyChanged, distinct, distinctUntilChanged } from 'rxjs/operators';
 import deepEqual from 'deep-equal';
 
 import { environment } from '../../environments/environment';
@@ -50,7 +50,6 @@ export class ValidatorActivationServiceService {
           const latestStatus$ = interval(pollingInterval).pipe(
             startWith(status),
             switchMap(() => this.statusFromServer(pubkey)),
-            skipWhile(s => s === null),
           );
 
           const latestBlockTime$ = from(latestStatus$).pipe(
@@ -75,18 +74,18 @@ export class ValidatorActivationServiceService {
   }
 
   private statusFromServer(pubkey: string): Observable<ValidatorStatusResponse> {
-    const subject = new Subject<ValidatorStatusResponse>();
-    const req: ValidatorIndexRequest = new ValidatorIndexRequest();
-    req.setPublicKey(pubkey);
+    return new Observable<ValidatorStatusResponse>((observer) => {
+      const req: ValidatorIndexRequest = new ValidatorIndexRequest();
+      req.setPublicKey(pubkey);
 
-    this.client.validatorStatus(req, null/*metadata*/, (err, resp) => {
-      if (err) {
-        console.error(err);
-      }
-
-      subject.next(resp);
-    });
-    return subject;
+      this.client.validatorStatus(req, null/*metadata*/, (err, resp) => {
+        if (err) {
+          observer.error(err);
+        } else {
+          observer.next(resp);
+        }
+      });
+    }).pipe(retry(5));
   }
 
   private blockTime(status: ValidatorStatusResponse): Observable<Date> {
@@ -147,7 +146,8 @@ export class ValidatorActivationServiceService {
           };
         }
 
-        const estimatedDelaySec = ETH1_FOLLOW_DISTANCE * ETH1_BLOCK_TIME_SEC + (ACTIVATION_ELIGIBILITY_DELAY_SLOTS * 6);
+        // Add 120s arbitrary delay in block inclusion...
+        const estimatedDelaySec = ETH1_FOLLOW_DISTANCE * ETH1_BLOCK_TIME_SEC + (ACTIVATION_ELIGIBILITY_DELAY_SLOTS * 6) + 120;
 
         const secSinceDeposit = Math.max(0, (now.getTime() - eth1BlockTime.getTime()) / 1000);
         const percent = Math.min(50, (secSinceDeposit / estimatedDelaySec) * 100);
