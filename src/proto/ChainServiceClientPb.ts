@@ -9,11 +9,11 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import {
-  ValidatorIndexRequest,
-  ValidatorStatusResponse} from './validator_pb';
+import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
 
-export class ValidatorServiceClient {
+import {BlockTreeResponse} from './chain_pb';
+
+export class BeaconServiceClient {
   client_: grpcWeb.AbstractClientBase;
   hostname_: string;
   credentials_: null | { [index: string]: string; };
@@ -31,25 +31,25 @@ export class ValidatorServiceClient {
     this.options_ = options;
   }
 
-  methodInfoValidatorStatus = new grpcWeb.AbstractClientBase.MethodInfo(
-    ValidatorStatusResponse,
-    (request: ValidatorIndexRequest) => {
+  methodInfoBlockTree = new grpcWeb.AbstractClientBase.MethodInfo(
+    BlockTreeResponse,
+    (request: google_protobuf_empty_pb.Empty) => {
       return request.serializeBinary();
     },
-    ValidatorStatusResponse.deserializeBinary
+    BlockTreeResponse.deserializeBinary
   );
 
-  validatorStatus(
-    request: ValidatorIndexRequest,
+  blockTree(
+    request: google_protobuf_empty_pb.Empty,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
-               response: ValidatorStatusResponse) => void) {
+               response: BlockTreeResponse) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/ethereum.beacon.rpc.v1.ValidatorService/ValidatorStatus',
+        '/ethereum.beacon.rpc.v1.BeaconService/BlockTree',
       request,
       metadata || {},
-      this.methodInfoValidatorStatus,
+      this.methodInfoBlockTree,
       callback);
   }
 

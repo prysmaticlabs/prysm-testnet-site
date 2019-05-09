@@ -1,42 +1,54 @@
-export class FundingRequest {
-  constructor ();
+import * as jspb from "google-protobuf"
+
+export class FundingRequest extends jspb.Message {
   getWalletAddress(): string;
-  setWalletAddress(a: string): void;
+  setWalletAddress(value: string): void;
+
   getRecaptchaSiteKey(): string;
-  setRecaptchaSiteKey(a: string): void;
+  setRecaptchaSiteKey(value: string): void;
+
   getRecaptchaResponse(): string;
-  setRecaptchaResponse(a: string): void;
-  toObject(): FundingRequest.AsObject;
+  setRecaptchaResponse(value: string): void;
+
   serializeBinary(): Uint8Array;
-  static deserializeBinary: (bytes: {}) => FundingRequest;
+  toObject(includeInstance?: boolean): FundingRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: FundingRequest): FundingRequest.AsObject;
+  static serializeBinaryToWriter(message: FundingRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): FundingRequest;
+  static deserializeBinaryFromReader(message: FundingRequest, reader: jspb.BinaryReader): FundingRequest;
 }
 
 export namespace FundingRequest {
   export type AsObject = {
-    WalletAddress: string;
-    RecaptchaSiteKey: string;
-    RecaptchaResponse: string;
+    walletAddress: string,
+    recaptchaSiteKey: string,
+    recaptchaResponse: string,
   }
 }
 
-export class FundingResponse {
-  constructor ();
+export class FundingResponse extends jspb.Message {
   getError(): string;
-  setError(a: string): void;
+  setError(value: string): void;
+
   getAmount(): string;
-  setAmount(a: string): void;
+  setAmount(value: string): void;
+
   getTransactionhash(): string;
-  setTransactionhash(a: string): void;
-  toObject(): FundingResponse.AsObject;
+  setTransactionhash(value: string): void;
+
   serializeBinary(): Uint8Array;
-  static deserializeBinary: (bytes: {}) => FundingResponse;
+  toObject(includeInstance?: boolean): FundingResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: FundingResponse): FundingResponse.AsObject;
+  static serializeBinaryToWriter(message: FundingResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): FundingResponse;
+  static deserializeBinaryFromReader(message: FundingResponse, reader: jspb.BinaryReader): FundingResponse;
 }
 
 export namespace FundingResponse {
   export type AsObject = {
-    Error: string;
-    Amount: string;
-    Transactionhash: string;
+    error: string,
+    amount: string,
+    transactionhash: string,
   }
 }
 

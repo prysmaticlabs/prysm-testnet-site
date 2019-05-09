@@ -8,6 +8,7 @@
 
 
 import * as grpcWeb from 'grpc-web';
+
 import {
   FundingRequest,
   FundingResponse} from './faucet_pb';
@@ -40,14 +41,14 @@ export class FaucetServiceClient {
 
   requestFunds(
     request: FundingRequest,
-    metadata: grpcWeb.Metadata,
+    metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
                response: FundingResponse) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
         '/faucet.FaucetService/RequestFunds',
       request,
-      metadata,
+      metadata || {},
       this.methodInfoRequestFunds,
       callback);
   }
