@@ -444,6 +444,11 @@
   resolved "https://registry.yarnpkg.com/@types/deep-equal/-/deep-equal-1.0.1.tgz#71cfabb247c22bcc16d536111f50c0ed12476b03"
   integrity sha512-mMUu4nWHLBlHtxXY17Fg6+ucS/MnndyOWyOe7MmwkoMYxvfQU2ajtRaEvqSUv+aVkMqH/C0NCI8UoVfRNQ10yg==
 
+"@types/google-protobuf@^3.2.7":
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/@types/google-protobuf/-/google-protobuf-3.2.7.tgz#9576ed5dd62cdb1c9f952522028a03b7cb2b69b5"
+  integrity sha512-Pb9wl5qDEwfnJeeu6Zpn5Y+waLrKETStqLZXHMGCTbkNuBBudPy4qOGN6veamyeoUBwTm2knOVeP/FlHHhhmzA==
+
 "@types/jasmine@*":
   version "3.3.12"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.12.tgz#bf282cb540e9ad7a0a04b742082c073b655eab39"

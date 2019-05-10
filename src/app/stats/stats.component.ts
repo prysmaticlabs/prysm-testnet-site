@@ -11,7 +11,8 @@ import { BlockTreeResponse } from 'src/proto/chain_pb';
 export class StatsComponent implements OnInit {
 
   inProgress = false;
-  numElements = 0;
+  nodes: Array<any> = [];
+  links: Array<any> = [];
 
   constructor(
     private readonly blockService: BlockTreeService,
@@ -23,8 +24,31 @@ export class StatsComponent implements OnInit {
   ngOnInit() {
     this.progress.startProgress();
     this.blockService.getBlockTree().subscribe(async (res: BlockTreeResponse) => {
-      this.numElements = res.getTreeList().length;
-      console.log(res);
+      const tree = this.blockService.sortTree(res.getTreeList());
+
+      const existingParentBlocks = {};
+      this.nodes = tree.map((node) => {
+        const blockRoot = this.blockService.toHexString(node.getBlockRoot());
+        existingParentBlocks[blockRoot] = true;
+        return {
+          id: blockRoot,
+          label: blockRoot,
+        };
+      });
+
+      for (let i = 0; i < this.nodes.length; i++) {
+        const node = tree[i];
+        const blockRoot = this.blockService.toHexString(node.getBlockRoot());
+        const parentRoot = this.blockService.toHexString(node.getBlock().getParentRootHash32());
+        const hasParent = existingParentBlocks[parentRoot];
+        if (hasParent) {
+          this.links.push({
+            id: i,
+            source: parentRoot,
+            target: blockRoot,
+          });
+        }
+      }
       this.progress.stopProgress();
     });
   }

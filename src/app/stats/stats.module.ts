@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
 
 import { StatsComponent } from './stats.component';
 import { BlockTreeService } from './block-tree.service';
@@ -8,6 +9,7 @@ import { BlockTreeService } from './block-tree.service';
   declarations: [StatsComponent],
   imports: [
     CommonModule,
+    NgxGraphModule,
   ],
   providers: [
     BlockTreeService,
