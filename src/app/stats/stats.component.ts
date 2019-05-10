@@ -4,12 +4,13 @@ import { ProgressService } from '../progress.service';
 import { BlockTreeResponse } from 'src/proto/chain_pb';
 import { Subject, interval } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import BigNumber from 'bignumber.js';
 
 interface GraphVertex {
   id: string | number;
   label: string;
   isJustified: boolean;
-  votes: number;
+  votes: string;
   numAttestations: number;
   numDeposits: number;
   slot: string;
@@ -63,14 +64,22 @@ export class StatsComponent implements OnInit {
       const newNodes = tree.map((node, idx) => {
         const blockRoot = this.blockService.toHexString(node.getBlockRoot());
         existingParentBlocks[blockRoot] = true;
+
+        let votesString = (node.getVotes() / MAX_DEPOSIT_AMOUNT).toString();
+        if (votesString.indexOf('.') === -1) {
+          votesString += '.';
+        }
+        while (votesString.length < votesString.indexOf('.') + 8) {
+          votesString += '0';
+        }
         return {
           id: blockRoot,
           label: blockRoot,
           isJustified: idx === 0,
-          votes: node.getVotes() / MAX_DEPOSIT_AMOUNT,
+          votes: votesString,
           numAttestations: node.getBlock().getBody().getAttestationsList().length,
           numDeposits: node.getBlock().getBody().getDepositsList().length,
-          slot: (BigInt(node.getBlock().getSlot()) - BigInt(GENESIS_SLOT)).toString(),
+          slot: (new BigNumber(node.getBlock().getSlot()).minus(new BigNumber(GENESIS_SLOT))).toString(),
         };
       });
 
