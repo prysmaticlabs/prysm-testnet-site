@@ -17,7 +17,7 @@ message BlockTreeResponse {
 }
 
 message BeaconBlock {
-  uint64 slot = 1;
+  uint64 slot = 1 [jstype = JS_STRING];
   bytes parent_root_hash32 = 2;
   bytes state_root_hash32 = 3;
   bytes randao_reveal = 4;

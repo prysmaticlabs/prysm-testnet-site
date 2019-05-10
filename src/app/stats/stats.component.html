@@ -1,7 +1,26 @@
+<div class="charts">
 <ngx-graph
   class="chart-container"
-  [view]="[500, 200]"
   [links]="links"
   [nodes]="nodes"
+  [zoomToFit$]="zoomToFit$"
+  [autoZoom]="true"
+  [draggingEnabled]="false"
 >
+  <ng-template #nodeTemplate let-node>
+    <svg:g class="node">
+      <svg:rect [attr.width]="180" [attr.height]="120" stroke="#3d465a" fill="#FFFFFF" stroke-width="2" rx="15" ry="15" />
+      <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="15">
+        Votes: {{node.votes}}
+      </svg:text>
+      <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="30">
+        Attestations: {{node.numAttestations}}
+      </svg:text>
+      <svg:text class="node-label" alignment-baseline="central" [attr.x]="(180 / 2) - (node.label.length / 3)" [attr.y]="140">
+        {{node.label.slice(0, 10)}}
+      </svg:text>
+    </svg:g>
+  </ng-template>
 </ngx-graph>
+</div>
+

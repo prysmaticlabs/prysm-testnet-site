@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { BlockTreeService } from './block-tree.service';
 import { ProgressService } from '../progress.service';
 import { BlockTreeResponse } from 'src/proto/chain_pb';
+import { Subject } from 'rxjs';
 
 interface GraphVertex {
   id: string | number;
   label: string;
+  votes: number;
+  numAttestations: number;
 }
 
 interface GraphEdge {
@@ -24,6 +27,9 @@ export class StatsComponent implements OnInit {
   inProgress = false;
   nodes: Array<GraphVertex> = [];
   links: Array<GraphEdge> = [];
+
+  zoomToFit$: Subject<boolean> = new Subject();
+
 
   constructor(
     private readonly blockService: BlockTreeService,
@@ -44,6 +50,8 @@ export class StatsComponent implements OnInit {
         return {
           id: blockRoot,
           label: blockRoot,
+          votes: node.getVotes(),
+          numAttestations: node.getBlock().getBody().getAttestationsList().length,
         };
       });
 
@@ -54,7 +62,7 @@ export class StatsComponent implements OnInit {
         const hasParent = existingParentBlocks[parentRoot];
         if (hasParent) {
           this.links.push({
-            id: i,
+            id: blockRoot.slice(0, 3),
             source: parentRoot,
             target: blockRoot,
           });
@@ -64,4 +72,7 @@ export class StatsComponent implements OnInit {
     });
   }
 
+  fitGraph() {
+      this.zoomToFit$.next(true);
+  }
 }
