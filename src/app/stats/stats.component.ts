@@ -3,6 +3,17 @@ import { BlockTreeService } from './block-tree.service';
 import { ProgressService } from '../progress.service';
 import { BlockTreeResponse } from 'src/proto/chain_pb';
 
+interface GraphVertex {
+  id: string | number;
+  label: string;
+}
+
+interface GraphEdge {
+  id: string | number;
+  source: string;
+  target: string;
+}
+
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
@@ -11,8 +22,8 @@ import { BlockTreeResponse } from 'src/proto/chain_pb';
 export class StatsComponent implements OnInit {
 
   inProgress = false;
-  nodes: Array<any> = [];
-  links: Array<any> = [];
+  nodes: Array<GraphVertex> = [];
+  links: Array<GraphEdge> = [];
 
   constructor(
     private readonly blockService: BlockTreeService,
