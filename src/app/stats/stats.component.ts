@@ -65,11 +65,11 @@ export class StatsComponent implements OnInit {
         const blockRoot = this.blockService.toHexString(node.getBlockRoot());
         existingParentBlocks[blockRoot] = true;
 
-        let votesString = (node.getVotes() / MAX_DEPOSIT_AMOUNT).toString();
+        let votesString = Math.floor(node.getVotes() / MAX_DEPOSIT_AMOUNT).toString();
         if (votesString.indexOf('.') === -1) {
           votesString += '.';
         }
-        while (votesString.length < votesString.indexOf('.') + 8) {
+        while (votesString.length < votesString.indexOf('.') + 15) {
           votesString += '0';
         }
         return {
