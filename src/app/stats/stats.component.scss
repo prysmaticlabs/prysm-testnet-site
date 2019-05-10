@@ -1,6 +1,27 @@
+@import '../../styles/variables';
+
 .charts {
-    margin-left: -150px;
-    height: 500px;
-    width: 1200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 120px 20px;
+    height: 100% !important;
+    width: 100% !important;
     background-color: white;
+}
+
+.slot {
+    font-weight: bold;
+}
+
+.node .justified {
+    stroke: $pink;
+}
+
+.node:not(.justified) {
+    stroke: #3d465a;
+}
+
+.line {
+    width: 200px;
 }

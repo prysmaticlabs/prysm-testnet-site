@@ -3,22 +3,38 @@
   class="chart-container"
   [links]="links"
   [nodes]="nodes"
-  [zoomToFit$]="zoomToFit$"
   [autoZoom]="true"
-  [draggingEnabled]="false"
+  [draggingEnabled]="true"
+  [update$]="update$"
+  [center$]="center$"
 >
   <ng-template #nodeTemplate let-node>
     <svg:g class="node">
-      <svg:rect [attr.width]="180" [attr.height]="120" stroke="#3d465a" fill="#FFFFFF" stroke-width="2" rx="15" ry="15" />
-      <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="15">
+      <svg:rect [attr.width]="240" [attr.height]="180" [class.justified]="node.isJustified" fill="#FFFFFF" stroke-width="3" rx="15" ry="15" />
+      <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="30">
         Votes: {{node.votes}}
       </svg:text>
-      <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="30">
+      <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="55">
         Attestations: {{node.numAttestations}}
       </svg:text>
-      <svg:text class="node-label" alignment-baseline="central" [attr.x]="(180 / 2) - (node.label.length / 3)" [attr.y]="140">
+      <svg:text class="slot node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="80">
+        Slot: {{node.slot}}
+      </svg:text>
+      <svg:text *ngIf="node.isJustified" class="slot" alignment-baseline="central" [attr.x]="16" [attr.y]="105">
+        Justified Block 
+      </svg:text>
+      <svg:text class="node-label" alignment-baseline="central" [attr.x]="(240 / 2) - (node.label.length / 3)" [attr.y]="140">
         {{node.label.slice(0, 10)}}
       </svg:text>
+    </svg:g>
+  </ng-template>
+  <ng-template #linkTemplate let-link>
+    <svg:g class="edge">
+      <svg:path
+        class="line"
+        stroke-width="4"
+        marker-end="url(#arrow)" >
+      </svg:path>
     </svg:g>
   </ng-template>
 </ngx-graph>

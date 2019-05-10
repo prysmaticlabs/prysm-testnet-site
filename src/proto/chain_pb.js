@@ -756,7 +756,7 @@ proto.ethereum.beacon.rpc.v1.BeaconBlock.prototype.toObject = function(opt_inclu
  */
 proto.ethereum.beacon.rpc.v1.BeaconBlock.toObject = function(includeInstance, msg) {
   var f, obj = {
-    slot: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    slot: jspb.Message.getFieldWithDefault(msg, 1, "0"),
     parentRootHash32: msg.getParentRootHash32_asB64(),
     stateRootHash32: msg.getStateRootHash32_asB64(),
     randaoReveal: msg.getRandaoReveal_asB64(),
@@ -800,7 +800,7 @@ proto.ethereum.beacon.rpc.v1.BeaconBlock.deserializeBinaryFromReader = function(
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readUint64());
+      var value = /** @type {string} */ (reader.readUint64String());
       msg.setSlot(value);
       break;
     case 2:
@@ -859,8 +859,8 @@ proto.ethereum.beacon.rpc.v1.BeaconBlock.prototype.serializeBinary = function() 
 proto.ethereum.beacon.rpc.v1.BeaconBlock.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getSlot();
-  if (f !== 0) {
-    writer.writeUint64(
+  if (parseInt(f, 10) !== 0) {
+    writer.writeUint64String(
       1,
       f
     );
@@ -914,16 +914,16 @@ proto.ethereum.beacon.rpc.v1.BeaconBlock.serializeBinaryToWriter = function(mess
 
 /**
  * optional uint64 slot = 1;
- * @return {number}
+ * @return {string}
  */
 proto.ethereum.beacon.rpc.v1.BeaconBlock.prototype.getSlot = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, "0"));
 };
 
 
-/** @param {number} value */
+/** @param {string} value */
 proto.ethereum.beacon.rpc.v1.BeaconBlock.prototype.setSlot = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 

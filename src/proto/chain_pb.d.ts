@@ -54,8 +54,8 @@ export namespace BlockTreeResponse {
 }
 
 export class BeaconBlock extends jspb.Message {
-  getSlot(): number;
-  setSlot(value: number): void;
+  getSlot(): string;
+  setSlot(value: string): void;
 
   getParentRootHash32(): Uint8Array | string;
   getParentRootHash32_asU8(): Uint8Array;
@@ -97,7 +97,7 @@ export class BeaconBlock extends jspb.Message {
 
 export namespace BeaconBlock {
   export type AsObject = {
-    slot: number,
+    slot: string,
     parentRootHash32: Uint8Array | string,
     stateRootHash32: Uint8Array | string,
     randaoReveal: Uint8Array | string,
