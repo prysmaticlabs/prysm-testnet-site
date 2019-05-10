@@ -4,9 +4,7 @@
   [links]="links"
   [nodes]="nodes"
   [autoZoom]="true"
-  [draggingEnabled]="true"
-  [update$]="update$"
-  [center$]="center$"
+  [draggingEnabled]="false"
 >
   <ng-template #nodeTemplate let-node>
     <svg:g class="node">
@@ -26,15 +24,6 @@
       <svg:text class="node-label" alignment-baseline="central" [attr.x]="(240 / 2) - (node.label.length / 3)" [attr.y]="140">
         {{node.label.slice(0, 10)}}
       </svg:text>
-    </svg:g>
-  </ng-template>
-  <ng-template #linkTemplate let-link>
-    <svg:g class="edge">
-      <svg:path
-        class="line"
-        stroke-width="4"
-        marker-end="url(#arrow)" >
-      </svg:path>
     </svg:g>
   </ng-template>
 </ngx-graph>

@@ -36,8 +36,6 @@ export class StatsComponent implements OnInit {
   inProgress = false;
   nodes: Array<GraphVertex> = [];
   links: Array<GraphEdge> = [];
-  update$: Subject<boolean> = new Subject();
-  center$: Subject<boolean> = new Subject();
 
   constructor(
     private readonly blockService: BlockTreeService,
@@ -46,22 +44,22 @@ export class StatsComponent implements OnInit {
     this.progress.progress.subscribe(v => this.inProgress = v);
   }
 
-  slotPoll() {
-    return interval(SLOT_DURATION_MILLISECONDS)
-      .pipe(
-        switchMap(() => {
-          this.progress.startProgress();
-          return this.blockService.getBlockTree();
-        }), 
-        // distinctUntilChanged(), // only emit and redraw graph if the value has actually changed
-      );
-  }
+  // slotPoll() {
+  //   return interval(SLOT_DURATION_MILLISECONDS)
+  //     .pipe(
+  //       switchMap(() => {
+  //         this.progress.startProgress();
+  //         return this.blockService.getBlockTree();
+  //       }), 
+  //       // distinctUntilChanged(), // only emit and redraw graph if the value has actually changed
+  //     );
+  // }
 
   ngOnInit() {
-    this.slotPoll().subscribe(async (res: BlockTreeResponse) => {
+    this.blockService.getBlockTree().subscribe(async (res: BlockTreeResponse) => {
       const tree = this.blockService.sortTree(res.getTreeList());
       const existingParentBlocks = {};
-      const newNodes = tree.map((node, idx) => {
+      this.nodes = tree.map((node, idx) => {
         const blockRoot = this.blockService.toHexString(node.getBlockRoot());
         existingParentBlocks[blockRoot] = true;
 
@@ -83,25 +81,22 @@ export class StatsComponent implements OnInit {
         };
       });
 
-      let newLinks = [];
       for (let i = 0; i < this.nodes.length; i++) {
         const node = tree[i];
         const blockRoot = this.blockService.toHexString(node.getBlockRoot());
         const parentRoot = this.blockService.toHexString(node.getBlock().getParentRootHash32());
         const hasParent = existingParentBlocks[parentRoot];
         if (hasParent) {
-          newLinks.push({
+          this.links.push({
             id: blockRoot.slice(0, 3),
             source: parentRoot,
             target: blockRoot,
           });
         }
       }
-      this.nodes = newNodes;
-      this.links = newLinks;
-      this.update$.next(true);
-      this.center$.next(true);
-      this.progress.stopProgress();
+      // this.update$.next(true);
+      // this.center$.next(true);
+      // this.progress.stopProgress();
     });
   }
 }
