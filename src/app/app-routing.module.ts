@@ -9,6 +9,7 @@ const routes: Routes = [
   {path: '', pathMatch: 'full', component: HomeComponent},
   {path: 'stats', component: StatsComponent},
   {path: 'participate', component: ParticipateComponent},
+  {path: '**', redirectTo: ''},
 ];
 
 @NgModule({

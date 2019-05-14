@@ -1,11 +1,27 @@
 <nav>
   <mat-toolbar [class.loaded]="!inProgress">
-    <span class="brand"><a routerLink="/">💎 <span class="brand-text">Prysm Eth2 Testnet</span></a></span>
+    <span id="brand-logo" class="brand"><a routerLink="/">💎 <span class="brand-text">Prysm Eth2 Testnet</span></a></span>
 
     <span class="flex-spacer"></span>
-    <a class="link" routerLink="/" mat-button>Home</a>
-    <a routerLink="/participate" mat-button>Participate</a>
-    <a class="link" target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!</a>
+    <a id="home-link"
+       class="link"
+       routerLink="/"
+       mat-button>
+      Home
+    </a>
+    <a id="participate-link"
+       routerLink="/participate"
+       mat-button>
+      Participate
+    </a>
+    <a id="deposit-contract-link"
+       class="link"
+       target="_blank"
+       href="https://goerli.etherscan.io/address/{{depositContractAddress}}"
+       *ngIf="numValidators"
+       mat-button>
+      {{numValidators}} validators!
+    </a>
   </mat-toolbar>
   <mat-progress-bar *ngIf="inProgress" mode="indeterminate" color="primary"></mat-progress-bar>
 </nav>
