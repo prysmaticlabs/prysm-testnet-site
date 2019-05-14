@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockTreeService } from './block-tree.service';
 import { ProgressService } from '../progress.service';
-import { BlockTreeResponse } from 'src/proto/chain_pb';
+import { BlockTreeResponse } from '../../proto/chain_pb';
 import { Subject, interval } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import BigNumber from 'bignumber.js';
