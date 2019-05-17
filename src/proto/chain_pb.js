@@ -355,15 +355,13 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.BlockTreeResponse.prototype.toObject = function(opt_includeInstance) {
@@ -373,8 +371,8 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.prototype.toObject = function(opt
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.BlockTreeResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -470,15 +468,13 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.serializeBinaryToWriter = functio
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.toObject = function(opt_includeInstance) {
@@ -488,8 +484,8 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.toObject = fun
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode} msg The msg instance to transform.
  * @return {!Object}
@@ -499,7 +495,8 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.toObject = function(incl
   var f, obj = {
     block: (f = msg.getBlock()) && proto.ethereum.beacon.rpc.v1.BeaconBlock.toObject(includeInstance, f),
     blockRoot: msg.getBlockRoot_asB64(),
-    votes: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    participatedVotes: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    totalVotes: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -547,7 +544,11 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.deserializeBinaryFromRea
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setVotes(value);
+      msg.setParticipatedVotes(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setTotalVotes(value);
       break;
     default:
       reader.skipField();
@@ -593,10 +594,17 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.serializeBinaryToWriter 
       f
     );
   }
-  f = message.getVotes();
+  f = message.getParticipatedVotes();
   if (f !== 0) {
     writer.writeUint64(
       3,
+      f
+    );
+  }
+  f = message.getTotalVotes();
+  if (f !== 0) {
+    writer.writeUint64(
+      4,
       f
     );
   }
@@ -676,17 +684,32 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.setBlockRoot =
 
 
 /**
- * optional uint64 votes = 3;
+ * optional uint64 participated_votes = 3;
  * @return {number}
  */
-proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.getVotes = function() {
+proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.getParticipatedVotes = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
 /** @param {number} value */
-proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.setVotes = function(value) {
+proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.setParticipatedVotes = function(value) {
   jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional uint64 total_votes = 4;
+ * @return {number}
+ */
+proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.getTotalVotes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.ethereum.beacon.rpc.v1.BlockTreeResponse.TreeNode.prototype.setTotalVotes = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -729,15 +752,13 @@ proto.ethereum.beacon.rpc.v1.BlockTreeResponse.prototype.clearTreeList = functio
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.BeaconBlock.prototype.toObject = function(opt_includeInstance) {
@@ -747,8 +768,8 @@ proto.ethereum.beacon.rpc.v1.BeaconBlock.prototype.toObject = function(opt_inclu
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.BeaconBlock} msg The msg instance to transform.
  * @return {!Object}
@@ -1161,15 +1182,13 @@ proto.ethereum.beacon.rpc.v1.BeaconBlockBody.repeatedFields_ = [1,2,3,4,5];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.BeaconBlockBody.prototype.toObject = function(opt_includeInstance) {
@@ -1179,8 +1198,8 @@ proto.ethereum.beacon.rpc.v1.BeaconBlockBody.prototype.toObject = function(opt_i
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.BeaconBlockBody} msg The msg instance to transform.
  * @return {!Object}
@@ -1506,15 +1525,13 @@ proto.ethereum.beacon.rpc.v1.BeaconBlockBody.prototype.clearVoluntaryExitsList =
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.Attestation.prototype.toObject = function(opt_includeInstance) {
@@ -1524,8 +1541,8 @@ proto.ethereum.beacon.rpc.v1.Attestation.prototype.toObject = function(opt_inclu
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.Attestation} msg The msg instance to transform.
  * @return {!Object}
@@ -1806,15 +1823,13 @@ proto.ethereum.beacon.rpc.v1.Attestation.prototype.setAggregateSignature = funct
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.AttestationData.prototype.toObject = function(opt_includeInstance) {
@@ -1824,8 +1839,8 @@ proto.ethereum.beacon.rpc.v1.AttestationData.prototype.toObject = function(opt_i
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.AttestationData} msg The msg instance to transform.
  * @return {!Object}
@@ -2238,15 +2253,13 @@ proto.ethereum.beacon.rpc.v1.AttestationData.prototype.setJustifiedBlockRootHash
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.ProposalSignedData.prototype.toObject = function(opt_includeInstance) {
@@ -2256,8 +2269,8 @@ proto.ethereum.beacon.rpc.v1.ProposalSignedData.prototype.toObject = function(op
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.ProposalSignedData} msg The msg instance to transform.
  * @return {!Object}
@@ -2450,15 +2463,13 @@ proto.ethereum.beacon.rpc.v1.SlashableAttestation.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.SlashableAttestation.prototype.toObject = function(opt_includeInstance) {
@@ -2468,8 +2479,8 @@ proto.ethereum.beacon.rpc.v1.SlashableAttestation.prototype.toObject = function(
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.SlashableAttestation} msg The msg instance to transform.
  * @return {!Object}
@@ -2477,7 +2488,7 @@ proto.ethereum.beacon.rpc.v1.SlashableAttestation.prototype.toObject = function(
  */
 proto.ethereum.beacon.rpc.v1.SlashableAttestation.toObject = function(includeInstance, msg) {
   var f, obj = {
-    validatorIndicesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
+    validatorIndicesList: jspb.Message.getRepeatedField(msg, 1),
     custodyBitfield: msg.getCustodyBitfield_asB64(),
     data: (f = msg.getData()) && proto.ethereum.beacon.rpc.v1.AttestationData.toObject(includeInstance, f),
     aggregateSignature: msg.getAggregateSignature_asB64()
@@ -2743,15 +2754,13 @@ proto.ethereum.beacon.rpc.v1.SlashableAttestation.prototype.setAggregateSignatur
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.ProposerSlashing.prototype.toObject = function(opt_includeInstance) {
@@ -2761,8 +2770,8 @@ proto.ethereum.beacon.rpc.v1.ProposerSlashing.prototype.toObject = function(opt_
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.ProposerSlashing} msg The msg instance to transform.
  * @return {!Object}
@@ -3066,15 +3075,13 @@ proto.ethereum.beacon.rpc.v1.ProposerSlashing.prototype.setProposalSignature2 = 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.AttesterSlashing.prototype.toObject = function(opt_includeInstance) {
@@ -3084,8 +3091,8 @@ proto.ethereum.beacon.rpc.v1.AttesterSlashing.prototype.toObject = function(opt_
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.AttesterSlashing} msg The msg instance to transform.
  * @return {!Object}
@@ -3260,15 +3267,13 @@ proto.ethereum.beacon.rpc.v1.AttesterSlashing.prototype.hasSlashableAttestation2
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.Crosslink.prototype.toObject = function(opt_includeInstance) {
@@ -3278,8 +3283,8 @@ proto.ethereum.beacon.rpc.v1.Crosslink.prototype.toObject = function(opt_include
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.Crosslink} msg The msg instance to transform.
  * @return {!Object}
@@ -3445,15 +3450,13 @@ proto.ethereum.beacon.rpc.v1.Deposit.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.Deposit.prototype.toObject = function(opt_includeInstance) {
@@ -3463,8 +3466,8 @@ proto.ethereum.beacon.rpc.v1.Deposit.prototype.toObject = function(opt_includeIn
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.Deposit} msg The msg instance to transform.
  * @return {!Object}
@@ -3691,15 +3694,13 @@ proto.ethereum.beacon.rpc.v1.Deposit.prototype.setDepositData = function(value) 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.VoluntaryExit.prototype.toObject = function(opt_includeInstance) {
@@ -3709,8 +3710,8 @@ proto.ethereum.beacon.rpc.v1.VoluntaryExit.prototype.toObject = function(opt_inc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.VoluntaryExit} msg The msg instance to transform.
  * @return {!Object}
@@ -3896,15 +3897,13 @@ proto.ethereum.beacon.rpc.v1.VoluntaryExit.prototype.setSignature = function(val
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.Eth1Data.prototype.toObject = function(opt_includeInstance) {
@@ -3914,8 +3913,8 @@ proto.ethereum.beacon.rpc.v1.Eth1Data.prototype.toObject = function(opt_includeI
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.Eth1Data} msg The msg instance to transform.
  * @return {!Object}
@@ -4098,15 +4097,13 @@ proto.ethereum.beacon.rpc.v1.Eth1Data.prototype.setBlockHash32 = function(value)
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto.
+ * Creates an object representation of this proto suitable for use in Soy templates.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.ethereum.beacon.rpc.v1.Eth1DataVote.prototype.toObject = function(opt_includeInstance) {
@@ -4116,8 +4113,8 @@ proto.ethereum.beacon.rpc.v1.Eth1DataVote.prototype.toObject = function(opt_incl
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.ethereum.beacon.rpc.v1.Eth1DataVote} msg The msg instance to transform.
  * @return {!Object}

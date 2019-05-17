@@ -12,7 +12,8 @@ message BlockTreeResponse {
   message TreeNode {
     BeaconBlock block = 1;
     bytes block_root = 2;
-    uint64 votes = 3;
+    uint64 participated_votes = 3;
+    uint64 total_votes = 4;
   }
 }
 

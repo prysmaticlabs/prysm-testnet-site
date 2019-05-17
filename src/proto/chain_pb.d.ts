@@ -32,8 +32,11 @@ export namespace BlockTreeResponse {
     getBlockRoot_asB64(): string;
     setBlockRoot(value: Uint8Array | string): void;
 
-    getVotes(): number;
-    setVotes(value: number): void;
+    getParticipatedVotes(): number;
+    setParticipatedVotes(value: number): void;
+
+    getTotalVotes(): number;
+    setTotalVotes(value: number): void;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TreeNode.AsObject;
@@ -47,7 +50,8 @@ export namespace BlockTreeResponse {
     export type AsObject = {
       block?: BeaconBlock.AsObject,
       blockRoot: Uint8Array | string,
-      votes: number,
+      participatedVotes: number,
+      totalVotes: number,
     }
   }
 

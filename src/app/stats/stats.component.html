@@ -10,7 +10,10 @@
     <svg:g class="node">
       <svg:rect [attr.width]="240" [attr.height]="180" [class.justified]="node.isJustified" fill="#FFFFFF" stroke-width="3" rx="15" ry="15" />
       <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="30">
-        Votes: {{node.votes}}
+        Votes: {{node.totalVotes}}
+      </svg:text>
+      <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="30">
+        Votes: {{node.participatedVotes}}
       </svg:text>
       <svg:text class="node-type" alignment-baseline="central" [attr.x]="16" [attr.y]="55">
         Attestations: {{node.numAttestations}}

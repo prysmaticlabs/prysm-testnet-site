@@ -10,7 +10,8 @@ interface GraphVertex {
   id: string | number;
   label: string;
   isJustified: boolean;
-  votes: string;
+  participatedVotes: string;
+  totalVotes: string;
   numAttestations: number;
   numDeposits: number;
   slot: string;
@@ -63,18 +64,26 @@ export class StatsComponent implements OnInit {
         const blockRoot = this.blockService.toHexString(node.getBlockRoot());
         existingParentBlocks[blockRoot] = true;
 
-        let votesString = Math.floor(node.getVotes() / MAX_DEPOSIT_AMOUNT).toString();
-        if (votesString.indexOf('.') === -1) {
-          votesString += '.';
+        let participatedVotesString = Math.floor(node.getParticipatedVotes() / MAX_DEPOSIT_AMOUNT).toString();
+        if (participatedVotesString.indexOf('.') === -1) {
+          participatedVotesString += '.';
         }
-        while (votesString.length < votesString.indexOf('.') + 15) {
-          votesString += '0';
+        while (participatedVotesString.length < participatedVotesString.indexOf('.') + 15) {
+          participatedVotesString += '0';
+        }
+        let totalVotesString = Math.floor(node.getParticipatedVotes() / MAX_DEPOSIT_AMOUNT).toString();
+        if (totalVotesString.indexOf('.') === -1) {
+          totalVotesString += '.';
+        }
+        while (totalVotesString.length < totalVotesString.indexOf('.') + 15) {
+          totalVotesString += '0';
         }
         return {
           id: blockRoot,
           label: blockRoot,
           isJustified: idx === 0,
-          votes: votesString,
+          participatedVotes: participatedVotesString,
+          totalVotes: totalVotesString,
           numAttestations: node.getBlock().getBody().getAttestationsList().length,
           numDeposits: node.getBlock().getBody().getDepositsList().length,
           slot: (new BigNumber(node.getBlock().getSlot()).minus(new BigNumber(GENESIS_SLOT))).toString(),
