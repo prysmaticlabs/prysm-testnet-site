@@ -3990,10 +3990,10 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
-google-protobuf@3.7.0-rc.2:
-  version "3.7.0-rc.2"
-  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.7.0-rc.2.tgz#a65e9216825065099c4ff243eee9e16e764cc2c9"
-  integrity sha512-mHl4c23RGm7PakQ7OODtWa0H3tpm78we9JE23GkcrTL8rbD/7jpX6p5977quPdr9bLa0yJSst4tDDyXl8wwW3Q==
+google-protobuf@3.9.2:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.9.2.tgz#3ae89569ec8df1c9e83609f77b09f7ed56d2414e"
+  integrity sha512-TxK/kqHmVeqTXiuejN9aAy4Y/8bTa9k+F1/WXCOuIXCMheV1ySeSFfYS4ctzM6WZZbUo6rlshoX4/eqEK28Swg==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2:
   version "4.1.15"
