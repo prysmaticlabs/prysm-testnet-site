@@ -33,7 +33,7 @@
     "@ngx-pwa/local-storage": "7.4.1",
     "@portis/web3": "2.0.0-beta.11",
     "@types/deep-equal": "1.0.1",
-    "core-js": "2.6.5",
+    "core-js": "2.6.9",
     "deep-equal": "1.0.1",
     "ethers": "4.0.27",
     "express": "4.16.4",
