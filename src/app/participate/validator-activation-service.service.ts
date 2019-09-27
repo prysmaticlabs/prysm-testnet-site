@@ -127,11 +127,16 @@ export class ValidatorActivationServiceService {
           genesisTime.getTime() + status.getDepositInclusionSlot() * SECONDS_PER_SLOT * 1000
         );
         const secSinceInclusion = Math.max(0, (now.getTime() - inclusionTime.getTime()) / 1000);
-        const estimatedDelaySlots =
-          (ACTIVATION_ELIGIBILITY_DELAY_SLOTS *
-          status.getPositionInActivationQueue()) +
-          SLOTS_PER_ETH1_VOTING_PERIOD;
-        const estimatedDelaySec = SECONDS_PER_SLOT * estimatedDelaySlots;
+
+        // Hardcoding delay sec to 10 minutes for now.
+
+        // const estimatedDelaySlots =
+        //   (ACTIVATION_ELIGIBILITY_DELAY_SLOTS *
+        //   status.getPositionInActivationQueue()) +
+        //   (2 * SLOTS_PER_ETH1_VOTING_PERIOD);
+        // const estimatedDelaySec = SECONDS_PER_SLOT * estimatedDelaySlots;
+
+        const estimatedDelaySec = 10 * 60; // 10 minutes.
 
         const percent = 50 + Math.min(48, (secSinceInclusion / estimatedDelaySec) * 100);
 
