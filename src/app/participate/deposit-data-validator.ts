@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn, ValidationErrors } from '@angular/forms';
 
-export const DEPOSIT_DATA_LENGTH = 386;
+export const DEPOSIT_DATA_LENGTH = 778;
 
 @Directive({
   selector: '[depositDataValidation]',

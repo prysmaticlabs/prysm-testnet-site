@@ -1,19 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
-interface DepositData {
+import { ethers } from 'ethers';
+import { DEPOSIT_CONTRACT_ABI } from '../web3/DepositContract';
+
+export interface DepositData {
   pubkey: string;
-  proof_of_possession: string;
-  withdrawal_credentials_hash32: string;
+  signature: string;
+  withdrawal_credentials: string;
 }
+
+const contractInterface = new ethers.utils.Interface(DEPOSIT_CONTRACT_ABI);
 
 @Injectable({
   providedIn: 'root'
 })
 export class DecodeDepositDataService {
-  constructor(private http: HttpClient) { }
 
-  decodeDepositData(deposit: string) {
-    return this.http.post<DepositData>('https://prylabs.net/ssz/decodeDepositData', { data: (deposit || '').trim() });
+  // Decode raw transaction arguments into deposit data.
+  decodeDepositData(deposit: string): Observable<DepositData> {  
+    const args = contractInterface.parseTransaction({data: deposit.trim()}).args;
+
+    return of({
+      pubkey: args[0],
+      withdrawal_credentials: args[1],
+      signature: args[2],
+    });
   }
 }
