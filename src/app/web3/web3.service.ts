@@ -113,7 +113,7 @@ export abstract class Web3Service {
     }
 
     return new Observable<void>(observer => {
-      const filter = this.depositContract(address).filters.Deposit();
+      const filter = this.depositContract(address).filters.DepositEvent();
       this.depositContract(address).on(filter, () => observer.next());
     });
   }

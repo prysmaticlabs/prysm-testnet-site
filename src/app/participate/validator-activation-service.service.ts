@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { zip, Observable, interval, of, Subject, from } from 'rxjs';
 import { retry, withLatestFrom, map, tap, switchMap, startWith, takeWhile, skipWhile, distinctUntilKeyChanged, distinct, distinctUntilChanged } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import {Buffer} from 'buffer';
 import deepEqual from 'deep-equal';
 
 import { environment } from '../../environments/environment';
@@ -33,19 +35,22 @@ export class ValidatorActivationServiceService {
   constructor(
     private readonly web3: NoAccessWeb3Service,
     private readonly contractService: ContractService,
+    private readonly http: HttpClient,
   ) { }
 
+  genesisTime(): Observable<Date> {
+    return this.http.get('https://api.prylabs.net/eth/v1alpha1/node/genesis').pipe(
+      map((res: {genesisTime: string}) => new Date(Date.parse(res.genesisTime)))
+    );
+  }
 
   // Updates the validator status percent every 200ms until 100%.
   validatorStatus(pubkey: string): Observable<ValidatorStatusUpdate> {
-
-    const genesisTime$ = this.contractService.getAddress()
-      .pipe(switchMap(address => this.web3.genesisTime(address)));
+    const genesisTime$ = this.genesisTime();
 
     return zip(genesisTime$, this.statusFromServer(pubkey))
       .pipe(
         switchMap(([genesisTime, status]) => {
-
           const pollingInterval = SECONDS_PER_SLOT * 1000;
           const latestStatus$ = interval(pollingInterval).pipe(
             startWith(status),
@@ -74,6 +79,10 @@ export class ValidatorActivationServiceService {
   }
 
   private statusFromServer(pubkey: string): Observable<ValidatorStatusResponse> {
+    console.log("Requesting status from server");
+    if (pubkey.startsWith('0x')) {
+       pubkey = Buffer.from(pubkey.slice(2), 'hex').toString('base64')
+    }
     return new Observable<ValidatorStatusResponse>((observer) => {
       const req: ValidatorIndexRequest = new ValidatorIndexRequest();
       req.setPublicKey(pubkey);
@@ -85,7 +94,7 @@ export class ValidatorActivationServiceService {
           observer.next(resp);
         }
       });
-    }).pipe(retry(5));
+    }).pipe(retry());
   }
 
   private blockTime(status: ValidatorStatusResponse): Observable<Date> {

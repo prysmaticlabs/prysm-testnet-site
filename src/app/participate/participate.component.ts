@@ -16,7 +16,7 @@ import { DEPOSIT_AMOUNT, Web3Service, Web3Provider } from '../web3/web3.service'
 import { environment } from '../../environments/environment';
 import { ContractService } from '../web3/contract.service';
 import { DEPOSIT_DATA_LENGTH } from './deposit-data-validator';
-import { DecodeDepositDataService } from './decode-deposit-data.service';
+import { DepositData, DecodeDepositDataService } from './decode-deposit-data.service';
 import { ValidatorActivationServiceService, ValidatorStatusUpdate } from './validator-activation-service.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
@@ -34,12 +34,13 @@ export class ParticipateComponent implements OnInit {
   balance: string;
   balance$?: Observable<unknown>;
   depositData: string;
+  dd: DepositData; 
   depositDataFormGroup: FormGroup;
   deposited: boolean | 'pending' = false;
   depositContractAddress: string;
   validatorStatus: ValidatorStatusUpdate;
   readonly MIN_BALANCE = ethers.utils.formatEther(environment.depositAmount);
-  readonly DOCKER_TAG = 'sapphire';
+  readonly DOCKER_TAG = 'latest';
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @ViewChild('stepper') stepper: MatStepper;
@@ -71,6 +72,7 @@ export class ParticipateComponent implements OnInit {
       // TODO: Handle invalid input or server error.
       this.depositDataService.decodeDepositData(data).subscribe(d => {
         this.pubkey = d.pubkey;
+        this.dd = d;
       });
 
     });
@@ -87,6 +89,7 @@ export class ParticipateComponent implements OnInit {
     // TODO: Handle invalid input or server error.
     this.depositDataService.decodeDepositData(data).subscribe(d => {
       this.pubkey = d.pubkey;
+      this.dd = d;
     });
   }
 
@@ -133,7 +136,7 @@ export class ParticipateComponent implements OnInit {
 
       this.deposited = 'pending';
       this.progress.startProgress();
-      this.web3.depositContract(this.depositContractAddress).deposit(this.depositData.trim(), {
+      this.web3.depositContract(this.depositContractAddress).deposit(this.dd.pubkey, this.dd.withdrawal_credentials, this.dd.signature, {
         value: ethers.utils.parseUnits(DEPOSIT_AMOUNT, 'wei'),
         gasLimit: 400000,
       }).then((tx: { hash: string }) => {
