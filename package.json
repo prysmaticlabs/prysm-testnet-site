@@ -30,7 +30,7 @@
     "@angular/router": "7.2.5",
     "@nguniversal/express-engine": "7.1.1",
     "@nguniversal/module-map-ngfactory-loader": "0.0.0",
-    "@ngx-pwa/local-storage": "7.4.1",
+    "@ngx-pwa/local-storage": "7.4.2",
     "@portis/web3": "2.0.0-beta.43",
     "@types/deep-equal": "1.0.1",
     "core-js": "2.6.5",
