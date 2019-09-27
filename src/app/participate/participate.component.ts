@@ -36,7 +36,7 @@ export class ParticipateComponent implements OnInit {
   depositData: string;
   dd: DepositData; 
   depositDataFormGroup: FormGroup;
-  deposited: boolean | 'pending' = true; //false;
+  deposited: boolean | 'pending' = false;
   depositContractAddress: string;
   validatorStatus: ValidatorStatusUpdate;
   readonly MIN_BALANCE = ethers.utils.formatEther(environment.depositAmount);
@@ -180,7 +180,7 @@ export class ParticipateComponent implements OnInit {
   private async updateBalance() {
     const accounts = await this.web3.queryAccounts();
     this.walletAddress = accounts[0];
-    this.balance = "10"; //await this.web3.ethBalanceOf(this.walletAddress);
+    this.balance = await this.web3.ethBalanceOf(this.walletAddress);
   }
 
   /** Snackbar helper to show errors. */

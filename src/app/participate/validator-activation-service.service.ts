@@ -51,8 +51,6 @@ export class ValidatorActivationServiceService {
     return zip(genesisTime$, this.statusFromServer(pubkey))
       .pipe(
         switchMap(([genesisTime, status]) => {
-          console.log("here");
-
           const pollingInterval = SECONDS_PER_SLOT * 1000;
           const latestStatus$ = interval(pollingInterval).pipe(
             startWith(status),
@@ -70,7 +68,7 @@ export class ValidatorActivationServiceService {
             map(vals => this.estimateActivationStatus(genesisTime, vals[1], vals[2])),
           );
         }),
-        // skipWhile((s: ValidatorStatusUpdate)  => s.percent < 0),
+        skipWhile((s: ValidatorStatusUpdate)  => s.percent < 0),
         takeWhile((s: ValidatorStatusUpdate) => s.percent < 100, true),
         startWith({
           percent: 0,
