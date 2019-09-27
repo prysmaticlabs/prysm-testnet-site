@@ -39,7 +39,7 @@ export class ValidatorActivationServiceService {
   ) { }
 
   genesisTime(): Observable<Date> {
-    return this.http.get('https://api.prylabs.network/eth/v1alpha1/node/genesis').pipe(
+    return this.http.get('https://api.prylabs.net/eth/v1alpha1/node/genesis').pipe(
       map((res: {genesisTime: string}) => new Date(Date.parse(res.genesisTime)))
     );
   }

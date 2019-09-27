@@ -124,8 +124,8 @@ docker run -it -v /tmp/prysm-data:/data \
 docker run -it -v /tmp/prysm-data:/data -p 4000:4000 \
   gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
   --datadir=/data \
-  --demo-config \
-  --no-genesis-delay
+  --no-genesis-delay \
+  --init-sync-no-verify
     </pre>
 
     <span>Run the next command in another terminal.</span>
