@@ -124,7 +124,6 @@ docker run -it -v /usr/local/prysm/validator:/data \
 docker run -it -v /usr/local/prysm/beacon:/data -p 4000:4000 \
   gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
   --datadir=/data \
-  --no-genesis-delay \
   --init-sync-no-verify
     </pre>
 
