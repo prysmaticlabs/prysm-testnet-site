@@ -8,7 +8,8 @@
     <a class="link" target="_blank" href="https://goerli.etherscan.io/address/{{depositContractAddress}}" *ngIf="numValidators" mat-button>{{numValidators}} validators!</a>
   </mat-toolbar>
   <mat-toolbar class="warning">
-    <p>Notice: The testnet is currently down until the next scheduled restart. Please follow <a href="https://github.com/prysmaticlabs/prysm/issues/3901">this github issue.</a></p>
+    <p class="desktop">Notice: The testnet is currently down until the next scheduled restart. Please follow <a href="https://github.com/prysmaticlabs/prysm/issues/3901">this github issue.</a></p>
+    <p class="mobile">Notice: <a href="https://github.com/prysmaticlabs/prysm/issues/3901">The testnet is currently down.</a></p>
   </mat-toolbar>
   <mat-progress-bar *ngIf="inProgress" mode="indeterminate" color="primary"></mat-progress-bar>
 </nav>
