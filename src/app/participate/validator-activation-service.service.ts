@@ -128,7 +128,7 @@ export class ValidatorActivationServiceService {
         );
         const secSinceInclusion = Math.max(0, (now.getTime() - inclusionTime.getTime()) / 1000);
 
-        // Hardcoding delay sec to 10 minutes for now.
+        // Hardcoding delay sec to 20 minutes for now.
 
         // const estimatedDelaySlots =
         //   (ACTIVATION_ELIGIBILITY_DELAY_SLOTS *
@@ -136,7 +136,7 @@ export class ValidatorActivationServiceService {
         //   (2 * SLOTS_PER_ETH1_VOTING_PERIOD);
         // const estimatedDelaySec = SECONDS_PER_SLOT * estimatedDelaySlots;
 
-        const estimatedDelaySec = 10 * 60; // 10 minutes.
+        const estimatedDelaySec = 20 * 60; // 20 minutes.
 
         const percent = 50 + Math.min(48, (secSinceInclusion / estimatedDelaySec) * 100);
 
