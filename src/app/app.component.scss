@@ -38,18 +38,6 @@ nav {
       align-items: center;
       justify-content: center;
 
-      .desktop {
-        @media (max-width: 800px) {
-          display: none;
-        }
-      }
-
-      .mobile {
-        @media (min-width: 800px) {
-          display: none;
-        }
-      }
-
       a {
         color: $white;
       }
