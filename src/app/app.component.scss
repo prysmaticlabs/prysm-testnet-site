@@ -28,21 +28,6 @@ nav {
   }
 
   & > mat-toolbar {
-    &.warning {
-      font-weight: 600;
-      color: $white;
-      background: mat-color($theme-warn);
-      font-size: 16px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      a {
-        color: $white;
-      }
-    }
-
     background: $white;
     color: $black;
     .flex-spacer {
