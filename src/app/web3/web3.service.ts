@@ -2,6 +2,7 @@ import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { ethers } from 'ethers';
 import { Observable, Subject } from 'rxjs';
+import {Buffer} from 'buffer';
 
 import { ContractService } from './contract.service';
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
@@ -89,8 +90,10 @@ export abstract class Web3Service {
 
     return this.depositContract(address)
       .functions
-      .deposit_count()
-      .then((res: ethers.utils.BigNumber) => res.toNumber());
+      .get_deposit_count()
+      .then((res: ethers.utils.Arrayish) => {
+        return ethers.utils.bigNumberify(Buffer.from(ethers.utils.arrayify(res)).swap64()).toNumber()
+      });
   }
 
   /** Max value required to deposit */
