@@ -136,7 +136,7 @@ export class ParticipateComponent implements OnInit {
 
       this.deposited = 'pending';
       this.progress.startProgress();
-      this.web3.depositContract(this.depositContractAddress).deposit(this.dd.pubkey, this.dd.withdrawal_credentials, this.dd.signature, {
+      this.web3.depositContract(this.depositContractAddress).deposit(this.dd.pubkey, this.dd.withdrawal_credentials, this.dd.signature, this.dd.deposit_data_root, {
         value: ethers.utils.parseUnits(DEPOSIT_AMOUNT, 'wei'),
         gasLimit: 400000,
       }).then((tx: { hash: string }) => {
