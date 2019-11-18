@@ -91,7 +91,7 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
       <ng-template matStepLabel>Generate a validator public / private key</ng-template>
       <div>
         <pre>
-docker run -it -v /tmp/prysm/validator:/data \
+docker run -it -v $HOME/prysm:/data \
    gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \
    accounts create --keystore-path=/data --password=changeme</pre>
        <div>
@@ -121,7 +121,7 @@ docker run -it -v /tmp/prysm/validator:/data \
     <ng-template matStepLabel>Start your beacon chain & validator clients</ng-template>
     <span>You'll need two terminals for this step.</span>
     <pre>
-docker run -it -v /tmp/prysm/beacon:/data -p 4000:4000 \
+docker run -it -v $HOME/prysm:/data -p 4000:4000 \
   gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
   --datadir=/data \
   --init-sync-no-verify
@@ -129,7 +129,7 @@ docker run -it -v /tmp/prysm/beacon:/data -p 4000:4000 \
 
     <span>Run the next command in another terminal.</span>
     <pre>
-docker run -it -v /tmp/prysm/validator:/data --network="host" \
+docker run -it -v $HOME/prysm:/data --network="host" \
   gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \
   --beacon-rpc-provider=127.0.0.1:4000 \
   --keystore-path=/data \
