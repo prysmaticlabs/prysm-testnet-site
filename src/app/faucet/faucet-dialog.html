@@ -29,12 +29,3 @@
     No thanks
   </button>
 </mat-dialog-actions>
-
-<ngx-invisible-recaptcha #captchaElem
-  [siteKey]="siteKey"
-   badge="bottomright"
-   (success)="handleSuccess($event)"
-   [(ngModel)]="recaptcha"
-   [ngModelOptions]="{ standalone: true }">
-</ngx-invisible-recaptcha> 
-

@@ -4,6 +4,7 @@ import { SimpleSnackBar, MatSnackBar } from '@angular/material/snack-bar';
 import { ReCaptchaV3Service, InvisibleReCaptchaComponent } from 'ngx-captcha';
 import { ethers } from 'ethers';
 
+
 import { environment } from '../../environments/environment';
 import { ProgressService } from '../progress.service';
 import { NoAccessWeb3Service } from '../web3/no-access.service';
@@ -61,7 +62,7 @@ export class FaucetDialog {
    * Handle successful captcha response. Calls the faucet API to make the 
    * funding request 
    */
-  handleSuccess(captcha: string): void {
+  private handleSuccess(captcha: string): void {
     console.log('captcha success', captcha);
 
     // Properties must be set via setters.
@@ -101,7 +102,11 @@ export class FaucetDialog {
   request() {
     this.inProgress = true;
     this.progress.startProgress();
-    this.captchaElem.execute();
+    this.reCaptcha.execute(this.siteKey, this.data.address, (token) => {
+      this.handleSuccess(token);
+    }, {
+        useGlobalDomain: false
+    });
   }
 
   /** Snackbar helper to show error */
