@@ -119,22 +119,29 @@ docker run -it -v $HOME/prysm:/data \
 
   <mat-step>
     <ng-template matStepLabel>Start your beacon chain & validator clients</ng-template>
-    <span>You'll need two terminals for this step.</span>
+    <span>Start beacon chain</span>
     <pre>
-docker run -it -v $HOME/prysm:/data -p 4000:4000 \
+docker run -dit --name beacon-chain -v $HOME/prysm:/data -p 4000:4000 \
   gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
   --datadir=/data \
   --init-sync-no-verify
     </pre>
 
-    <span>Run the next command in another terminal.</span>
+    <span>Start validator</span>
     <pre>
-docker run -it -v $HOME/prysm:/data --network="host" \
+docker run -dit --name validator -v $HOME/prysm:/data --network="host" \
   gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \
   --beacon-rpc-provider=127.0.0.1:4000 \
   --keystore-path=/data \
   --password=changeme
   </pre>
+    
+    <span>Debugging - show logs</span>
+    <pre>
+    docker logs beacon-chain
+    docker logs validator
+    </pre>
+    
   </mat-step>
 
   <mat-step [completed]="deposited">
