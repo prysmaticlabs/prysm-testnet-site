@@ -9,12 +9,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import { FaucetModule } from '../services/faucet/faucet.module';
-import { Web3Module } from '../services/web3/web3.module';
+import { FaucetModule } from '../../services/faucet/faucet.module';
+import { Web3Module } from '../../services/web3/web3.module';
 import { ParticipateComponent } from './participate.component';
 import { DepositDataValidatorDirective, } from './deposit-data-validator';
 import { DecodeDepositDataService } from './decode-deposit-data.service';
-import { Eth2Module } from '../services/eth2/eth2.module';
+import { Eth2Module } from '../../services/eth2/eth2.module';
 
 @NgModule({
   declarations: [

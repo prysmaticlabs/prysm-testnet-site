@@ -6,12 +6,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 import { HomeComponent } from './home.component';
-import { AppRoutingModule } from '../app-routing.module';
-import { Eth2Module } from '../services/eth2/eth2.module';
-import { CountdownModule } from '../services/countdown/countdown.module';
+import { AppRoutingModule } from '../../app-routing.module';
+import { ChainInfoComponent } from 'src/app/components/chain-info/chain-info.component';
+import { Eth2Module } from 'src/app/services/eth2/eth2.module';
+import { CountdownModule } from 'src/app/services/countdown/countdown.module';
+import { MatProgressBarModule } from '@angular/material';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, ChainInfoComponent],
   imports: [
     AppRoutingModule,
     CommonModule,

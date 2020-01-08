@@ -1,0 +1,28 @@
+<div class="columns">
+  <div class="card-img">
+    <img src="assets/stripedprysm.svg">
+  </div>
+  <div class="chain-info">
+    <h3>Validators</h3>
+    <div class="flex">
+      <div>
+        <p class="bignum">16387</p>
+        <p>Active</p>
+      </div>
+      <div>
+        <p class="bignum">10090</p>
+        <p>Pending</p>
+      </div>
+    </div>
+    <div>
+      <h3 *ngIf="countingDown">Scheduled Genesis Time</h3>
+      <h3 *ngIf="!countingDown">Genesis Time</h3>
+      <p>{{genesisTime}}</p>
+      <p *ngIf="countingDown">{{countdown.days}} Day(s), {{countdown.hours}} Hours, {{countdown.minutes}} Minutes,  {{countdown.seconds}} Seconds</p>
+    </div>
+    <div>
+      <h3>Deposit Contract Address</h3>
+      <p><a href="https://goerli.etherscan.io/address/0x4689a3C63CE249355C8a573B5974db21D2d1b8Ef">0x4689a3C63CE249355C8a573B5974db21D2d1b8Ef</a></p>
+    </div>
+  </div>
+</div>
