@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, interval } from 'rxjs';
-import { takeWhile, map } from 'rxjs/operators';
+import { takeWhile, map, startWith, takeUntil } from 'rxjs/operators';
 
 export interface IInterval {
   days: number;
@@ -16,7 +16,17 @@ export class CountdownService {
 
   constructor() { }
 
-  getIntervalTime(dateA: number, dateB: number): IInterval {
+  getCountDown(timeToGo: number): Observable<IInterval> {
+    return interval(1000).pipe(
+      startWith(0),
+      map(
+        _ =>  this.getIntervalTime(timeToGo, Date.now())
+      ),
+      takeWhile((x: IInterval) => !this.isComplete(x)),
+    );
+  }
+
+  private getIntervalTime(dateA: number, dateB: number): IInterval {
     let intervalTime: number = Math.floor((dateA - dateB) / 1000);
     return this.getTime(intervalTime);
   }
@@ -33,16 +43,7 @@ export class CountdownService {
       return interval;
   }
 
-  getCountDown(timeToGo: number): Observable<IInterval> {
-    return interval(1000).pipe(
-      takeWhile(x => this.validIntervalCountdown(timeToGo)),
-      map(
-        x =>  this.getIntervalTime(timeToGo, Date.now())
-      )
-    );
-  }
-
-  validIntervalCountdown(timeToGo) {
-    return (timeToGo - Date.now()) >= 0 ? true : false;
+  isComplete(time: IInterval): boolean {
+    return time.days === 0 && time.hours === 0 && time.minutes === 0 && time.seconds === 0;
   }
 }

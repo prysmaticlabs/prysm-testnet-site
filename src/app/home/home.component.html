@@ -1,6 +1,9 @@
 <div class="centered">
   <h1>The Sapphire Testnet</h1>
   <h3>Ethereum Serenity Phase 0 Test Network</h3>
+  <h3 *ngIf="countingDown">
+    {{countdown.days}} Day(s), {{countdown.hours}} Hours, {{countdown.minutes}} Minutes,  {{countdown.seconds}} Seconds
+  </h3>
   <h3>{{genesisTime}}</h3>
   <div>
     <img src="assets/prysm.svg">
