@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Buffer } from 'buffer';
 
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { BigNumber } from 'ethers/utils';
 
 const TESTNET_ID = 5;

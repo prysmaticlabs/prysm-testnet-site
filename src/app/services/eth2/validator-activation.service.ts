@@ -16,9 +16,9 @@ import { HttpClient } from '@angular/common/http';
 import { Buffer } from 'buffer';
 import deepEqual from 'deep-equal';
 
-import { environment } from '../../environments/environment';
-import { ValidatorServiceClient } from '../../proto/ValidatorServiceClientPb';
-import { ValidatorIndexRequest, ValidatorStatusResponse, ValidatorStatus } from '../../proto/validator_pb';
+import { environment } from '../../../environments/environment';
+import { ValidatorServiceClient } from '../../../proto/ValidatorServiceClientPb';
+import { ValidatorIndexRequest, ValidatorStatusResponse, ValidatorStatus } from '../../../proto/validator_pb';
 import { NoAccessWeb3Service } from '../web3/no-access.service';
 import { ContractService } from '../web3/contract.service';
 

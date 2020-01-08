@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ethers } from 'ethers';
-import { BeaconNodeService } from '../eth2/beacon-node.service';
+import { BeaconNodeService } from '../services/eth2/beacon-node.service';
+import { CountdownService } from '../services/countdown/countdown.service';
 
 @Component({
   selector: 'app-home',
@@ -29,10 +30,18 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly beaconNodeService: BeaconNodeService,
+    private readonly countdownService: CountdownService,
   ) { }
 
   ngOnInit() {
-    return this.beaconNodeService.getGenesisTime().subscribe(
+    let birthday = 1578812509;
+    this.countdownService.getCountDown(birthday).subscribe(
+      interval  => console.log('Countdown', interval),
+      error => console.log('error', error),
+      () => console.log('The countdown finish'),
+    );
+
+    this.beaconNodeService.getGenesisTime().subscribe(
       t => {
         console.log(t);
         this.genesisTime = t;

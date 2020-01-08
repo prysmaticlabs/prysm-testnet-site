@@ -8,16 +8,16 @@ import { Observable, Subject, interval } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ethers } from 'ethers';
 
-import { PortisService } from '../web3/portis.service';
-import { MetamaskService } from '../web3/metamask.service';
-import { ProgressService } from '../progress.service';
-import { FaucetService } from '../faucet/faucet.service';
-import { DEPOSIT_AMOUNT, Web3Service, Web3Provider } from '../web3/web3.service';
+import { PortisService } from '../services/web3/portis.service';
+import { MetamaskService } from '../services/web3/metamask.service';
+import { ProgressService } from '../services/progress/progress.service';
+import { FaucetService } from '../services/faucet/faucet.service';
+import { DEPOSIT_AMOUNT, Web3Service, Web3Provider } from '../services/web3/web3.service';
 import { environment } from '../../environments/environment';
-import { ContractService } from '../web3/contract.service';
+import { ContractService } from '../services/web3/contract.service';
 import { DEPOSIT_DATA_LENGTH } from './deposit-data-validator';
 import { DepositData, DecodeDepositDataService } from './decode-deposit-data.service';
-import { ValidatorActivationService, ValidatorStatusUpdate } from '../eth2/validator-activation.service';
+import { ValidatorActivationService, ValidatorStatusUpdate } from '../services/eth2/validator-activation.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 
