@@ -7,6 +7,7 @@ import {Buffer} from 'buffer';
 import { ContractService } from './contract.service';
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
 import { environment } from '../../environments/environment';
+import { BigNumber } from 'ethers/utils';
 
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
@@ -16,7 +17,6 @@ export enum Web3Provider {
   PORTIS,
   METAMASK,
 }
-
 
 export abstract class Web3Service {
   private signer: ethers.providers.JsonRpcSigner;
@@ -31,31 +31,29 @@ export abstract class Web3Service {
   }
 
   /** Throws an error if the provider is on the wrong network. */
-  ensureTestnet(): Promise<void> {
+  async ensureTestnet(): Promise<void> {
     if (isPlatformServer(this.platformId)) {
       return Promise.resolve();
     }
 
-    return this.eth.getNetwork().then(net => {
-      if (net.chainId !== TESTNET_ID) {
-        throw new Error(`Invalid testnet id: ${net.chainId}. Restart your web3 provider ` +
-          `connected to ${TESTNET_URL} or other Goerli network node.`);
-      }
-    });
+    const net = await this.eth.getNetwork()
+    if (net.chainId !== TESTNET_ID) {
+      throw new Error(`Invalid testnet id: ${net.chainId}. Restart your web3 provider ` +
+        `connected to ${TESTNET_URL} or other Goerli network node.`);
+    }
   }
 
   /** Throws an error if there is no signer. */
-  ensureSigner(): Promise<void> {
+  async ensureSigner(): Promise<void> {
     if (isPlatformServer(this.platformId)) {
       return Promise.resolve();
     }
 
-    return this.eth.listAccounts().then(accounts => {
-      if (accounts.length === 0) {
-        throw new Error('no accounts to sign with');
-      }
-      this.signer = this.eth.getSigner(accounts[0]);
-    });
+    const accounts = await this.eth.listAccounts()
+    if (accounts.length === 0) {
+      throw new Error('no accounts to sign with');
+    }
+    this.signer = this.eth.getSigner(accounts[0]);
   }
 
   /** Returns list of accounts associated with the web3 provider */
@@ -68,13 +66,13 @@ export abstract class Web3Service {
   }
 
   /** Returns the balance of an account in units of ETH */
-  ethBalanceOf(address: string): Promise<string> {
+  async ethBalanceOf(address: string): Promise<string> {
     if (isPlatformServer(this.platformId)) {
       return Promise.resolve('0');
     }
 
-    return this.eth.getBalance(address)
-      .then(bal => ethers.utils.formatEther(bal));
+    const bal = await this.eth.getBalance(address)
+    return ethers.utils.formatEther(bal);
   }
 
   /** Reference to the deposit contract */
@@ -83,30 +81,28 @@ export abstract class Web3Service {
   }
 
   /** Number of validators that have deposited so far */
-  numValidators(address: string): Promise<number> {
+  async numValidators(address: string): Promise<number> {
     if (isPlatformServer(this.platformId)) {
       return Promise.resolve(0);
     }
 
-    return this.depositContract(address)
+    const res: ethers.utils.Arrayish = await this.depositContract(address)
       .functions
-      .get_deposit_count()
-      .then((res: ethers.utils.Arrayish) => {
-        return ethers.utils.bigNumberify(Buffer.from(ethers.utils.arrayify(res)).swap64()).toNumber()
-      });
+      .get_deposit_count();
+    return ethers.utils.bigNumberify(Buffer.from(ethers.utils.arrayify(res)).swap64()).toNumber();
   }
 
   /** Max value required to deposit */
-  maxDepositValue(address: string): Promise<number> {
+  async maxDepositValue(address: string): Promise<BigNumber> {
     if (isPlatformServer(this.platformId)) {
-      return Promise.resolve(ethers.utils.parseEther('32').toNumber());
+      return Promise.resolve(ethers.utils.parseEther('32'));
     }
 
-    return this.depositContract(address)
+    const res = await this.depositContract(address)
       .methods
       .MAX_DEPOSIT_AMOUNT() // Note: this is denoted in gwei!
-      .call()
-      .then(res => ethers.utils.parseUnits(res[0], 'gwei'));
+      .call();
+    return ethers.utils.parseUnits(res[0], 'gwei');
   }
 
   /** Deposit event stream */
