@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { HomeComponent } from './home.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { Eth2Module } from '../eth2/eth2.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -17,6 +18,7 @@ import { AppRoutingModule } from '../app-routing.module';
     MatCardModule,
     MatButtonModule,
     MatListModule,
-  ]
+    Eth2Module,
+  ],
 })
 export class HomeModule { }

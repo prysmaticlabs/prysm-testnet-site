@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ethers } from 'ethers';
+import { BeaconNodeService } from '../eth2/beacon-node.service';
 
 @Component({
   selector: 'app-home',
@@ -23,4 +24,12 @@ export class HomeComponent {
   ];
 
   readonly DEPOSIT_AMOUNT = ethers.utils.formatEther(environment.depositAmount);
+
+  constructor(
+    private readonly beaconNodeService: BeaconNodeService,
+  ) { }
+
+  genesisTime() {
+    return this.beaconNodeService.genesisTime();
+  }
 }

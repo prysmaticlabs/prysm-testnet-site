@@ -17,7 +17,7 @@ import { environment } from '../../environments/environment';
 import { ContractService } from '../web3/contract.service';
 import { DEPOSIT_DATA_LENGTH } from './deposit-data-validator';
 import { DepositData, DecodeDepositDataService } from './decode-deposit-data.service';
-import { ValidatorActivationServiceService, ValidatorStatusUpdate } from './validator-activation-service.service';
+import { ValidatorActivationServiceService, ValidatorStatusUpdate } from '../eth2/validator-activation-service.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 

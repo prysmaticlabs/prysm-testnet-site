@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { zip, Observable, interval, of, Subject, from } from 'rxjs';
+import { zip, Observable, interval, of, from } from 'rxjs';
 import {
   retry,
   withLatestFrom,
@@ -25,7 +25,7 @@ import { ContractService } from '../web3/contract.service';
 const SECONDS_PER_SLOT = 6;
 const ETH1_FOLLOW_DISTANCE = 5;
 const ETH1_BLOCK_TIME_SEC = 14;
-const ACTIVATION_ELIGIBILITY_DELAY_SLOTS = 1 /*epoch*/ * 8 /*slotsPerEpoch*/;
+const ACTIVATION_ELIGIBILITY_DELAY_SLOTS = 1 /* epoch */ * 8 /* slotsPerEpoch */;
 
 export interface ValidatorStatusUpdate {
   percent: number;
@@ -35,7 +35,7 @@ export interface ValidatorStatusUpdate {
 @Injectable({
   providedIn: 'root'
 })
-export class ValidatorActivationServiceService {
+export class ValidatorActivationService {
   private readonly client = new ValidatorServiceClient(
     // 'http://localhost:8080',
     environment.apiEndpoint,

@@ -2,7 +2,6 @@ import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { ethers } from 'ethers';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Buffer } from 'buffer';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,7 +11,6 @@ import { BigNumber } from 'ethers/utils';
 
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
-const ETH2_API_URL = 'https://api.prylabs.net/eth/v1alpha1';
 export const DEPOSIT_AMOUNT = environment.depositAmount;
 
 export enum Web3Provider {
@@ -118,12 +116,6 @@ export abstract class Web3Service {
       const filter = this.depositContract(address).filters.DepositEvent();
       this.depositContract(address).on(filter, () => observer.next());
     });
-  }
-
-  genesisTime(address: string): Observable<Date> {
-    return this.http.get(ETH2_API_URL + 'node/genesis').pipe(
-      map((res: {genesisTime: string}) => new Date(Date.parse(res.genesisTime)))
-    );
   }
 
   blockTime(height: number): Observable<Date> {
