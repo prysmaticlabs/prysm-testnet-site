@@ -1,16 +1,18 @@
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { ethers } from 'ethers';
-import { Observable, Subject } from 'rxjs';
-import {Buffer} from 'buffer';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Buffer } from 'buffer';
+import { HttpClient } from '@angular/common/http';
 
-import { ContractService } from './contract.service';
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
 import { environment } from '../../environments/environment';
 import { BigNumber } from 'ethers/utils';
 
 const TESTNET_ID = 5;
 const TESTNET_URL = 'https://goerli.prylabs.net';
+const ETH2_API_URL = 'https://api.prylabs.net/eth/v1alpha1';
 export const DEPOSIT_AMOUNT = environment.depositAmount;
 
 export enum Web3Provider {
@@ -23,6 +25,7 @@ export abstract class Web3Service {
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     public readonly eth: ethers.providers.JsonRpcProvider,
+    private readonly http: HttpClient,
   ) {
     // Do not use a real eth provider in server side rendering.
     if (isPlatformServer(platformId)) {
@@ -36,7 +39,7 @@ export abstract class Web3Service {
       return Promise.resolve();
     }
 
-    const net = await this.eth.getNetwork()
+    const net = await this.eth.getNetwork();
     if (net.chainId !== TESTNET_ID) {
       throw new Error(`Invalid testnet id: ${net.chainId}. Restart your web3 provider ` +
         `connected to ${TESTNET_URL} or other Goerli network node.`);
@@ -118,13 +121,9 @@ export abstract class Web3Service {
   }
 
   genesisTime(address: string): Observable<Date> {
-    const genesisTime = this.depositContract(address).genesisTime;
-    return new Observable<Date>(observer => {
-      genesisTime().then((time: string) => {
-        const t = littleEndianHexStringToDecimal(time);
-        observer.next(new Date(t * 1000));
-      });
-    });
+    return this.http.get(ETH2_API_URL + 'node/genesis').pipe(
+      map((res: {genesisTime: string}) => new Date(Date.parse(res.genesisTime)))
+    );
   }
 
   blockTime(height: number): Observable<Date> {
@@ -137,10 +136,4 @@ export abstract class Web3Service {
       });
     });
   }
-}
-
-function littleEndianHexStringToDecimal(str: string) {
-  const prefix = '0x';
-  const bigEndian = prefix + (str || '').replace(prefix, '').match(/../g).reverse().join('');
-  return parseInt(bigEndian, 16);
 }

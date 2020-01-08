@@ -13,7 +13,6 @@ export class HomeComponent {
     'Full, Casper Proof of Stake',
     'Goerli Testnet ETH for Staking',
     'Publicly Accessible',
-    'Short-Lived (Scheduled Restarts)',
   ];
 
   readonly notTestnetProperties = [
@@ -21,7 +20,6 @@ export class HomeComponent {
     'Includes Smart Contract & EVM Functionality',
     'Real ETH',
     'Highly Optimized',
-    'Long Running & Highly Available',
   ];
 
   readonly DEPOSIT_AMOUNT = ethers.utils.formatEther(environment.depositAmount);
