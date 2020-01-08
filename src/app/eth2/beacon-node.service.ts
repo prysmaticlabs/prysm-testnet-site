@@ -15,7 +15,7 @@ export class BeaconNodeService {
     private readonly http: HttpClient,
   ) { }
 
-  genesisTime(): Observable<Date> {
+  getGenesisTime(): Observable<Date> {
     return this.http.get(ETH2_API_URL + '/node/genesis').pipe(
       map((res: {genesisTime: string}) => new Date(Date.parse(res.genesisTime)))
     );

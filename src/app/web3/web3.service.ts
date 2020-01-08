@@ -3,7 +3,6 @@ import { isPlatformServer } from '@angular/common';
 import { ethers } from 'ethers';
 import { Observable } from 'rxjs';
 import { Buffer } from 'buffer';
-import { HttpClient } from '@angular/common/http';
 
 import { DEPOSIT_CONTRACT_ABI } from './DepositContract';
 import { environment } from '../../environments/environment';
@@ -23,7 +22,6 @@ export abstract class Web3Service {
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     public readonly eth: ethers.providers.JsonRpcProvider,
-    private readonly http: HttpClient,
   ) {
     // Do not use a real eth provider in server side rendering.
     if (isPlatformServer(platformId)) {

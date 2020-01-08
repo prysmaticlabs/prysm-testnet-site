@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ethers } from 'ethers';
 import { BeaconNodeService } from '../eth2/beacon-node.service';
@@ -8,7 +8,9 @@ import { BeaconNodeService } from '../eth2/beacon-node.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  genesisTime: Date;
+
   readonly testnetProperties = [
     'Prysm Only, Single Client Testnet',
     'Full, Casper Proof of Stake',
@@ -29,7 +31,15 @@ export class HomeComponent {
     private readonly beaconNodeService: BeaconNodeService,
   ) { }
 
-  genesisTime() {
-    return this.beaconNodeService.genesisTime();
+  ngOnInit() {
+    return this.beaconNodeService.getGenesisTime().subscribe(
+      t => {
+        console.log(t);
+        this.genesisTime = t;
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 }

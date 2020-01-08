@@ -17,7 +17,7 @@ import { environment } from '../../environments/environment';
 import { ContractService } from '../web3/contract.service';
 import { DEPOSIT_DATA_LENGTH } from './deposit-data-validator';
 import { DepositData, DecodeDepositDataService } from './decode-deposit-data.service';
-import { ValidatorActivationServiceService, ValidatorStatusUpdate } from '../eth2/validator-activation-service.service';
+import { ValidatorActivationService, ValidatorStatusUpdate } from '../eth2/validator-activation.service';
 
 const DEPOSIT_DATA_STORAGE_KEY = 'deposit_data';
 
@@ -56,7 +56,7 @@ export class ParticipateComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly contractService: ContractService,
     private readonly depositDataService: DecodeDepositDataService,
-    private readonly validatorActivationService: ValidatorActivationServiceService,
+    private readonly validatorActivationService: ValidatorActivationService,
   ) { }
 
   ngOnInit() {
