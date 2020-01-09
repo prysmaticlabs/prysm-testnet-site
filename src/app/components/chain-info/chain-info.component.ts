@@ -17,8 +17,8 @@ export class ChainInfoComponent implements OnInit {
   countdown: IInterval;
   depositContractAddress: string;
   totalValidators: number;
-  numActiveValidators: number;
-  inProgress = false;
+  numActiveValidators: number = 0;
+  private globalProgress = false;
 
   constructor(
     private readonly beaconNodeService: BeaconNodeService,
@@ -27,7 +27,7 @@ export class ChainInfoComponent implements OnInit {
     private readonly web3: NoAccessWeb3Service,
     private readonly progress: ProgressService,
   ) {
-    this.progress.progress.subscribe(v => this.inProgress = v);
+    this.progress.progress.subscribe(v => this.globalProgress = v);
   }
 
   ngOnInit() {
@@ -65,6 +65,10 @@ export class ChainInfoComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  get inProgress(): boolean {
+    return this.globalProgress && this.numActiveValidators <= 0;
   }
 
   private async updateValidatorCount(address: string) {
