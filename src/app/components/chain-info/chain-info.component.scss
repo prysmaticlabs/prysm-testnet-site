@@ -52,3 +52,9 @@ a {
    text-decoration: none;
    font-weight: bold;
 }
+
+@media (max-width: 800px) {
+    a {
+        font-size: 14px;
+    }
+}
