@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BeaconNodeService } from 'src/app/services/eth2/beacon-node.service';
-import { CountdownService, IInterval } from 'src/app/services/countdown/countdown.service';
+import { BeaconNodeService } from '../../services/eth2/beacon-node.service';
+import { CountdownService, IInterval } from '../../services/countdown/countdown.service';
 
 @Component({
   selector: 'app-chain-info',
