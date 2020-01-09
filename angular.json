@@ -28,7 +28,7 @@
               "src/robots.txt"
             ],
             "styles": [
-              "src/styles/main.scss"
+              "src/styles.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
