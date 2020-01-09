@@ -6057,10 +6057,10 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
 
-ngx-captcha@6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/ngx-captcha/-/ngx-captcha-6.2.1.tgz#1f374d32b062f2cfb68efcbe3a3e55882e02fa6f"
-  integrity sha512-Q13u805tnH95Rq/tjp9fvw2aCuAIm8PGvEDWaLfdgLcMEl/0YYntR0LdBwAZSepTQHbiM+XbuKU64k0/IMpNzw==
+ngx-captcha@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-captcha/-/ngx-captcha-7.0.0.tgz#a7aa9f4338435f4efb8be21296685a4a4dadb944"
+  integrity sha512-L9lX9ZHgMwl0brm1Vw45bxkqMOwCLAEjD+Cs7GHZW/3FVIBb/yJ7qVEgIIOOI29+95Fkaxbc585vgQCdnnwQAQ==
   dependencies:
     tslib "^1.9.0"
 
