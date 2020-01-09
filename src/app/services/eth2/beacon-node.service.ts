@@ -22,14 +22,13 @@ export class BeaconNodeService {
   }
 
   getNumActiveValidators(): Observable<number> {
-    return this.http.get(ETH2_API_URL + '/validators?genesis=true&pageSize=1').pipe(
+    return this.http.get(ETH2_API_URL + '/beacon/committees').pipe(
       map((res: {
         epoch: number,
-        validatorList: Array<object>,
-        nextPageToken: string,
-        totalSize: number,
+        committees: Array<any>,
+        activeValidatorCount: number,
       }) => {
-        return res.totalSize;
+        return res.activeValidatorCount;
       })
     );
   }
