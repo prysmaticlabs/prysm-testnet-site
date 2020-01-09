@@ -68,7 +68,7 @@ export class ChainInfoComponent implements OnInit {
   }
 
   get inProgress(): boolean {
-    return this.globalProgress && this.numActiveValidators > 0;
+    return !this.globalProgress || this.numActiveValidators <= 0;
   }
 
   private async updateValidatorCount(address: string) {
