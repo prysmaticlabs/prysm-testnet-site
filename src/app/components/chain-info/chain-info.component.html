@@ -1,0 +1,30 @@
+<div class="columns">
+  <div class="card-img">
+    <img src="assets/stripedprysm.svg">
+  </div>
+  <div class="chain-info">
+    <h3>Validators</h3>
+    <div class="flex">
+      <div>
+        <p *ngIf="!inProgress" class="bignum">{{totalValidators}}</p>
+        <p *ngIf="inProgress" class="bignum">...</p>
+        <p>Total</p>
+      </div>
+      <div>
+        <p *ngIf="!inProgress" class="bignum">{{numActiveValidators}} / {{totalValidators - numActiveValidators}}</p>
+        <p *ngIf="inProgress" class="bignum">...</p>
+        <p>(Active / Pending)</p>
+      </div>
+    </div>
+    <div>
+      <h3 *ngIf="countingDown">Scheduled Genesis Time</h3>
+      <h3 *ngIf="!countingDown">Genesis Time</h3>
+      <p>{{genesisTime}}</p>
+      <p *ngIf="countingDown">{{countdown.days}} Day(s), {{countdown.hours}} Hours, {{countdown.minutes}} Minutes,  {{countdown.seconds}} Seconds</p>
+    </div>
+    <div>
+      <h3>Deposit Contract Address</h3>
+      <p><a href="https://goerli.etherscan.io/address/{{depositContractAddress}}" class="contract">{{depositContractAddress}}</a></p>
+    </div>
+  </div>
+</div>

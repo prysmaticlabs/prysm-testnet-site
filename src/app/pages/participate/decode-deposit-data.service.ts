@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { ethers } from 'ethers';
-import { DEPOSIT_CONTRACT_ABI } from '../web3/DepositContract';
+import { DEPOSIT_CONTRACT_ABI } from '../../services/web3/DepositContract';
 
 export interface DepositData {
   pubkey: string;

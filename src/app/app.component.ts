@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NoAccessWeb3Service } from './web3/no-access.service';
-import { ProgressService } from './progress.service';
-import { ContractService } from './web3/contract.service';
+import { NoAccessWeb3Service } from './services/web3/no-access.service';
+import { ProgressService } from './services/progress/progress.service';
+import { ContractService } from './services/web3/contract.service';
 
 @Component({
   selector: 'app-root',

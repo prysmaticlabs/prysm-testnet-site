@@ -19,12 +19,23 @@ WORKDIR /ng-app
 COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
-RUN npm run build:ssr
+RUN npm run ng build --prod
 
 
-# Copy only the dist dir.
-FROM node:11-alpine
+############
+### prod ###
+############
 
-COPY --from=builder /ng-app/dist/ /dist
+# base image
+FROM nginx:1.16.0-alpine
 
-CMD ["node", "dist/server"]
+# copy artifact build from the 'build environment'
+COPY --from=builder /ng-app/dist/browser /usr/share/nginx/html
+
+# expose port 80
+EXPOSE 80
+
+COPY nginx/default.conf /etc/nginx/conf.d/
+
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]

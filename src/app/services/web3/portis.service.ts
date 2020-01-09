@@ -12,7 +12,12 @@ const NETWORK = 'goerli';
 })
 export class PortisService extends Web3Service {
   constructor(@Inject(PLATFORM_ID) platformId: Object) {
-    const provider = isPlatformServer(platformId) ? undefined : new Portis(DAPP_ID, NETWORK).provider;
+    let provider: ethers.providers.AsyncSendable|undefined; 
+    try { 
+      provider = isPlatformServer(platformId) ? undefined : new Portis(DAPP_ID, NETWORK).provider;
+    } catch (e) {
+      console.error(e);
+    }
     super(platformId, new ethers.providers.Web3Provider(provider));
   } 
 }

@@ -1,0 +1,60 @@
+@import '../../../styles/variables';
+
+.card-img img {
+    height: 240px;
+    width: 240px;
+    margin-top: 35px;
+    @media (max-width: 800px) {
+        display: none;
+    }
+}
+
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+    @media (max-width: 800px) {
+        margin-top: 0px;
+        margin-left: 0px;
+        padding: 0px;
+    }
+}
+
+.columns div {
+    max-width: 500px;
+}
+
+.chain-info {
+    padding-left: 40px;
+    font-size: 16px;
+    @media (max-width: 800px) {
+        padding-left: 0px;
+    }
+}
+
+.flex {
+    display: flex;
+    margin-bottom: -20px;
+    margin-top: -30px;
+    padding-top: 0px;
+}
+
+.flex div {
+    padding-right: 40px;
+}
+
+.bignum {
+    font-size: 24px;
+    margin-bottom: -10px;
+}
+
+a {
+   color: $pink;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+@media (max-width: 800px) {
+    a {
+        font-size: 14px;
+    }
+}

@@ -1,21 +1,31 @@
 import { Injectable } from '@angular/core';
-import { zip, Observable, interval, of, Subject, from } from 'rxjs';
-import { retry, withLatestFrom, map, tap, switchMap, startWith, takeWhile, skipWhile, distinctUntilKeyChanged, distinct, distinctUntilChanged } from 'rxjs/operators';
+import { zip, Observable, interval, of, from } from 'rxjs';
+import {
+  retry,
+  withLatestFrom,
+  map,
+  tap,
+  switchMap,
+  startWith,
+  takeWhile,
+  skipWhile,
+  distinctUntilKeyChanged,
+  distinctUntilChanged,
+} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import {Buffer} from 'buffer';
+import { Buffer } from 'buffer';
 import deepEqual from 'deep-equal';
 
-import { environment } from '../../environments/environment';
-import { ValidatorServiceClient } from '../../proto/ValidatorServiceClientPb';
-import { ValidatorIndexRequest, ValidatorStatusResponse, ValidatorStatus } from '../../proto/validator_pb';
+import { environment } from '../../../environments/environment';
+import { ValidatorServiceClient } from '../../../proto/ValidatorServiceClientPb';
+import { ValidatorIndexRequest, ValidatorStatusResponse, ValidatorStatus } from '../../../proto/validator_pb';
 import { NoAccessWeb3Service } from '../web3/no-access.service';
 import { ContractService } from '../web3/contract.service';
 
 const SECONDS_PER_SLOT = 6;
 const ETH1_FOLLOW_DISTANCE = 5;
 const ETH1_BLOCK_TIME_SEC = 14;
-const ACTIVATION_ELIGIBILITY_DELAY_SLOTS = 1 /*epoch*/ * 8 /*slotsPerEpoch*/;
-const SLOTS_PER_ETH1_VOTING_PERIOD = 16 /*epochs*/ * 8 /*slotsPerEpoch*/;
+const ACTIVATION_ELIGIBILITY_DELAY_SLOTS = 1 /* epoch */ * 8 /* slotsPerEpoch */;
 
 export interface ValidatorStatusUpdate {
   percent: number;
@@ -25,7 +35,7 @@ export interface ValidatorStatusUpdate {
 @Injectable({
   providedIn: 'root'
 })
-export class ValidatorActivationServiceService {
+export class ValidatorActivationService {
   private readonly client = new ValidatorServiceClient(
     // 'http://localhost:8080',
     environment.apiEndpoint,
@@ -79,7 +89,7 @@ export class ValidatorActivationServiceService {
   }
 
   private statusFromServer(pubkey: string): Observable<ValidatorStatusResponse> {
-    console.log("Requesting status from server");
+    console.log('Requesting status from server');
     if (pubkey.startsWith('0x')) {
        pubkey = Buffer.from(pubkey.slice(2), 'hex').toString('base64')
     }

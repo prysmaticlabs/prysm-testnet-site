@@ -5,12 +5,12 @@ import { ReCaptchaV3Service, InvisibleReCaptchaComponent } from 'ngx-captcha';
 import { ethers } from 'ethers';
 
 
-import { environment } from '../../environments/environment';
-import { ProgressService } from '../progress.service';
+import { environment } from '../../../environments/environment';
+import { ProgressService } from '../progress/progress.service';
 import { NoAccessWeb3Service } from '../web3/no-access.service';
 import { Subject } from 'rxjs';
-import { FaucetServiceClient } from '../../proto/FaucetServiceClientPb';
-import { FundingRequest, FundingResponse } from '../../proto/faucet_pb';
+import { FaucetServiceClient } from '../../../proto/FaucetServiceClientPb';
+import { FundingRequest, FundingResponse } from '../../../proto/faucet_pb';
 
 /** Faucet service to initiate a funding request via dialog/modal. */
 @Injectable({
