@@ -35,5 +35,7 @@ COPY --from=builder /ng-app/dist/browser /usr/share/nginx/html
 # expose port 80
 EXPOSE 80
 
+COPY nginx/default.conf /etc/nginx/conf.d/
+
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
