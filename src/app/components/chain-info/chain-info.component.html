@@ -6,12 +6,14 @@
     <h3>Validators</h3>
     <div class="flex">
       <div>
-        <p class="bignum">16387</p>
-        <p>Active</p>
+        <p *ngIf="!inProgress" class="bignum">{{totalValidators}}</p>
+        <p *ngIf="inProgress" class="bignum">...</p>
+        <p>Total</p>
       </div>
       <div>
-        <p class="bignum">10090</p>
-        <p>Pending</p>
+        <p *ngIf="!inProgress" class="bignum">{{numActiveValidators}} / {{totalValidators - numActiveValidators}}</p>
+        <p *ngIf="inProgress" class="bignum">...</p>
+        <p>(Active / Pending)</p>
       </div>
     </div>
     <div>
@@ -22,7 +24,7 @@
     </div>
     <div>
       <h3>Deposit Contract Address</h3>
-      <p><a href="https://goerli.etherscan.io/address/0x4689a3C63CE249355C8a573B5974db21D2d1b8Ef">0x4689a3C63CE249355C8a573B5974db21D2d1b8Ef</a></p>
+      <p><a href="https://goerli.etherscan.io/address/{{depositContractAddress}}">{{depositContractAddress}}</a></p>
     </div>
   </div>
 </div>
