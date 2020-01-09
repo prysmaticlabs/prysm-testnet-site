@@ -6,12 +6,14 @@
     <h3>Validators</h3>
     <div class="flex">
       <div>
-        <p class="bignum">16387</p>
-        <p>Active</p>
+        <p *ngIf="!inProgress" class="bignum">{{totalValidators}}</p>
+        <p *ngIf="inProgress" class="bignum">...</p>
+        <p>Total</p>
       </div>
       <div>
-        <p class="bignum">10090</p>
-        <p>Pending</p>
+        <p *ngIf="!inProgress" class="bignum">{{numActiveValidators}} / {{totalValidators - numActiveValidators}}</p>
+        <p *ngIf="inProgress" class="bignum">...</p>
+        <p>(Active / Pending)</p>
       </div>
     </div>
     <div>

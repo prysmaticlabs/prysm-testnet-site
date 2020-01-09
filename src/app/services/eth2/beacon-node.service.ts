@@ -20,4 +20,17 @@ export class BeaconNodeService {
       map((res: {genesisTime: string}) => new Date(Date.parse(res.genesisTime)))
     );
   }
+
+  getNumActiveValidators(): Observable<number> {
+    return this.http.get(ETH2_API_URL + '/validators?genesis=true&pageSize=1').pipe(
+      map((res: {
+        epoch: number,
+        validatorList: Array<object>,
+        nextPageToken: string,
+        totalSize: number,
+      }) => {
+        return res.totalSize;
+      })
+    );
+  }
 }

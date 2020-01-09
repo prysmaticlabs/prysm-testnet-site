@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BeaconNodeService } from 'src/app/services/eth2/beacon-node.service';
 import { CountdownService, IInterval } from 'src/app/services/countdown/countdown.service';
 import { ContractService } from 'src/app/services/web3/contract.service';
+import { NoAccessWeb3Service } from 'src/app/services/web3/no-access.service';
+import { ProgressService } from 'src/app/services/progress/progress.service';
 
 @Component({
   selector: 'app-chain-info',
@@ -13,21 +15,38 @@ export class ChainInfoComponent implements OnInit {
   countingDown: boolean;
   countdown: IInterval;
   depositContractAddress: string;
+  totalValidators: number;
+  numActiveValidators: number;
+  inProgress = false;
 
   constructor(
     private readonly beaconNodeService: BeaconNodeService,
     private readonly countdownService: CountdownService,
     private readonly contractService: ContractService,
-  ) { }
+    private readonly web3: NoAccessWeb3Service,
+    private readonly progress: ProgressService,
+  ) {
+    this.progress.progress.subscribe(v => this.inProgress = v);
+  }
 
   ngOnInit() {
-    this.contractService.getAddress().subscribe((res: string) => {
+    this.progress.startProgress();
+    this.contractService.getAddress().subscribe(async (res: string) => {
       this.depositContractAddress = res;
+      await this.updateValidatorCount(res);
     });
+
+    this.beaconNodeService.getNumActiveValidators().subscribe(
+      num => {
+        this.numActiveValidators = num;
+      },
+      err => {
+        console.error(err);
+      }
+    );
 
     this.beaconNodeService.getGenesisTime().subscribe(
       t => {
-        console.log(t);
         this.genesisTime = t;
         const unixTimestamp = t.getTime();
         this.countdownService.getCountDown(unixTimestamp).subscribe(
@@ -45,5 +64,10 @@ export class ChainInfoComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  private async updateValidatorCount(address: string) {
+    this.totalValidators = await this.web3.numValidators(address);
+    this.progress.stopProgress();
   }
 }
