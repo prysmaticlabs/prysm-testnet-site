@@ -3,16 +3,16 @@
   <h1>
     Want to try Ethereum 2.0?
   </h1>
-  <p>Great! That's probably why you are here.</p> 
+  <p>Great! That's probably why you are here.</p>
   <p>
     Keep in mind: this is a highly experimental test network with no uptime
-    guarantees. 
+    guarantees.
   </p>
   <p>
-     We gladly offer support in our 
-    <a href="https://discord.gg/2PDUuRU" target="_blank">Discord channel</a>, through 
-    <a href="https://github.com/prysmaticlabs/prysm/issues" target="_blank">Github issues</a>, our 
-    <a href="https://gitter.im/prysmaticlabs/prysm" target="_blank">Gitter channel</a>, and 
+     We gladly offer support in our
+    <a href="https://discord.gg/2PDUuRU" target="_blank">Discord channel</a>, through
+    <a href="https://github.com/prysmaticlabs/prysm/issues" target="_blank">Github issues</a>, our
+    <a href="https://gitter.im/prysmaticlabs/prysm" target="_blank">Gitter channel</a>, and
     <a href="https://twitter.com/prylabs" target="_blank">Twitter @prylabs.</a>
   </p>
 
@@ -25,15 +25,15 @@
   <mat-step>
     <ng-template matStepLabel>Get Prysm</ng-template>
     <p>
-      Prysm is our Ethereum 2.0 client and it comes in two components. 
+      Prysm is our Ethereum 2.0 client and it comes in two components.
     </p>
-  
+
     <p>
-      <b>Beacon chain client</b> - Responsible for managing the state of the 
+      <b>Beacon chain client</b> - Responsible for managing the state of the
       beacon chain, validator shuffling, and more.
     </p>
     <p>
-      <b>Validator client</b> - Responsible for producing new blocks and 
+      <b>Validator client</b> - Responsible for producing new blocks and
       attestations in the beacon chain and shard chains.
     </p>
     <div>
@@ -56,20 +56,20 @@ docker pull gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}}</pre>
     <ng-template [ngIf]="!walletAddress">
       <p>First, choose a web3 provider.</p>
       <span class="providers">
-        <button mat-raised-button 
+        <button mat-raised-button
                 class="web3-logo"
                 (click)="chooseWeb3Provider(web3Provider.METAMASK)">
           <img src="/assets/metamask-fox-wordmark-horizontal.svg">
         </button>
-       
-        <button mat-raised-button 
-                class="web3-logo" 
+
+        <button mat-raised-button
+                class="web3-logo"
                 (click)="chooseWeb3Provider(web3Provider.PORTIS)">
           <img src="/assets/portis.svg">
         </button>
       </span>
     </ng-template>
-    
+
     <div class="step2-wallet" *ngIf="walletAddress">
       <p>
         You are {{walletAddress}} and you have {{balance}} GöETH.
@@ -98,7 +98,7 @@ docker run -it -v $HOME/prysm:/data \
          From those results, copy and paste the deposit data below.
        </div>
        <mat-form-field class="full-width">
-         <textarea matInput 
+         <textarea matInput
                    placeholder="Your validator deposit data"
                    cdkTextareaAutosize
                    #autosize="cdkTextareaAutosize"
@@ -123,8 +123,7 @@ docker run -it -v $HOME/prysm:/data \
     <pre>
 docker run -it -v $HOME/prysm:/data -p 4000:4000 \
   gcr.io/prysmaticlabs/prysm/beacon-chain:{{DOCKER_TAG}} \
-  --datadir=/data \
-  --init-sync-no-verify
+  --datadir=/data
     </pre>
 
     <span>Run the next command in another terminal.</span>
@@ -133,6 +132,7 @@ docker run -it -v $HOME/prysm:/data --network="host" \
   gcr.io/prysmaticlabs/prysm/validator:{{DOCKER_TAG}} \
   --beacon-rpc-provider=127.0.0.1:4000 \
   --keystore-path=/data \
+  --datadir=/data \
   --password=changeme
   </pre>
   </mat-step>
@@ -145,7 +145,7 @@ docker run -it -v $HOME/prysm:/data --network="host" \
         the deposit contract. This transaction sends your deposit data and the
         deposit GöETH to initiate a new validator into the system.
       </p>
-      <button mat-raised-button 
+      <button mat-raised-button
               color="accent"
               (click)="makeDeposit()"
               [disabled]="deposited==='pending'">Make deposit</button>
@@ -156,10 +156,10 @@ docker run -it -v $HOME/prysm:/data --network="host" \
     <ng-template matStepLabel>Wait for your validator assignment</ng-template>
     <div>
       Now, once your validator is up and running - you just have to wait for its activation! It will take about 10 minutes, as there is a voting period in which
-      new deposits are added to the running chain from other validators. In the mainnet configuration, this process takes about 2 hours. Once you get assigned, 
-      you'll be able to see how your validator performs its responsibility of creating or voting on blocks as well as earning any rewards throughout its lifecycle. 
+      new deposits are added to the running chain from other validators. In the mainnet configuration, this process takes about 2 hours. Once you get assigned,
+      you'll be able to see how your validator performs its responsibility of creating or voting on blocks as well as earning any rewards throughout its lifecycle.
       Your beacon chain client must be synced for the validator assignment to be seen by your validator client.
-      If you leave your validator offline for a while, it will begin to accrue penalties from the network for being idle. Wanna learn more about Prysm and the 
+      If you leave your validator offline for a while, it will begin to accrue penalties from the network for being idle. Wanna learn more about Prysm and the
       state of the testnet? Join our discord channel <a href="https://discord.gg/upbrAU7" target="_blank">here</a> to chat!
     </div>
 
