@@ -22,8 +22,12 @@ export class CountdownService {
       map(
         _ =>  this.getIntervalTime(timeToGo, Date.now())
       ),
-      takeWhile((x: IInterval) => !this.isComplete(x)),
+      takeWhile(_ => !this.isComplete(timeToGo, Date.now())),
     );
+  }
+
+  isComplete(dateA: number, dateB: number): boolean {
+    return (dateA - dateB) <= 0;
   }
 
   private getIntervalTime(dateA: number, dateB: number): IInterval {
@@ -31,8 +35,8 @@ export class CountdownService {
     return this.getTime(intervalTime);
   }
 
-  private getTime(time : number): IInterval{
-      let intervalTime: IInterval = {days : 0, hours : 0, minutes : 0, seconds: 0};
+  private getTime(time: number): IInterval{
+      const intervalTime: IInterval = {days : 0, hours : 0, minutes : 0, seconds: 0};
       intervalTime.days = Math.floor(time / 86400);
       time -= intervalTime.days * 86400;
       intervalTime.hours = Math.floor(time / 3600) % 24;
@@ -41,9 +45,5 @@ export class CountdownService {
       time -= intervalTime.minutes * 60;
       intervalTime.seconds = time % 60;
       return intervalTime;
-  }
-
-  isComplete(time: IInterval): boolean {
-    return time.days === 0 && time.hours === 0 && time.minutes === 0 && time.seconds === 0;
   }
 }
