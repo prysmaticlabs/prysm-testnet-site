@@ -371,10 +371,10 @@
   resolved "https://registry.yarnpkg.com/@nguniversal/express-engine/-/express-engine-7.1.1.tgz#9445ccb374dabdadccc8de98ca8a79b536ae14de"
   integrity sha512-RJ2VATA6s48bYNrAfjnkjUCohpR7ehiOySwGA2vuUIWCWXKDIIPxgmET5ffVHy1a2XdMsOgrQ9Whth7+CxnUgw==
 
-"@nguniversal/module-map-ngfactory-loader@0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@nguniversal/module-map-ngfactory-loader/-/module-map-ngfactory-loader-0.0.0.tgz#2717c1fcc9aa82ec2305603111937b91ca2a36bb"
-  integrity sha512-0loMrmHIOxn7JAmxoBmLczY4YQ+066/89WjY5VDMCY2ZxFRMZhNZjh8m3EE5Nu4UXpw3fHghBQeqC4alUSuQOw==
+"@nguniversal/module-map-ngfactory-loader@8.2.6":
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/@nguniversal/module-map-ngfactory-loader/-/module-map-ngfactory-loader-8.2.6.tgz#0edc07c4437566970392c9bca1d13b8964971cb0"
+  integrity sha512-YcxXSrDZt6iDR+YbesJvprNpHd1nRLeThJwAFlcwvK/GVGSyKeWV6eqk3bRkBkgkw8OwaG/4lOQ4aofxQw+13w==
 
 "@ngx-pwa/local-storage@7.4.1":
   version "7.4.1"
