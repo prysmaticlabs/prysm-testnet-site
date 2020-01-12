@@ -38,7 +38,7 @@
     "ethers": "4.0.27",
     "express": "4.16.4",
     "google-protobuf": "3.11.2",
-    "grpc-web": "1.0.6",
+    "grpc-web": "1.0.7",
     "ngx-captcha": "7.0.0",
     "rxjs": "6.4.0",
     "tslib": "1.9.3",
