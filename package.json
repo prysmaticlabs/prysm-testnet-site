@@ -28,7 +28,7 @@
     "@angular/platform-browser-dynamic": "7.2.16",
     "@angular/platform-server": "7.2.16",
     "@angular/router": "7.2.16",
-    "@nguniversal/express-engine": "7.1.1",
+    "@nguniversal/express-engine": "8.2.6",
     "@nguniversal/module-map-ngfactory-loader": "0.0.0",
     "@ngx-pwa/local-storage": "8.2.3",
     "@portis/web3": "2.0.0-beta.43",
