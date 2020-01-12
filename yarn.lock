@@ -366,10 +366,10 @@
     tree-kill "1.2.1"
     webpack-sources "1.3.0"
 
-"@nguniversal/express-engine@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@nguniversal/express-engine/-/express-engine-7.1.1.tgz#9445ccb374dabdadccc8de98ca8a79b536ae14de"
-  integrity sha512-RJ2VATA6s48bYNrAfjnkjUCohpR7ehiOySwGA2vuUIWCWXKDIIPxgmET5ffVHy1a2XdMsOgrQ9Whth7+CxnUgw==
+"@nguniversal/express-engine@8.2.6":
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/@nguniversal/express-engine/-/express-engine-8.2.6.tgz#3930551727b5be1256f0aefa1ffd3c37cb420f9f"
+  integrity sha512-IKUKTpesgjYyB0Xg+fFhSbwbGBJhG0Wfn8MkQAi9RgSi8QsrSMkI3oUXc86Z7fpQL55D/ZIH7PekoC0Fmh/kxA==
 
 "@nguniversal/module-map-ngfactory-loader@0.0.0":
   version "0.0.0"
