@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, NG_VALIDATORS, Validator, ValidationErrors } from '@angular/forms';
 
 export const DEPOSIT_DATA_LENGTH = 842;
 
@@ -13,7 +13,9 @@ export const DEPOSIT_DATA_LENGTH = 842;
 })
 export class DepositDataValidatorDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors|null {
-    if (/^0x[0-9a-f]+$/.test((control.value || '').trim()) && (control.value || '').trim().length === DEPOSIT_DATA_LENGTH) {
+    const isHex = (/^0x[0-9a-f]+$/).test((control.value || '').replace(/\s+/g, ''));
+    const hasRightLength = (control.value || '').replace(/\s+/g, '').length === DEPOSIT_DATA_LENGTH;
+    if (isHex && hasRightLength) {
       return null;
     }
     return { 'invalidDepositData': {value: control.value}};
