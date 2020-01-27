@@ -20,7 +20,7 @@ export class DecodeDepositDataService {
 
   // Decode raw transaction arguments into deposit data.
   decodeDepositData(deposit: string): Observable<DepositData> {
-    const args = contractInterface.parseTransaction({data: deposit.trim()}).args;
+    const args = contractInterface.parseTransaction({data: deposit.replace(/\s+/g, '')}).args;
 
     return of({
       pubkey: args[0],
