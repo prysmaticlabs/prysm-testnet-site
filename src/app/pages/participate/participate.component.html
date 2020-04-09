@@ -37,7 +37,7 @@
       attestations in the beacon chain and shard chains.
     </p>
     <div>
-      The easiest way to get Prysm is to use our installation script in our repository: <a href="https://github.com/prysmaticlabs/prysm" target="_blank">github.com/prysmaticlabs/prysm</a>. First, clone our repo and navigate to it. We'll be using the installation script in the next sections.
+      The easiest way to get Prysm is to use our installation script in our repository: <a href="https://github.com/prysmaticlabs/prysm" target="_blank">github.com/prysmaticlabs/prysm</a>. First, clone our repository and navigate to it. We'll be using an installation script contained in the repository for the next sections.
       <pre>
 git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
 </pre>
@@ -91,7 +91,7 @@ git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
       <ng-template matStepLabel>Generate a validator public / private key</ng-template>
       <div>
         <pre>
-   ./prysm.sh validator accounts create --keystore-path=/data --password=changeme</pre>
+   ./prysm.sh validator accounts create --keystore-path=$HOME/validator --password=changeme</pre>
        <div>
          From those results, copy and paste the deposit data below.
        </div>
