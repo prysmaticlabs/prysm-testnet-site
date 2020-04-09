@@ -9,17 +9,15 @@ import { ethers } from 'ethers';
 })
 export class HomeComponent {
   readonly testnetProperties = [
-    'Prysm Only, Single Client Testnet',
-    'Full, Casper Proof of Stake',
+    'Casper Proof of Stake',
     'Goerli Testnet ETH for Staking',
-    'Publicly Accessible',
+    'Same Configuration Parameters as Mainnet'
   ];
 
   readonly notTestnetProperties = [
-    'Multi-Client Network',
     'Includes Smart Contract & EVM Functionality',
     'Real ETH',
-    'Highly Optimized',
+    'Sharding or Cross-Shard Transactions'
   ];
 
   readonly DEPOSIT_AMOUNT = ethers.utils.formatEther(environment.depositAmount);
