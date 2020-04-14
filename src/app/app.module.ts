@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeModule } from './pages/home/home.module';
-import { ParticipateModule } from './pages/participate/participate.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { ParticipateModule } from './pages/participate/participate.module';
     MatToolbarModule,
     MatProgressBarModule,
     HomeModule,
-    ParticipateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
