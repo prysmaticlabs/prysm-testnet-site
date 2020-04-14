@@ -3,24 +3,18 @@
     <img src="assets/stripedprysm.svg">
   </div>
   <div class="chain-info">
-    <h3>Validators</h3>
+
     <div class="flex">
       <div>
+        <p >Scheduled Genesis Time</p>
+        <p *ngIf="countingDown">{{countdown.days}} Day(s), {{countdown.hours}} Hours, {{countdown.minutes}} Minutes,  {{countdown.seconds}} Seconds</p>
+      </div>
+      <div>
+        <p>Validators</p>
         <p *ngIf="!inProgress" class="bignum">{{totalValidators}}</p>
         <p *ngIf="inProgress" class="bignum">...</p>
         <p>Total</p>
       </div>
-      <div>
-        <p *ngIf="!inProgress" class="bignum">{{numActiveValidators}} / {{totalValidators - numActiveValidators}}</p>
-        <p *ngIf="inProgress" class="bignum">...</p>
-        <p>(Active / Pending)</p>
-      </div>
-    </div>
-    <div>
-      <h3 *ngIf="countingDown">Scheduled Genesis Time</h3>
-      <h3 *ngIf="!countingDown">Genesis Time</h3>
-      <p>{{genesisTime}}</p>
-      <p *ngIf="countingDown">{{countdown.days}} Day(s), {{countdown.hours}} Hours, {{countdown.minutes}} Minutes,  {{countdown.seconds}} Seconds</p>
     </div>
     <div>
       <h3>Deposit Contract Address</h3>
