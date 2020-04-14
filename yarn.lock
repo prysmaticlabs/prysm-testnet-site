@@ -60,7 +60,7 @@
     webpack-sources "1.3.0"
     webpack-subresource-integrity "1.1.0-rc.6"
   optionalDependencies:
-    node-sass "4.11.0"
+    node-sass "4.13.1"
 
 "@angular-devkit/build-optimizer@0.13.1":
   version "0.13.1"
