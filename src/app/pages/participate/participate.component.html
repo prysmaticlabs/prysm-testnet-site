@@ -22,7 +22,7 @@
     <mat-icon>check</mat-icon>
   </ng-template>
 
-  <mat-step>
+  <mat-step *ngIf="!hasPrysm">
     <ng-template matStepLabel>Get Prysm</ng-template>
     <p>
       Prysm is our Ethereum 2.0 client and it comes in two components.
@@ -90,11 +90,20 @@ git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
     <form [formGroup]="depositDataFormGroup">
       <ng-template matStepLabel>Generate a validator public / private key</ng-template>
       <div>
-        <pre>
-   ./prysm.sh validator accounts create --keystore-path=$HOME/validator --password=changeme</pre>
-       <div>
-         From those results, copy and paste the deposit data below.
-       </div>
+        <div [ngSwitch]="hasPrysm">
+          <a *ngSwitchCase="'dappnode'"
+            href="http://my.dappnode/#/packages/prysm-validator.public.dappnode.eth/file-manager?from=%2Fdata%2Fdeposit_data.txt"
+            rel="noopener noreferrer" target="_blank"
+          >
+            Download deposit data
+          </a>
+          <pre *ngSwitchDefault>
+            ./prysm.sh validator accounts create --keystore-path=$HOME/validator --password=changeme
+          </pre>
+        </div>
+        <p>
+          From those results, copy and paste the deposit data below.
+        </p>
        <mat-form-field class="full-width">
          <textarea matInput
                    placeholder="Your validator deposit data"
@@ -115,7 +124,7 @@ git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
     </form>
   </mat-step>
 
-  <mat-step>
+  <mat-step *ngIf="!hasPrysm">
     <ng-template matStepLabel>Start your beacon chain & validator clients</ng-template>
     <span>You'll need two terminals for this step.</span>
     <pre>

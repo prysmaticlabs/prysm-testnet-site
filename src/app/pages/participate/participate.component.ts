@@ -39,6 +39,7 @@ export class ParticipateComponent implements OnInit {
   deposited: boolean | 'pending' = false;
   depositContractAddress: string;
   validatorStatus: ValidatorStatusUpdate;
+  hasPrysm: string;
   readonly MIN_BALANCE = ethers.utils.formatEther(environment.depositAmount);
   readonly DOCKER_TAG = 'latest';
 
@@ -76,6 +77,7 @@ export class ParticipateComponent implements OnInit {
       });
 
     });
+    this.hasPrysm = new URLSearchParams(window.location.search).get('node');
   }
 
   hasMinimumBalance(): boolean {
