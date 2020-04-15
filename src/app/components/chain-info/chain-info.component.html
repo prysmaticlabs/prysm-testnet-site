@@ -1,24 +1,22 @@
 <div class="columns">
-  <div class="card-img">
-    <img src="assets/stripedprysm.svg">
-  </div>
   <div class="chain-info">
 
     <div class="flex">
       <div>
-        <p >Scheduled Genesis Time</p>
-        <p *ngIf="countingDown">{{countdown.days}} Day(s), {{countdown.hours}} Hours, {{countdown.minutes}} Minutes,  {{countdown.seconds}} Seconds</p>
+        <h1 >Scheduled Genesis Time</h1>
+        <p *ngIf="countingDown" class="bignum">{{countdown.days}} Day(s), {{countdown.hours}} Hours, {{countdown.minutes}} Minutes,  {{countdown.seconds}} Seconds</p>
+        <p *ngIf="!countingDown" class="bignum">Will be announced today</p>
+
       </div>
       <div>
-        <p>Validators</p>
-        <p *ngIf="!inProgress" class="bignum">{{totalValidators}}</p>
-        <p *ngIf="inProgress" class="bignum">...</p>
-        <p>Total</p>
+        <h3 class="validator">Validator count</h3>
+        <p *ngIf="inProgress" class="bignum">{{totalValidators}}</p>
+      </div>
+      <div>
+        <h3 class="validator">Deposit Contract Address</h3>
+        <p><a href="https://goerli.etherscan.io/address/{{depositContractAddress}}" class="contract">{{depositContractAddress}}</a></p>
       </div>
     </div>
-    <div>
-      <h3>Deposit Contract Address</h3>
-      <p><a href="https://goerli.etherscan.io/address/{{depositContractAddress}}" class="contract">{{depositContractAddress}}</a></p>
-    </div>
+
   </div>
 </div>

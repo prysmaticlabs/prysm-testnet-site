@@ -2,7 +2,7 @@
 @import '~@angular/material/theming';
 
 div.centered {
-  text-align: center;  
+  text-align: center;
   color: $white;
   h3 {
     font-weight: normal;
@@ -33,6 +33,15 @@ div.main-actions {
   }
   a:hover {
     background-color: $pink;
+  }
+}
+
+.prysm-img img {
+  height: 200px;
+  width: 200px;
+  margin-top: 35px;
+  @media (max-width: 200px) {
+    display: none;
   }
 }
 
