@@ -37,10 +37,10 @@
       attestations in the beacon chain and shard chains.
     </p>
     <div>
-      The easiest way to get Prysm is to use our installation script in our repository: <a href="https://github.com/prysmaticlabs/prysm" target="_blank">github.com/prysmaticlabs/prysm</a>. First, clone our repository and navigate to it. We'll be using an installation script contained in the repository for the next sections.
-      <pre>
-git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
-</pre>
+      The easiest way to get Prysm is to use our installation script in our repository: <a href="https://github.com/prysmaticlabs/prysm" target="_blank">github.com/prysmaticlabs/prysm</a>.
+      First, make sure you <a href="https://git-scm.com/downloads" target="_blank">have git installed</a> and make a folder named prysm. After that you'll download the prysm.sh script which we'll be using this script for the next sections.
+      <pre> mkdir prysm && cd prysm </pre>
+      <pre> curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && chmod +x prysm.sh </pre>
     </div>
     <div>
       Alternatively, you can install Prysm by following our docs <a href="https://docs.prylabs.network/docs/getting-started.html" target="_blank">here 💎</a>
@@ -155,13 +155,13 @@ git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
   <mat-step>
     <ng-template matStepLabel>Wait for your validator assignment</ng-template>
     <div>
-      Now, once your validator is up and running - you just have to wait for its activation! This process takes about 2 hours. You do not have to leave this window open after you submit your transaction. 
+      Now, once you've made your deposit and your validator is up and running - you just have to wait for its activation! This process can take about 5 hours. You can close this window after your transaction has been sent.
       You can follow the current beacon chain in Bitfly's block explorer: <a href="https://beaconcha.in" target="_blank">https://beaconcha.in</a> or on <a href="https://beacon.etherscan.io" target="_blank">https://beacon.etherscan.io</a>. Additionally, we recommend registering your node on <a href="https://eth2stats.io" target="_blank">eth2stats</a>.
       <br/>Once you get assigned,
       you'll be able to see how your validator performs its responsibility of creating or voting on blocks as well as earning any rewards throughout its lifecycle.
       Your beacon chain client must be synced for the validator assignment to be seen by your validator client.
       If you leave your validator offline for a while, it will begin to accrue penalties from the network for being idle. Wanna learn more about Prysm and the
-      state of the testnet? Join our discord channel <a href="https://discord.gg/YMVYzv6" target="_blank">here</a> to chat! 
+      state of the testnet? Join our discord channel <a href="https://discord.gg/YMVYzv6" target="_blank">here</a> to chat!
     </div>
 
     <div class="activation-status" *ngIf="validatorStatus">
