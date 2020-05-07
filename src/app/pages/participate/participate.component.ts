@@ -34,12 +34,13 @@ export class ParticipateComponent implements OnInit {
   balance: string;
   balance$?: Observable<unknown>;
   depositData: string;
-  dd: DepositData; 
+  dd: DepositData;
   depositDataFormGroup: FormGroup;
   deposited: boolean | 'pending' = false;
   depositContractAddress: string;
   validatorStatus: ValidatorStatusUpdate;
   hasPrysm: string;
+  txHash: string;
   readonly MIN_BALANCE = ethers.utils.formatEther(environment.depositAmount);
   readonly DOCKER_TAG = 'latest';
 
@@ -144,7 +145,7 @@ export class ParticipateComponent implements OnInit {
           gasLimit: 400000,
         }).then((tx: { hash: string }) => {
           this.snackbar.open('Transaction received. Pending confirmation...', '', snackbarConfig);
-
+          this.txHash = tx.hash;
           this.web3.eth.waitForTransaction(tx.hash, 1).then(() => confirmation$.next());
       }).catch((e: Error) => this.showError(e));
     } catch (e) {
