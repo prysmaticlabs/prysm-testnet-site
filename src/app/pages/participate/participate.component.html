@@ -37,10 +37,11 @@
       attestations in the beacon chain and shard chains.
     </p>
     <div>
-      The easiest way to get Prysm is to use our installation script in our repository: <a href="https://github.com/prysmaticlabs/prysm" target="_blank">github.com/prysmaticlabs/prysm</a>. First, clone our repository and navigate to it. We'll be using an installation script contained in the repository for the next sections.
-      <pre>
-git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
-</pre>
+      The easiest way to get Prysm is to use our installation script in our repository: <a href="https://github.com/prysmaticlabs/prysm" target="_blank">github.com/prysmaticlabs/prysm</a>.
+      First, make sure you <a href="https://git-scm.com/downloads" target="_blank">have git installed</a> and make a folder named prysm.
+      After that you'll download the prysm.sh script which we'll be using for the next sections.
+      <pre> mkdir prysm && cd prysm </pre>
+      <pre> curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && chmod +x prysm.sh </pre>
     </div>
     <div>
       Alternatively, you can install Prysm by following our docs <a href="https://docs.prylabs.network/docs/getting-started.html" target="_blank">here 💎</a>
@@ -50,7 +51,7 @@ git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
   <mat-step [completed]="(walletAddress && hasMinimumBalance()) || deposited">
     <ng-template matStepLabel>Get GöETH — Test ether</ng-template>
     <p>
-      This test network leverages the Goerli network to simulate validator
+      This test network leverages the Goerli test network to simulate validator
       deposits on a proof-of-work chain.
     </p>
     <ng-template [ngIf]="!walletAddress">
