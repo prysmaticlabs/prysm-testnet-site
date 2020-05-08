@@ -155,18 +155,15 @@ git clone https://github.com/prysmaticlabs/prysm && cd ./prysm
   <mat-step>
     <ng-template matStepLabel>Wait for your validator assignment</ng-template>
     <div>
-      Now, once your validator is up and running - you just have to wait for its activation! This process takes about 2 hours. You do not have to leave this window open after you submit your transaction. 
-      You can follow the current beacon chain in Bitfly's block explorer: <a href="https://beaconcha.in" target="_blank">https://beaconcha.in</a> or on <a href="https://beacon.etherscan.io" target="_blank">https://beacon.etherscan.io</a>. Additionally, we recommend registering your node on <a href="https://eth2stats.io" target="_blank">eth2stats</a>.
+      Now, once your validator is up and running - you just have to wait for its activation! This process takes about 4-5 hours. You do not have to leave this window open after you submit your transaction. You can see the progress of your transaction on <a href="https://goerli.etherscan.io/tx/{{txHash}}" target="_blank">goerli.etherscan.io</a>
+      <br/>
+      You can also follow the current beacon chain in Bitfly's block explorer: <a href="https://beaconcha.in" target="_blank">https://beaconcha.in</a> or on <a href="https://beacon.etherscan.io" target="_blank">https://beacon.etherscan.io</a>. Additionally, we recommend registering your node on <a href="https://eth2stats.io" target="_blank">eth2stats</a>.
+      <br/>
       <br/>Once you get assigned,
       you'll be able to see how your validator performs its responsibility of creating or voting on blocks as well as earning any rewards throughout its lifecycle.
       Your beacon chain client must be synced for the validator assignment to be seen by your validator client.
       If you leave your validator offline for a while, it will begin to accrue penalties from the network for being idle. Wanna learn more about Prysm and the
-      state of the testnet? Join our discord channel <a href="https://discord.gg/YMVYzv6" target="_blank">here</a> to chat! 
-    </div>
-
-    <div class="activation-status" *ngIf="validatorStatus">
-      <h4>Activation Status: {{validatorStatus.state}}</h4>
-      <mat-progress-bar mode="buffer" [value]="validatorStatus.percent" [bufferValue]="validatorStatus.percent"></mat-progress-bar>
+      state of the testnet? Join our discord channel <a href="https://discord.gg/YMVYzv6" target="_blank">here</a> to chat!
     </div>
   </mat-step>
 
