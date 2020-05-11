@@ -98,10 +98,38 @@
           >
             Download deposit data
           </a>
+          <span>Run the command appropriate for your Operating System.</span>
           <pre *ngSwitchDefault>
-            ./prysm.sh validator accounts create
+            <style>
+              table#step3 {
+                border: 1px solid black;
+                border-collapse: collapse;
+              }
+              th, td {
+                padding: 15px;
+              }
+              </style>
+            <table id="step3">
+              <tr>
+                <th>GNU\Linux, macOS, ARM64</th>
+              </tr>
+              <tr>
+                <td>./prysm.sh validator accounts create</td>
+              </tr>
+            </table>
+            <table id="step3">
+              <tr>
+                <th>Windows</th>
+              </tr> 
+              <tr>
+                <td>.\prysm.bat validator accounts create --keystore-path=%appdata%\Eth2Validators</td>
+              </tr>
+            </table>
           </pre>
         </div>
+        <p>
+          Prysm will prompt for a password to encrypt your new ETH2 keys, and save them to disk.
+        </p>
         <p>
           From those results, copy and paste the deposit data below.
         </p>
@@ -127,15 +155,37 @@
 
   <mat-step *ngIf="!hasPrysm">
     <ng-template matStepLabel>Start your beacon chain & validator clients</ng-template>
-    <span>You'll need two terminals for this step.</span>
-    <pre>
-      ./prysm.sh beacon-chain
-    </pre>
+      <span>You'll need two terminals for this step.</span>
+      <pre>
+        <style>
+          table#step4 {
+            border: 1px solid black;
+            border-collapse: collapse;
+          }
+          th, td {
+            padding: 15px;
+            border: 1px solid black;
+          }
+          </style>
+        <table id="step4">
+          <tr>
+            <th></th>
+            <th>GNU\Linux, macOS, ARM64</th>
+            <th>Windows</th>
+          </tr>
+          <tr>
+            <th>Terminal 1:</th>
+            <td>./prysm.sh beacon-chain</td>
+            <td>.\prysm.bat beacon-chain</td>
+          </tr>
+          <tr>
+            <th>Terminal 2:</th>
+            <td>./prysm.sh validator</td>
+            <td>.\prysm.bat validator</td>
+          </tr> 
+        </table>
+      </pre>
 
-    <span>Run the next command in another terminal.</span>
-    <pre>
-      ./prysm.sh validator
-  </pre>
   </mat-step>
 
   <mat-step [completed]="deposited">
