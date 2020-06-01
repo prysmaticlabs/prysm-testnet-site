@@ -98,9 +98,7 @@
           >
             Download deposit data
           </a>
-          <pre *ngSwitchDefault>
-            ./prysm.sh validator accounts create
-          </pre>
+          <pre *ngSwitchDefault>./prysm.sh validator accounts create</pre>
         </div>
         <p>
           From those results, copy and paste the deposit data below.
@@ -128,14 +126,10 @@
   <mat-step *ngIf="!hasPrysm">
     <ng-template matStepLabel>Start your beacon chain & validator clients</ng-template>
     <span>You'll need two terminals for this step.</span>
-    <pre>
-      ./prysm.sh beacon-chain
-    </pre>
+    <pre>./prysm.sh beacon-chain</pre>
 
     <span>Run the next command in another terminal.</span>
-    <pre>
-      ./prysm.sh validator
-  </pre>
+    <pre>./prysm.sh validator</pre>
   </mat-step>
 
   <mat-step [completed]="deposited">
