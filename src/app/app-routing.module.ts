@@ -6,7 +6,7 @@ import { ParticipateComponent } from './pages/participate/participate.component'
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: HomeComponent},
-  {path: 'participate', component: ParticipateComponent},
+  {path: 'participate', component: HomeComponent},
 ];
 
 @NgModule({
