@@ -1,24 +1,19 @@
 <div class="centered">
-  <h1>The Onyx Testnet</h1>
-  <h3>Ethereum Serenity Phase 0 Test Network</h3>
+  <h1>The Medalla Testnet</h1>
+  <h3>Ethereum 2.0 Phase 0 Test Network</h3>
 </div>
 
 <div class="main-actions">
-  <a routerLink="/participate" mat-button>Become a Validator</a>
+  <a href="https://medalla.launchpad.ethereum.org/" mat-button target="_blank">Become a Validator</a>
 </div>
 
 <mat-card>
   <mat-card-content>
-    <app-chain-info></app-chain-info>
-    <hr/>
     <p>
-    The <b>Onyx Testnet</b> is a public network created by <a href="https://prysmaticlabs.com" target="_blank">Prysmatic Labs</a>. It implements the Ethereum 2.0 Phase 0 protocol for a proof-of-stake blockchain,
-    enabling anyone holding Goerli test ETH to join and participate.
+    The <a href="https://medalla.launchpad.ethereum.org/" target="_blank">Medalla Testnet</a> is a public network created by the <a href="https://ethereum.org/en/" target="_blank">Ethereum Foundation</a>. It implements the Ethereum 2.0 Phase 0 protocol for a proof-of-stake blockchain,
+    enabling anyone holding test ETH to join and participate. You can join the test by directly participating in the official Ethereum 2.0 <a href="https://medalla.launchpad.ethereum.org/">launchpad</a>. Our team, Prysmatic Labs, created a client implementation for Ethereum 2.0 written in Go, called <a href="https://github.com/prysmaticlabs/prysm" target="_blank">Prysm</a>.
     </p>
 
-    <p>
-      <i>This is a highly experimental test network</i> with no security guarantees. The network <b>will have scheduled restarts</b> for improvements and maintenance as we help make eth2 a reality.
-    </p>
     <p>
       <a href="https://docs.prylabs.network" target="_blank">💎 Read the Docs 💎</a>
     </p>
@@ -29,31 +24,6 @@
       <a class="social discord" mat-button href="https://discord.gg/YMVYzv6" target="_blank"><img src="assets/discord.svg"/></a>
       <a class="social github" mat-button href="https://github.com/prysmaticlabs/prysm" target="_blank"><img src="assets/github.svg"/>Github</a>
     </p>
-    <hr/>
-    <h2>Testnet Information</h2>
-    <div class="tables">
-      <div>
-        <h3>What This Is</h3>
-
-        <mat-list>
-          <mat-list-item *ngFor="let prop of testnetProperties">
-            <mat-icon mat-list-icon color="primary">check</mat-icon>
-            {{prop}}
-          </mat-list-item>
-        </mat-list>
-      </div>
-
-      <div>
-        <h3>What This Isn't</h3>
-
-        <mat-list>
-          <mat-list-item *ngFor="let prop of notTestnetProperties">
-            <mat-icon mat-list-icon color="warn">clear</mat-icon>
-            {{prop}}
-          </mat-list-item>
-        </mat-list>
-      </div>
-    </div>
     <hr/>
     <h2>Frequently Asked Questions</h2>
     <h3>What is Prysm?</h3>
