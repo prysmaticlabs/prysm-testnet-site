@@ -1,10 +1,10 @@
 <nav>
   <mat-toolbar [class.loaded]="!inProgress">
-    <span class="brand"><a routerLink="/"><img src="assets/prysm.svg"/> <span class="brand-text">Prysmatic Eth2 Testnet</span></a></span>
+    <span class="brand"><a routerLink="/"><img src="assets/prysm.svg"/> <span class="brand-text">Eth2 Mainnet</span></a></span>
 
     <span class="flex-spacer"></span>
     <a class="link" target="_blank" href="https://docs.prylabs.network/docs/getting-started/" mat-button>Read the Docs</a>
-    <a href="https://medalla.launchpad.ethereum.org/" target="_blank" mat-button>Participate</a>
+    <a href="https://launchpad.ethereum.org/" target="_blank" mat-button>Participate</a>
   </mat-toolbar>
   <mat-progress-bar *ngIf="inProgress" mode="indeterminate" color="primary"></mat-progress-bar>
 </nav>
